@@ -1,15 +1,16 @@
 var express = require('express')
 var router = express.Router()
-const log = require('./utils/logger.js')
+const log = require('../utils/logger')
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' })
-})
+router.get('/', (_, res) => {
+        log.error('Recieved NOTHINGG')
+        res.json('Nothing on this endpoint')
+    })
 
-router.get('/healthcheck', function (req, res, next) {
-  log.info('Recieved Health Check')
-  res.json('API Is up')
-})
+router.get('/healthcheck', (_, res) => {
+        log.info('Recieved Health Check')
+        res.json('API Is up')
+    })
 
 module.exports = router
