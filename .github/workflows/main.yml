@@ -30,7 +30,8 @@ jobs:
       #  run: npm run prettier
 
       # Runs a set of commands using the runners shell
-      - name: Format Prettier
-        run: |
-          npm install --save-dev prettier
-          npm run prettier 
+      - name: Prettier Action
+        uses: creyD/prettier_action@v4.2
+        with: 
+            prettier_options: write **/*.{js,md,json,css,jsx,tsx,ts,scss}
+
