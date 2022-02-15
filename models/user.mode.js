@@ -4,12 +4,12 @@ const bcrypt = require('bcrypt')
 const UserSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
-    phone: { type: String, required: true, unique: true },
+    phone: { type: String, required: true, unique: true, min: 12 },
     password: { type: String, required: true },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
     gender: { type: String, required: true, default: 'male' },
-    type: { type: Boolean, required: true, default: 0 },
+    type: { type: Boolean, default: true },
     age: { type: Number, required: true }
   },
   { timestamps: true, versionKey: false }

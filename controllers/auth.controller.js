@@ -10,7 +10,7 @@ exports.postSignUp = (req, res) => {
       req.body.email,
       req.body.phone,
       req.body.password,
-      req.body.firs_name,
+      req.body.first_name,
       req.body.last_name,
       req.body.gender,
       req.body.type,
