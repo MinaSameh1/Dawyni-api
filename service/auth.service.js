@@ -18,8 +18,5 @@ exports.createNewUser = async (UserToBeAdded) => {
   const newUser = await User.create({
     ...UserToBeAdded
   })
-  return {
-    error: null,
-    user: omit(newUser, 'password')
-  }
+  return { error: null,user: omit(newUser, 'password')}
 }
