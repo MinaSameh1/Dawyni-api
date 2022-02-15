@@ -26,13 +26,16 @@ const UserSchema = Zod.object({
     invalid_type_error: 'Must be String'
   }),
   gender: Zod.enum(['male', 'female'], {
+    message: 'Must be between male and female',
     invalid_type_error: 'Must be String',
     required_error: 'Gender is required'
   }),
-  type: Zod.optional(Zod.number({
-    required_error: 'Phone is required',
-    invalid_type_error: 'Must be String'
-  })),
+  type: Zod.optional(
+    Zod.number({
+      required_error: 'Phone is required',
+      invalid_type_error: 'Must be String'
+    })
+  ),
   age: Zod.number({
     required_error: 'age is required',
     invalid_type_error: 'Must be String'

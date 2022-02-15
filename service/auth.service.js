@@ -6,36 +6,20 @@ const { omit } = require('lodash')
   ?no ===>create new account
   */
 
-exports.createNewUser = (
-  email,
-  phone,
-  password,
-  first_name,
-  last_name,
-  gender,
-  type,
-  age
-) => {
-  return new Promise((resolve, reject) => {
-    return User.exists({ email: email })
-      .then((user) => {
-        if (user) reject('email is already registered')
-        return User.create({
-          email,
-          phone,
-          password,
-          first_name,
-          last_name,
-          gender,
-          type,
-          age
-        })
-      })
-      .then((newUser) => {
-        resolve(omit(newUser), 'password')
-      })
-      .catch((err) => {
-        reject(err)
-      })
+exports.createNewUser = (UserToBeAdded) => {
+  return (async (resolve, reject) => {
+    try {
+          const user = await User.exists({
+              $or: [{ email: UserToBeAdded.email }, { phone: UserToBeAdded.phone }]
+          })
+          if (user)
+              reject('email or phone number is already used')
+          const newUser = await User.create({
+              ...UserToBeAdded
+          })
+          resolve(omit(newUser), 'password')
+      } catch (err) {
+          reject(err)
+      }
   })
 }

@@ -6,16 +6,7 @@ email,phone, password,first_name,last_name,gender,type,age
 */
 exports.postSignUp = (req, res) => {
   authServer
-    .createNewUser(
-      req.body.email,
-      req.body.phone,
-      req.body.password,
-      req.body.first_name,
-      req.body.last_name,
-      req.body.gender,
-      req.body.type,
-      req.body.age
-    )
+    .createNewUser(req.body)
     .then((newUser) => {
       res.status(201).json(newUser)
     })

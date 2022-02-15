@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-		"debug": "node --inspect ./bin/www",
+    "debug": "node --inspect ./bin/www",
     "prettier": "prettier -w .",
     "pre-commit": "lint-staged"
   },
