@@ -16,10 +16,10 @@ exports.postSignUp = (req, res) => {
       req.body.type,
       req.body.age
     )
-    .then(newUser => {
+    .then((newUser) => {
       res.status(201).json(newUser)
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json({
         error: true,
         message: err

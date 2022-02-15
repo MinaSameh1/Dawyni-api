@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // dotenv config and db connection
 dotenv.config()
-mongoose.connect(process.env.MONGO_URL, err => {
+mongoose.connect(process.env.MONGO_URL, (err) => {
   if (err) throw err
 })
 

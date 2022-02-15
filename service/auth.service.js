@@ -1,4 +1,5 @@
 const User = require('../models/user.mode')
+const { omit } = require('lodash')
 /*
   todo:check if email exists
   !yes ===> errer
@@ -17,7 +18,7 @@ exports.createNewUser = (
 ) => {
   return new Promise((resolve, reject) => {
     return User.exists({ email: email })
-      .then(user => {
+      .then((user) => {
         if (user) reject('email is already registered')
         return User.create({
           email,
@@ -30,10 +31,10 @@ exports.createNewUser = (
           age
         })
       })
-      .then(newUser => {
-        resolve(newUser)
+      .then((newUser) => {
+        resolve(omit(newUser), 'password')
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err)
       })
   })
