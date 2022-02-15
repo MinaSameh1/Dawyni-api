@@ -19,18 +19,16 @@ exports.createNewUser = (
     return User.exists({ email: email })
       .then(user => {
         if (user) reject('email is already registered')
-        return User.create(
-					{
-						email,
-						phone,
-						password,
-						first_name,
-						last_name,
-						gender,
-						type,
-						age
-					}
-        )
+        return User.create({
+          email,
+          phone,
+          password,
+          first_name,
+          last_name,
+          gender,
+          type,
+          age
+        })
       })
       .then(newUser => {
         resolve(newUser)
