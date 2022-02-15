@@ -15,16 +15,13 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true, versionKey: false }
 )
 
-// UserSchema.pre('save', async next => {
-//   let user = this
-//
-//   if (!user.isModified('password')) return next()
-//
-//   const salt = await bcrypt.genSalt(config.get('saltWorkFactor'))
-//
-//   this.password = await bcrypt.hash(this.passwordj, salt)
-//
-// 	return next()
-// })
+UserSchema.pre('save', async function (next) {
+
+  if (!this.isModified('password')) return next()
+
+  const salt = await bcrypt.genSalt(config.get('saltWorkFactor'))
+
+  this.password = await bcrypt.hash(this.password, salt)
+})
 
 module.exports = mongoose.model('user', UserSchema)
