@@ -10,6 +10,9 @@ const mongoose = require('mongoose')
 var indexRouter = require('./routes/index')
 const bodyParser = require('body-parser')
 
+// routes
+const authRoute = require('./routes/auth.route')
+
 var app = express()
 
 // view engine setup
@@ -30,6 +33,7 @@ mongoose.connect(process.env.MONGO_URL, err => {
 })
 
 app.use('/', indexRouter)
+app.use('/', authRoute)
 
 // catch 404 and forward to error handler
 app.use((_, __, next) => {

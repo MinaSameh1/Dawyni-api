@@ -7,15 +7,14 @@ email,phone, password,first_name,last_name,gender,type,age
 exports.postSignUp = (req, res) => {
   authServer
     .createNewUser(
-      req.email,
-      req.phone,
-      req.password,
-      req,
-      req.firs_name,
-      req.last_name,
-      req.gender,
-      req.type,
-      req.age
+      req.body.email,
+      req.body.phone,
+      req.body.password,
+      req.body.firs_name,
+      req.body.last_name,
+      req.body.gender,
+      req.body.type,
+      req.body.age
     )
     .then(newUser => {
       res.status(201).json(newUser.len())

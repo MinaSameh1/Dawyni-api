@@ -18,7 +18,7 @@ exports.createNewUser = (
   return new Promise((resolve, reject) => {
     return User.findOne({ email: email })
       .then(user => {
-        if (user) reject('email is used')
+        if (user) reject('email is already registered')
         let newUser = new User(
           email,
           phone,
