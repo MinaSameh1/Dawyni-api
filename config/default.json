@@ -1,5 +1,5 @@
 {
-	"saltWorkFactor": 10,
+  "saltWorkFactor": 10,
   "loggingLevel": "info",
-	"COMMENT_ABOUT_LOGGING_LEVEL": "Can be silent or debug or info etc, see pino logging levels"
-	}
+  "COMMENT_ABOUT_LOGGING_LEVEL": "Can be silent or debug or info etc, see pino logging levels"
+}

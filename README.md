@@ -2,9 +2,9 @@
 
 ## API Endpoints
 
-| Endpoint | method | brief description |
-| ---------|--------|------------------|
-| /healthcheck | get | Checks if api is working returns 200 |
+| Endpoint     | method | brief description                    |
+| ------------ | ------ | ------------------------------------ |
+| /healthcheck | get    | Checks if api is working returns 200 |
 
 ### Responses:
 
