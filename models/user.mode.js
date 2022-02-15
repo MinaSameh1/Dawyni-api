@@ -9,19 +9,19 @@ const UserSchema = new mongoose.Schema(
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
     gender: { type: String, required: true, default: 'male' },
-    type: { type: Boolean, default: true },
+    type: { type: Number, default: true },
     age: { type: Number, required: true }
   },
   { timestamps: true, versionKey: false }
 )
 
-UserSchema.pre('save', async next => {
-  let user = this
-  if (!user.isModified('password')) return next()
-
-  const salt = await bcrypt.genSalt(config.get('saltWorkFactor'))
-
-  this.password = await bcrypt.hash(this.passwordj, salt)
-})
+// UserSchema.pre('save', async next => {
+//   let user = this
+//   if (!user.isModified('password')) return next()
+//
+//   const salt = await bcrypt.genSalt(config.get('saltWorkFactor'))
+//
+//   this.password = await bcrypt.hash(this.passwordj, salt)
+// })
 
 module.exports = mongoose.model('user', UserSchema)
