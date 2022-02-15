@@ -10,5 +10,5 @@ const log = pino({
   timestamp: () => `,"time":"${dayjs().format()}"`
 })
 
-log.level = config.get("loggingLevel")
+log.level = config.get('loggingLevel')
 module.exports = log
