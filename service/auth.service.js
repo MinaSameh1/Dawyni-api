@@ -10,7 +10,6 @@ exports.createNewUser = async (UserToBeAdded) => {
   const user = await User.exists({
     $or: [{ email: UserToBeAdded.email }, { phone: UserToBeAdded.phone }]
   })
-
   if (user)
     return {
       error: 'email or phone number is already used',
