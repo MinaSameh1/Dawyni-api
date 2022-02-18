@@ -6,7 +6,8 @@
     "start": "nodemon ./bin/www",
     "debug": "node --inspect ./bin/www",
     "prettier": "prettier -w .",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "prepare": "husky install"
   },
   "pre-commit": [
     "pre-commit"
@@ -15,7 +16,8 @@
     "**/*.{json,css,scss,md,js,jsx}": [
       "prettier --write",
       "git add"
-    ]
+    ],
+    "*.js": "eslint --cache --fix"
   },
   "prettier": {
     "endOfLine": "lf",
@@ -48,6 +50,7 @@
   "devDependencies": {
     "eslint": "^8.9.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "pre-commit": "^1.2.2",
     "prettier": "^2.5.1"
