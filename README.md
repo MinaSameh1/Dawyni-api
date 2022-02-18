@@ -1,5 +1,15 @@
 # finalproject-api
 
+## First steps
+
+Upon cloning the repo prepare husky first if you intend to work on it.
+
+```bash
+npm run prepare
+```
+
+Then `npm start` to start the api server
+
 ## API Endpoints
 
 | Endpoint     | method | brief description                    |

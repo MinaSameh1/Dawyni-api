@@ -13,11 +13,8 @@
     "pre-commit"
   ],
   "lint-staged": {
-    "**/*.{json,css,scss,md,js,jsx}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.js": "eslint --cache --fix"
+    "**/*.{json,css,scss,md,js,jsx,ts,tsx}": "prettier --write",
+    "**/*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
   "prettier": {
     "endOfLine": "lf",
