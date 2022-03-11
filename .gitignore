@@ -71,6 +71,7 @@ web_modules/
 
 # dotenv environment variables file
 .env.test
+.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -83,6 +84,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+build
 
 # Gatsby files
 .cache/
