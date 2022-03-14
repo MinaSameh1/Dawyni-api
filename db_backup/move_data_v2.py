@@ -2,6 +2,7 @@
 import logging
 import sys
 
+from random import randint
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.collection import Collection
@@ -24,6 +25,29 @@ def get_db() -> Collection:
     # Create the db
     db = client["Pharm"]
     return db["drugs"]
+
+
+def get_image() -> str:
+    """Return random drug image."""
+    if randint(0, 10) < 4:
+        return (
+            "https://static.spineuniverse.com/sites/default/files/lead-"
+            + "images/article/47060-medications_tablets_capsules_mixed_otc_rx_"
+            + "lifetimestock-170963-l.jpg"
+        )
+    if randint(0, 10) < 8:
+        return (
+            "https://www.apsf.org/wp-content/uploads/newsletters/2018/3302/"
+            + "safe-medication-best-practices-featured.jpg"
+        )
+    if randint(0, 100) <= 50:
+        return (
+            "https://images.dailyhive.com/20171201115357/Untitled-design20.jpg"
+        )
+    return (
+        "https://st3.depositphotos.com/6707292/14180/i/950/depositphotos_"
+        + "141806664-stock-photo-different-types-of-drugs-are.jpg"
+    )
 
 
 def get_marketing_status(status: int) -> str:
@@ -81,9 +105,9 @@ def main():
                 """
                 # Create a dict object how we want it.
                 unclean = str(row[2]).replace(" ", "")
-                form: list = []
+                form: list[dict[str, str]] = []
                 for item in unclean.split(";"):
-                    form.append(item)
+                    form.append({"form": item, "image": get_image()})
                 unclean = str(row[6])
                 ingredients: list = []
                 for item in unclean.split(";"):
@@ -93,7 +117,7 @@ def main():
                 del unclean
                 db_row = {
                     "drug_name": row[5],
-                    "form": form,
+                    "forms": form,
                     "strength": str(row[3]),
                     "active_ingredients": ingredients,
                     "status": stat,
