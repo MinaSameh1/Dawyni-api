@@ -1,52 +1,62 @@
-import * as admin from 'firebase-admin'
+import { UserRecord } from 'firebase-admin/lib/auth/user-record'
+import { omit, get } from 'lodash'
+import { auth } from '../../utils/firebase'
 import logger from '../../utils/logger'
-import '../server/firebase'
-import UserModel from './user.model'
+import UserModel, { UserInput } from './user.model'
 
-// interface CreateUserResponse {
-//   email: string
-//   username: string
-//   _id: string
-//   createdAt: string
-//   updatedAt: string
-// }
-
+/**
+ * Responsible for any connection to FB or mongo related to user.
+ */
 export default class UserService {
-  initializeApp(config: admin.AppOptions): undefined {
-    admin.initializeApp(config)
-    return
-  }
-
   /**
-   * @param {object} { email, username, password }
-   * @returns {Promise<any>}
+   * Create a user
+   *
+   * @param { UserInput } [ input ]
+   * @returns { Promise<CreateUserResponse> }
    * @memberof UserService
    */
-  async createUserUsingEmailPass({
-    email,
-    username,
-    password
-  }: {
-    email: string
-    username: string
-    password: string
-  }): Promise<any> {
-    return admin
-      .auth()
-      .createUser({
-        email: email,
-        emailVerified: false,
-        phoneNumber: '',
-        password: password,
-        displayName: username,
-        disabled: false
-      })
-      .then(userRecord => {
-        logger.info('Created user.')
-        logger.debug(userRecord)
-        const user = new UserModel(userRecord)
-        return user.save()
-      })
+  async createUserUsingEmailPass(input: UserInput) {
+    logger.info(`Gonna Check for ${input.email}`)
+    const checkUser = await UserModel.exists({
+      $or: [
+        {
+          email: get(input, 'email')
+        },
+        {
+          username: get(input, 'username')
+        }
+      ]
+    })
+    if (checkUser) {
+      return {
+        err: 'Email or Username Already Exists!',
+        user: null
+      }
+    }
+
+    const userRecord = await auth.createUser({
+      email: get(input, 'email'),
+      emailVerified: false,
+      password: get(input, 'password'),
+      displayName: get(input, 'username'),
+      disabled: false
+    })
+
+    logger.info('Created user.')
+
+    logger.debug(userRecord)
+
+    const newUser = await UserModel.create({
+      email: get(input, 'email'),
+      password: get(input, 'password'),
+      uid: userRecord.uid,
+      username: get(input, 'username')
+    })
+
+    return {
+      err: null,
+      user: omit(newUser.toJSON(), 'password')
+    }
   }
 
   /**
@@ -57,8 +67,7 @@ export default class UserService {
    * @memberof UserService
    */
   async getAllUsers(maxResults = 1000): Promise<UserRecord[] | void> {
-    return admin
-      .auth()
+    return auth
       .listUsers(maxResults)
       .then(listUsersResult => listUsersResult.users)
       .catch(err => {

@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
+import config from 'config'
 import logger from './logger'
 
 export async function connect() {
-  const dbUri = process.env['DB_URI'] || 'mongodb://localhost:27017/PIS'
+  const dbUri = config.get<string>('dbUri')
 
   try {
     await mongoose.connect(dbUri)

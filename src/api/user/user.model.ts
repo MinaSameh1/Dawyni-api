@@ -1,10 +1,24 @@
 import { prop, getModelForClass, pre } from '@typegoose/typegoose'
-import bcrypt from 'bcrypt'
 import config from 'config'
+import bcrypt from 'bcrypt'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 
 interface roles {
   role: 'user' | 'admin'
+}
+
+export interface UserInput {
+  username?: string
+  email?: string
+  password?: string
+  role?: roles
+}
+
+interface User extends UserInput {
+  uid?: string
+  createdAt: Date
+  updatedAt: Date
+  // comparePass(candidatePass: string): Promise<boolean>
 }
 
 @pre<User>('save', async function (next) {
@@ -21,7 +35,10 @@ interface roles {
 
   return next()
 })
-class User extends TimeStamps {
+class User extends TimeStamps implements User {
+  @prop({ unique: true, type: () => [String] })
+  public uid?: string // FB user UID
+
   @prop({
     set: (val: string) => val.toLowerCase(),
     unique: true,

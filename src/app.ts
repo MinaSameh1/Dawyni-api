@@ -13,6 +13,7 @@ process.env['NODE_CONFIG_DIR'] = __dirname + '/utils/constants/'
 import 'dotenv/config'
 import logger from './utils/logger'
 import config from 'config'
+import deseralizeUser from './middleware/deseralizeUser'
 
 /************************************************************************************
  *                              Basic Express Middlewares
@@ -27,6 +28,9 @@ app.use(cors())
 
 // For security.
 app.use(helmet())
+
+// User authentication
+app.use(deseralizeUser)
 
 // Logger, must be last on the list.
 if (config.get<string>('NODE_ENV') == 'dev') app.use(pino(logger))
@@ -51,7 +55,7 @@ app.use(
     err: Error,
     _: express.Request,
     res: express.Response,
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     next: express.NextFunction
   ) => {
     return res.status(500).json({
