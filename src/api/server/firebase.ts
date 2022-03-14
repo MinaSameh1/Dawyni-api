@@ -1,6 +1,4 @@
-import { initializeApp } from 'firebase-admin'
-
-const firebaseConfig = {
+const firebase_config = {
   apiKey: process.env['apiKey'],
   authDomain: process.env['authDomain'],
   projectId: process.env['projectId'],
@@ -10,6 +8,4 @@ const firebaseConfig = {
   measurementId: process.env['measurementId']
 }
 
-const initFb = () => initializeApp(firebaseConfig)
-
-export default initFb
+export default firebase_config
