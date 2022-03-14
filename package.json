@@ -8,12 +8,12 @@
     "build": "cross-env NODE_ENV=production tsc",
     "watch": "tsc -w",
     "dev": "ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
-    "debug": "node --inspect ./node_modules/.bin/ts-node src/index.ts",
+    "debug": "ts-node-dev --transpile-only --respawn --inspect=9229 src/index.ts",
     "pre-commit": "lint-staged",
     "test": "cross-env NODE_ENV=development jest"
   },
   "lint-staged": {
-    "src/**/*.{ts}": [
+    "src/**/*.ts": [
       "eslint --ext .ts ./src --fix"
     ],
     "./src/**": [
@@ -41,6 +41,8 @@
     "express-pino-logger": "^7.0.0",
     "firebase-admin": "^10.0.2",
     "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "mongoose": "^6.2.5",
     "multer": "^1.4.4",
@@ -60,6 +62,7 @@
     "@types/express": "^4.17.13",
     "@types/express-pino-logger": "^4.0.3",
     "@types/jest": "^27.4.1",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.179",
     "@types/node": "^17.0.21",
     "@types/swagger-jsdoc": "^6.0.1",
@@ -67,9 +70,9 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint_d": "^11.1.1",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.5",
