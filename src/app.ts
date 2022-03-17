@@ -53,17 +53,16 @@ getFilesWithKeyword('router', __dirname + '/api').forEach((file: string) => {
 app.use(
   (
     err: Error,
-    _: express.Request,
+    req: express.Request,
     res: express.Response,
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    next: express.NextFunction
-  ) => {
-    return res.status(500).json({
+    // eslint-disable-next-line no-unused-vars
+    _: express.NextFunction
+  ) =>
+    res.status(500).json({
       errorName: err.name,
       message: err.message,
       stack: err.stack || 'no stack defined'
     })
-  }
 )
 
 export default app
