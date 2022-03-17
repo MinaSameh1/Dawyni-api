@@ -23,7 +23,7 @@ def get_db() -> Collection:
     client = MongoClient(con_string)
 
     # Create the db
-    db = client["Pharm"]
+    db = client["PIS"]
     return db["drugs"]
 
 
