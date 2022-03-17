@@ -3,6 +3,7 @@ import logging
 import sys
 
 from random import randint
+import json
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.collection import Collection
@@ -72,7 +73,7 @@ def get_marketing_status(status: int) -> str:
     return "Awaiting Approval"
 
 
-def main():
+def main() -> None:
     """Handle everything function aka main."""
     logging.basicConfig(filename="move_data.log", level=logging.DEBUG)
     logging.debug("------- Starting -----------------------------------------")
@@ -83,6 +84,7 @@ def main():
                 "drugs/MarketingStatus.txt", "r", encoding="utf8"
             ) as market_stat_file,
             open("BackupData.csv", "w", encoding="utf8"),
+            open("BackupData.json", "w", encoding="utf8") as json_file,
         ):
             products = pd.read_table(prods)
             market_stat = pd.read_table(market_stat_file)
@@ -123,6 +125,7 @@ def main():
                     "status": stat,
                 }
                 db_rows.append(db_row)
+                json.dump(db_row, json_file, ensure_ascii=False, indent=4)
                 # Insert many every 1k rows to make it faster
                 if len(db_rows) == 1000:
                     mongo.insert_many(db_rows)
