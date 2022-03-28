@@ -1,18 +1,22 @@
 import { Request, Response } from 'express'
+import { parseInt } from 'lodash'
 import logger from '../../utils/logger'
 import { getDrugs } from './drug.service'
 
 // exported getDrugsHandler
-const getDrugsHandler = async (req: Request, res: Response) => {
+export async function getDrugsHandler(req: Request, res: Response) {
   const limit = parseInt(
-    typeof req.query.limit === 'string' ? req.query.limit : '15'
+    typeof req.query.limit === 'string' ? req.query.limit : '20'
   )
   const offset = parseInt(
-    typeof req.query.offset === 'string' ? req.query.offset : '0'
+    typeof req.query.offset === 'string' ? req.query.offset : '15'
+  )
+  const page = parseInt(
+    typeof req.query.page === 'string' ? req.query.page : '0'
   )
 
   try {
-    const result = await getDrugs({}, offset, limit)
+    const result = await getDrugs({}, offset * page, limit)
     if (result.CurrentPage > result.pages) {
       return res.status(401).json({ message: 'No More Pages!' })
     }
@@ -32,4 +36,10 @@ const getDrugsHandler = async (req: Request, res: Response) => {
   }
 }
 
-export { getDrugsHandler }
+export async function updateDrugHandler(req: Request, res: Response) {
+  return res.send('Test')
+}
+
+export async function deleteDrugHandler(req: Request, res: Response) {
+  return res.send('Test')
+}
