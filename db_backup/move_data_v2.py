@@ -1,10 +1,9 @@
 """Moves and shapes data from csv files  to store in mongodb."""
 import logging
+from operator import itemgetter
+from random import randint, randrange, uniform
 import sys
 
-from random import randint, randrange, uniform
-
-# import json
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.collection import Collection
@@ -97,6 +96,7 @@ def main() -> None:
             mongo = get_db()
             db_rows: list[dict] = []
             json_rows = {"drugs": []}
+            banned = ["INTRA-ANAL", "VAGINAL"]
             for index, row in products.iterrows():
                 if market_stat.loc[index][1] == row[0]:
                     stat: str = get_marketing_status(market_stat.loc[index][2])
@@ -116,7 +116,17 @@ def main() -> None:
                 unclean = str(row[2]).replace(" ", "")
                 form: list[dict[str, str]] = []
                 for item in unclean.split(";"):
-                    form.append({"form": item, "image": get_image()})
+                    if len(item.split(",")) != 0:
+                        for itm in item.split(","):
+                            form.append({"form": itm, "image": get_image()})
+                    else:
+                        form.append({"form": item, "image": get_image()})
+                if [
+                    True
+                    for value in banned
+                    if value in map(itemgetter("form"), form)
+                ]:
+                    continue
                 unclean = str(row[6])
                 ingredients: list = []
                 for item in unclean.split(";"):
