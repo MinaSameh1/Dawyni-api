@@ -9,7 +9,7 @@ export async function getDrugsHandler(req: Request, res: Response) {
     typeof req.query.limit === 'string' ? req.query.limit : '20'
   )
   const offset = parseInt(
-    typeof req.query.offset === 'string' ? req.query.offset : '15'
+    typeof req.query.offset === 'string' ? req.query.offset : '20'
   )
   const page = parseInt(
     typeof req.query.page === 'string' ? req.query.page : '0'
