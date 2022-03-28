@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from 'zod'
+import { object, number, string, TypeOf } from 'zod'
 
 /**
  * @openapi
@@ -15,10 +15,10 @@ import { object, string, TypeOf } from 'zod'
  *        - status
  *        - price
  *       properties:
- *         name:
+ *         drug_name:
  *           type: string
  *         forms:
- *           type: { form: string, image: string }
+ *           type: "forms: [{ form: string, image: string }]"
  *         price:
  *           type: float
  *         image:
@@ -32,13 +32,28 @@ import { object, string, TypeOf } from 'zod'
  */
 
 const payload = {
-  body: object({})
+  body: object({
+    drug_name: string({
+      required_error: 'Name is required'
+    }),
+    price: number({
+      required_error: 'Price is required'
+    }),
+    status: string({
+      required_error: 'Status is required'
+    }),
+    strength: string({
+      required_error: 'Strength is required'
+    })
+    // active_ingredients: object()
+    // forms: object()
+  })
 }
 
 const params = {
   params: object({
     productId: string({
-      required_error: 'ProductId is required'
+      required_error: 'DrugID is required'
     })
   })
 }
