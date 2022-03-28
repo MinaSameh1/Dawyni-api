@@ -2,8 +2,9 @@
 import logging
 import sys
 
-from random import randint
-import json
+from random import randint, randrange, uniform
+
+# import json
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.collection import Collection
@@ -26,6 +27,11 @@ def get_db() -> Collection:
     # Create the db
     db = client["PIS"]
     return db["drugs"]
+
+
+def getRandomPrice():
+    """Return random float number."""
+    return round(uniform(10.5, 100.5), 2)
 
 
 def get_image() -> str:
@@ -84,12 +90,13 @@ def main() -> None:
                 "drugs/MarketingStatus.txt", "r", encoding="utf8"
             ) as market_stat_file,
             open("BackupData.csv", "w", encoding="utf8"),
-            open("BackupData.json", "w", encoding="utf8") as json_file,
+            # open("BackupData.json", "w", encoding="utf8") as json_file,
         ):
             products = pd.read_table(prods)
             market_stat = pd.read_table(market_stat_file)
             mongo = get_db()
             db_rows: list[dict] = []
+            json_rows = {"drugs": []}
             for index, row in products.iterrows():
                 if market_stat.loc[index][1] == row[0]:
                     stat: str = get_marketing_status(market_stat.loc[index][2])
@@ -117,18 +124,28 @@ def main() -> None:
                 # Delete this
                 unclean = None
                 del unclean
+                id = randrange(1, 10000000)
+                while id in db_rows:
+                    id = randrange(1, 10000000)
                 db_row = {
                     "drug_name": row[5],
                     "forms": form,
                     "strength": str(row[3]),
                     "active_ingredients": ingredients,
                     "status": stat,
+                    "price": getRandomPrice(),
                 }
                 db_rows.append(db_row)
-                json.dump(db_row, json_file, ensure_ascii=False, indent=4)
+                # json_rows["drugs"].append(db_row)
                 # Insert many every 1k rows to make it faster
                 if len(db_rows) == 1000:
                     mongo.insert_many(db_rows)
+                    for _id in json_rows["drugs"]:
+                        _id["_id"] = str(_id["_id"])
+                    # Uncomment these lines to create a json file
+                    # json.dump(
+                    #     json_rows, json_file, ensure_ascii=False, indent=2
+                    # )
                     db_rows = []
                 sys.stdout.write("\033[K" + "Index: " + str(index) + "\r")
             sys.stdout.write("\n")

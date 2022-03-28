@@ -12,7 +12,7 @@ export default class UserService {
    * Create a user
    *
    * @param { UserInput } [ input ]
-   * @returns { Promise<CreateUserResponse> }
+   * @returns { Promise<CreateUserResponse> } [ User ]
    * @memberof UserService
    */
   async createUserUsingEmailPass(input: UserInput) {

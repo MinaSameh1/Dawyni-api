@@ -1,4 +1,7 @@
 import { Router } from 'express'
+// import requireUser from '../../middleware/requireUser'
+// import validateResource from '../../middleware/validateResource'
+import { getDrugsHandler } from './drug.controller'
 
 const router = Router()
 /**
@@ -24,21 +27,28 @@ const router = Router()
  *         description: Drug not found
  */
 // router.put(
-//   "/api/drugs/:drugId",
+//   '/api/drugs/:drugId',
 //   [requireUser, validateResource(updateDrugSchema)],
 //   updateDrugHandler
-// );
+// )
 //
 // router.get(
-//   "/api/drugs/:drugId",
+// 	'/api/drugs',
+// 	getDrugsHandler
+// )
+
+// router.get(
+//   '/api/drugs/:drugId',
 //   validateResource(getDrugSchema),
-//   getDrugHandler
-// );
-//
+//   getDrugsHandler
+// )
+
+router.get('/api/drugs/', getDrugsHandler)
+
 // router.delete(
-//   "/api/drugs/:drugId",
+//   '/api/drugs/:drugId',
 //   [requireUser, validateResource(deleteDrugSchema)],
 //   deleteDrugHandler
-// );
-
+// )
+//
 export = { router }
