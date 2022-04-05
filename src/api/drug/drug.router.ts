@@ -1,7 +1,17 @@
 import { Router } from 'express'
-// import requireUser from '../../middleware/requireUser'
-// import validateResource from '../../middleware/validateResource'
-import { getDrugsHandler } from './drug.controller'
+import requireUser from '../../middleware/requireUser'
+import validateResource from '../../middleware/validateResource'
+import {
+  getDrugsHandler,
+  deleteDrugHandler,
+  updateDrugHandler,
+  getFormsHandler
+} from './drug.controller'
+import {
+  deleteDrugSchema,
+  getDrugSchema,
+  updateDrugSchema
+} from './drug.schema'
 
 const router = Router()
 /**
@@ -26,29 +36,27 @@ const router = Router()
  *       404:
  *         description: Drug not found
  */
-// router.put(
-//   '/api/drugs/:drugId',
-//   [requireUser, validateResource(updateDrugSchema)],
-//   updateDrugHandler
-// )
-//
-// router.get(
-// 	'/api/drugs',
-// 	getDrugsHandler
-// )
+router.put(
+  '/api/drugs/:drugId',
+  [requireUser, validateResource(updateDrugSchema)],
+  updateDrugHandler
+)
 
-// router.get(
-//   '/api/drugs/:drugId',
-//   validateResource(getDrugSchema),
-//   getDrugsHandler
-// )
+router.get('/api/drugs', getDrugsHandler)
+router.get('/api/drugs/forms', getFormsHandler)
+
+router.get(
+  '/api/drugs/:drugId',
+  validateResource(getDrugSchema),
+  getDrugsHandler
+)
 
 router.get('/api/drugs/', getDrugsHandler)
 
-// router.delete(
-//   '/api/drugs/:drugId',
-//   [requireUser, validateResource(deleteDrugSchema)],
-//   deleteDrugHandler
-// )
-//
+router.delete(
+  '/api/drugs/:drugId',
+  [requireUser, validateResource(deleteDrugSchema)],
+  deleteDrugHandler
+)
+
 export = { router }

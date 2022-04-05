@@ -1,12 +1,15 @@
 """Moves and shapes data from csv files  to store in mongodb."""
 import logging
 from operator import itemgetter
-from random import randint, randrange, uniform
+from random import randint, randrange, uniform, choice
 import sys
 
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.collection import Collection
+
+
+db_name = "PIS"
 
 
 def get_db() -> Collection:
@@ -24,7 +27,8 @@ def get_db() -> Collection:
     client = MongoClient(con_string)
 
     # Create the db
-    db = client["PIS"]
+    db = client[db_name]
+    db["drugs"].delete_many({})
     return db["drugs"]
 
 
@@ -54,6 +58,35 @@ def get_image() -> str:
         "https://st3.depositphotos.com/6707292/14180/i/950/depositphotos_"
         + "141806664-stock-photo-different-types-of-drugs-are.jpg"
     )
+
+
+def get_form() -> list[dict[str, str]]:
+    """
+    Get forms and forms them into required dict shape.
+
+    If form is not one of the 14 main catogries retrun random one.
+
+    @param `forms` the forms in shape of string
+    @return dict in shape of [ { form: form , image: image }]
+    """
+    form: list[dict[str, str]] = []
+    main_forms = [
+        "CLOTH",
+        "CAPSULE",
+        "SHAMPOO",
+        "GUM",
+        "INJECTION",
+        "ORAL",
+        "NASAL",
+        "GEL",
+        "CREAM",
+    ]
+    for _ in range(randint(1, 4)):
+        ch = choice(main_forms)
+        if ch in form:
+            continue
+        form.append({"form": ch, "image": get_image()})
+    return form
 
 
 def get_marketing_status(status: int) -> str:
@@ -96,7 +129,6 @@ def main() -> None:
             mongo = get_db()
             db_rows: list[dict] = []
             json_rows = {"drugs": []}
-            banned = ["INTRA-ANAL", "VAGINAL"]
             for index, row in products.iterrows():
                 if market_stat.loc[index][1] == row[0]:
                     stat: str = get_marketing_status(market_stat.loc[index][2])
@@ -113,20 +145,6 @@ def main() -> None:
                 }
                 """
                 # Create a dict object how we want it.
-                unclean = str(row[2]).replace(" ", "")
-                form: list[dict[str, str]] = []
-                for item in unclean.split(";"):
-                    if len(item.split(",")) != 0:
-                        for itm in item.split(","):
-                            form.append({"form": itm, "image": get_image()})
-                    else:
-                        form.append({"form": item, "image": get_image()})
-                if [
-                    True
-                    for value in banned
-                    if value in map(itemgetter("form"), form)
-                ]:
-                    continue
                 unclean = str(row[6])
                 ingredients: list = []
                 for item in unclean.split(";"):
@@ -139,7 +157,7 @@ def main() -> None:
                     id = randrange(1, 10000000)
                 db_row = {
                     "drug_name": row[5],
-                    "forms": form,
+                    "forms": get_form(),
                     "strength": str(row[3]),
                     "active_ingredients": ingredients,
                     "status": stat,

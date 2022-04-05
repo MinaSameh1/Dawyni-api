@@ -37,6 +37,10 @@ export async function findAndUpdateDrug(
   return DrugModel.findOneAndUpdate(query, update, options)
 }
 
+export async function getUniqueForms() {
+  return DrugModel.distinct('forms.form').lean()
+}
+
 export async function deleteDrug(query: FilterQuery<drug>) {
   return DrugModel.deleteOne(query)
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { parseInt } from 'lodash'
 import logger from '../../utils/logger'
-import { getDrugs } from './drug.service'
+import { getDrugs, getUniqueForms } from './drug.service'
 
 // exported getDrugsHandler
 export async function getDrugsHandler(req: Request, res: Response) {
@@ -34,6 +34,13 @@ export async function getDrugsHandler(req: Request, res: Response) {
       message: 'something went wrong'
     })
   }
+}
+
+export async function getFormsHandler(_: Request, res: Response) {
+  const result = await getUniqueForms()
+  return res.status(200).json({
+    data: result
+  })
 }
 
 export async function updateDrugHandler(req: Request, res: Response) {
