@@ -7,7 +7,7 @@ export async function getDrugs(
   limit: number,
   options: QueryOptions = { lean: true }
 ) {
-  const DrugsCollectionCount = await DrugModel.count()
+  const DrugsCollectionCount = await DrugModel.count(query)
   const TotalPages = Math.ceil(DrugsCollectionCount / limit)
   const CurrentPage = Math.ceil(offset / limit)
   return {

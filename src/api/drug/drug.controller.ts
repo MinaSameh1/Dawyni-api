@@ -16,7 +16,11 @@ export async function getDrugsHandler(req: Request, res: Response) {
   )
 
   try {
-    const result = await getDrugs({}, offset * page, limit)
+    let query = {}
+    if (typeof req.query.form === 'string') {
+      query = { 'forms.form': req.query.form }
+    }
+    const result = await getDrugs(query, offset * page, limit)
     if (result.CurrentPage > result.pages) {
       return res.status(401).json({ message: 'No More Pages!' })
     }
