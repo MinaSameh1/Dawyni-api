@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
 import { parseInt } from 'lodash'
 import logger from '../../utils/logger'
-import { getDrugs, getUniqueForms } from './drug.service'
+import mongoose from 'mongoose'
+import { getDrugs, getUniqueForms, findAndUpdateDrug } from './drug.service'
 
 // exported getDrugsHandler
 export async function getDrugsHandler(req: Request, res: Response) {
@@ -16,9 +17,15 @@ export async function getDrugsHandler(req: Request, res: Response) {
   )
 
   try {
-    let query = {}
+    const query: Record<string, unknown> = {}
     if (typeof req.query.form === 'string') {
-      query = { 'forms.form': req.query.form }
+      query['forms.form'] = req.query.form
+    }
+    if (typeof req.params.drugId === 'string') {
+      if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
+        return res.status(401).json({ message: 'Bad ObjectID' })
+      }
+      query['_id'] = req.params.drugId
     }
     const result = await getDrugs(query, offset * page, limit)
     if (result.CurrentPage > result.pages) {
@@ -33,6 +40,9 @@ export async function getDrugsHandler(req: Request, res: Response) {
       }
     })
   } catch (e) {
+    if (e == 'CastError')
+      return res.status(404).json({ message: 'object not found!' })
+
     logger.error('Error in getDrugs' + e)
     return res.status(500).json({
       message: 'something went wrong'
@@ -48,7 +58,29 @@ export async function getFormsHandler(_: Request, res: Response) {
 }
 
 export async function updateDrugHandler(req: Request, res: Response) {
-  return res.send('Test')
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
+      return res.status(401).json({ message: 'Bad ObjectID' })
+    }
+    if (req.body === null) {
+      return res.status(401).json({ message: 'nothing to update!' })
+    }
+
+    const result = findAndUpdateDrug({ _id: req.params.drugId }, req.body)
+
+    return res.status(200).json({
+      result: result
+    })
+  } catch (e) {
+    logger.error('Error in updateDrugHandler: ' + e)
+    if (e === 'CastError')
+      return res.status(404).json({ message: 'object not found!' })
+
+    logger.error('Error in getDrugs' + e)
+    return res.status(500).json({
+      message: 'something went wrong'
+    })
+  }
 }
 
 export async function deleteDrugHandler(req: Request, res: Response) {

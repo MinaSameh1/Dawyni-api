@@ -32,7 +32,7 @@ export async function findDrug(
 export async function findAndUpdateDrug(
   query: FilterQuery<drug>,
   update: UpdateQuery<drug>,
-  options: QueryOptions
+  options: QueryOptions = { lean: true }
 ) {
   return DrugModel.findOneAndUpdate(query, update, options)
 }

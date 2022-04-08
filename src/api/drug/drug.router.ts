@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import requireUser from '../../middleware/requireUser'
+// import requireUser from '../../middleware/requireUser'
 import validateResource from '../../middleware/validateResource'
 import {
   getDrugsHandler,
@@ -38,7 +38,7 @@ const router = Router()
  */
 router.put(
   '/api/drugs/:drugId',
-  [requireUser, validateResource(updateDrugSchema)],
+  [/* requireUser, */ validateResource(updateDrugSchema)],
   updateDrugHandler
 )
 
@@ -55,7 +55,7 @@ router.get('/api/drugs/', getDrugsHandler)
 
 router.delete(
   '/api/drugs/:drugId',
-  [requireUser, validateResource(deleteDrugSchema)],
+  [/* requireUser, */ validateResource(deleteDrugSchema)],
   deleteDrugHandler
 )
 

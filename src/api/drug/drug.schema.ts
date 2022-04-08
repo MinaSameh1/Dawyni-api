@@ -34,16 +34,16 @@ import { object, number, string, TypeOf } from 'zod'
 const payload = {
   body: object({
     drug_name: string({
-      required_error: 'Name is required'
+      required_error: 'drug_name is required'
     }),
     price: number({
-      required_error: 'Price is required'
+      required_error: 'price is required'
     }),
     status: string({
-      required_error: 'Status is required'
+      required_error: 'status is required'
     }),
     strength: string({
-      required_error: 'Strength is required'
+      required_error: 'strength is required'
     })
     // active_ingredients: object()
     // forms: object()
@@ -52,7 +52,7 @@ const payload = {
 
 const params = {
   params: object({
-    productId: string({
+    drugId: string({
       required_error: 'DrugID is required'
     })
   })

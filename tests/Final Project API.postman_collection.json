@@ -24,8 +24,13 @@
             },
             "url": {
               "raw": "{{endpoint}}/api/user",
-              "host": ["{{endpoint}}"],
-              "path": ["api", "user"]
+              "host": [
+                "{{endpoint}}"
+              ],
+              "path": [
+                "api",
+                "user"
+              ]
             }
           },
           "response": []
@@ -41,7 +46,9 @@
             {
               "listen": "test",
               "script": {
-                "exec": [""],
+                "exec": [
+                  ""
+                ],
                 "type": "text/javascript"
               }
             }
@@ -54,9 +61,14 @@
             "header": [],
             "url": {
               "raw": "localhost:8000/api/docs.json",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["api", "docs.json"]
+              "path": [
+                "api",
+                "docs.json"
+              ]
             }
           },
           "response": []
@@ -81,8 +93,13 @@
             "header": [],
             "url": {
               "raw": "{{endpoint}}/api/checkhealth",
-              "host": ["{{endpoint}}"],
-              "path": ["api", "checkhealth"]
+              "host": [
+                "{{endpoint}}"
+              ],
+              "path": [
+                "api",
+                "checkhealth"
+              ]
             }
           },
           "response": []
@@ -99,9 +116,14 @@
             "header": [],
             "url": {
               "raw": "localhost:8000/api/drugs?page=4",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["api", "drugs"],
+              "path": [
+                "api",
+                "drugs"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -119,8 +141,14 @@
             "header": [],
             "url": {
               "raw": "{{endpoint}}/api/drugs/forms",
-              "host": ["{{endpoint}}"],
-              "path": ["api", "drugs", "forms"]
+              "host": [
+                "{{endpoint}}"
+              ],
+              "path": [
+                "api",
+                "drugs",
+                "forms"
+              ]
             }
           },
           "response": []
@@ -131,9 +159,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{endpoint}}/api/drugs?form=INJECTION&page=6",
-              "host": ["{{endpoint}}"],
-              "path": ["api", "drugs"],
+              "raw": "{{endpoint}}/api/drugs?form=INJECTION&page=500",
+              "host": [
+                "{{endpoint}}"
+              ],
+              "path": [
+                "api",
+                "drugs"
+              ],
               "query": [
                 {
                   "key": "form",
@@ -141,8 +174,55 @@
                 },
                 {
                   "key": "page",
-                  "value": "6"
+                  "value": "500"
                 }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDrugById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a642",
+              "host": [
+                "{{endpoint}}"
+              ],
+              "path": [
+                "api",
+                "drugs",
+                "624bea1a351bbd33e4c5a642"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateDrug",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"BUTISOL SODIUM\",\n    \"forms\": [\n        {\n            \"form\": \"INJECTION\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        },\n        {\n            \"form\": \"CLOTH\",\n            \"image\": \"https://st3.depositphotos.com/6707292/14180/i/950/depositphotos_141806664-stock-photo-different-types-of-drugs-are.jpg\"\n        },\n        {\n            \"form\": \"CAPSULE\",\n            \"image\": \"https://www.apsf.org/wp-content/uploads/newsletters/2018/3302/safe-medication-best-practices-featured.jpg\"\n        },\n        {\n            \"form\": \"ANTOHER ONE!\",\n            \"image\":\"Ayo What?\"\n        }\n    ],\n    \"strength\": \"30MG\",\n    \"active_ingredients\": [\n        \"BUTABARBITAL SODIUM\"\n    ],\n    \"status\": \"Awaiting Approval\",\n    \"price\": 75.88\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a642",
+              "host": [
+                "{{endpoint}}"
+              ],
+              "path": [
+                "api",
+                "drugs",
+                "624bea1a351bbd33e4c5a642"
               ]
             }
           },
@@ -156,14 +236,18 @@
       "listen": "prerequest",
       "script": {
         "type": "text/javascript",
-        "exec": [""]
+        "exec": [
+          ""
+        ]
       }
     },
     {
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": [""]
+        "exec": [
+          ""
+        ]
       }
     }
   ],
