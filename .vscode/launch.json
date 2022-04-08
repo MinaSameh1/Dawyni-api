@@ -1,23 +1,19 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "cwd": "/home/mina/Documents/stuff/college/y4/FinalProject/finalproject-api",
-        "type": "node",
-        "sourceMaps": true,
-        "protocol": "inspector",
-        "name": "Debug (Custom Project Config)",
-        "console": "integratedTerminal",
-        "internalConsoleOptions": "neverOpen",
-        "disableOptimisticBPs": true,
-        "request": "launch",
-        "justMyCode": true,
-        "program": "${workspaceFolder}/node_modules/ts-node-dev/lib/bin.js",
-        "args": [
-          "--inspect",
-          "--",
-          "${workspaceFolder}/src/index.ts"
-        ]
-      }
-    ]
-  }
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "cwd": "/home/mina/Documents/stuff/college/y4/FinalProject/finalproject-api",
+      "type": "node",
+      "sourceMaps": true,
+      "protocol": "inspector",
+      "name": "Debug (Custom Project Config)",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "request": "launch",
+      "justMyCode": true,
+      "program": "${workspaceFolder}/node_modules/ts-node-dev/lib/bin.js",
+      "args": ["--inspect", "--", "${workspaceFolder}/src/index.ts"]
+    }
+  ]
+}

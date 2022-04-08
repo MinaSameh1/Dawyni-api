@@ -24,13 +24,8 @@
             },
             "url": {
               "raw": "{{endpoint}}/api/user",
-              "host": [
-                "{{endpoint}}"
-              ],
-              "path": [
-                "api",
-                "user"
-              ]
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user"]
             }
           },
           "response": []
@@ -46,9 +41,7 @@
             {
               "listen": "test",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript"
               }
             }
@@ -61,14 +54,9 @@
             "header": [],
             "url": {
               "raw": "localhost:8000/api/docs.json",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "8000",
-              "path": [
-                "api",
-                "docs.json"
-              ]
+              "path": ["api", "docs.json"]
             }
           },
           "response": []
@@ -93,13 +81,8 @@
             "header": [],
             "url": {
               "raw": "{{endpoint}}/api/checkhealth",
-              "host": [
-                "{{endpoint}}"
-              ],
-              "path": [
-                "api",
-                "checkhealth"
-              ]
+              "host": ["{{endpoint}}"],
+              "path": ["api", "checkhealth"]
             }
           },
           "response": []
@@ -116,14 +99,9 @@
             "header": [],
             "url": {
               "raw": "localhost:8000/api/drugs?page=4",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "8000",
-              "path": [
-                "api",
-                "drugs"
-              ],
+              "path": ["api", "drugs"],
               "query": [
                 {
                   "key": "page",
@@ -141,14 +119,8 @@
             "header": [],
             "url": {
               "raw": "{{endpoint}}/api/drugs/forms",
-              "host": [
-                "{{endpoint}}"
-              ],
-              "path": [
-                "api",
-                "drugs",
-                "forms"
-              ]
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "forms"]
             }
           },
           "response": []
@@ -160,13 +132,8 @@
             "header": [],
             "url": {
               "raw": "{{endpoint}}/api/drugs?form=INJECTION&page=500",
-              "host": [
-                "{{endpoint}}"
-              ],
-              "path": [
-                "api",
-                "drugs"
-              ],
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs"],
               "query": [
                 {
                   "key": "form",
@@ -188,14 +155,8 @@
             "header": [],
             "url": {
               "raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a642",
-              "host": [
-                "{{endpoint}}"
-              ],
-              "path": [
-                "api",
-                "drugs",
-                "624bea1a351bbd33e4c5a642"
-              ]
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "624bea1a351bbd33e4c5a642"]
             }
           },
           "response": []
@@ -216,14 +177,8 @@
             },
             "url": {
               "raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a642",
-              "host": [
-                "{{endpoint}}"
-              ],
-              "path": [
-                "api",
-                "drugs",
-                "624bea1a351bbd33e4c5a642"
-              ]
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "624bea1a351bbd33e4c5a642"]
             }
           },
           "response": []
@@ -236,18 +191,14 @@
       "listen": "prerequest",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],
