@@ -11,13 +11,14 @@ const app = express()
  ***********************************************************************************/
 process.env['NODE_CONFIG_DIR'] = __dirname + '/utils/constants/'
 import 'dotenv/config'
-import logger from './utils/logger'
-import config from 'config'
-import deseralizeUser from './middleware/deseralizeUser'
 
 /************************************************************************************
  *                              Basic Express Middlewares
  ***********************************************************************************/
+import logger from './utils/logger'
+import config from 'config'
+import deseralizeUser from './middleware/deseralizeUser'
+import logReqs from './middleware/logReqs'
 
 app.set('json spaces', 2)
 app.use(express.json())
@@ -28,6 +29,9 @@ app.use(cors())
 
 // For security.
 app.use(helmet())
+
+// Log request
+app.use(logReqs)
 
 // User authentication
 app.use(deseralizeUser)
@@ -57,12 +61,23 @@ app.use(
     res: express.Response,
     // eslint-disable-next-line no-unused-vars
     _: express.NextFunction
-  ) =>
-    res.status(500).json({
+  ) => {
+    logger.error({
       errorName: err.name,
       message: err.message,
       stack: err.stack || 'no stack defined'
     })
+    return res.status(500).json({
+      message: 'Something went wrong server side'
+    })
+  }
 )
+
+// In case of invalid request
+app.use((_, res) => {
+  res.status(404).json({
+    message: '404! This Request Was not found!'
+  })
+})
 
 export default app
