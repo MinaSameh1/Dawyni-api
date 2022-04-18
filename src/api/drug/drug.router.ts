@@ -10,7 +10,7 @@ import {
 } from './drug.controller'
 import {
   deleteDrugSchema,
-  updateDrugSchema,
+  patchDrugSchema,
   getDrugSchema,
   putDrugSchema
 } from './drug.schema'
@@ -46,7 +46,7 @@ router.put(
 
 router.patch(
   '/api/drugs/:drugId',
-  [/* requireUser, */ validateResource(updateDrugSchema)],
+  [/* requireUser, */ validateResource(patchDrugSchema)],
   patchDrugHandler
 )
 
