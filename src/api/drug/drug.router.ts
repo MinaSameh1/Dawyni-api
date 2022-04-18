@@ -4,13 +4,15 @@ import validateResource from '../../middleware/validateResource'
 import {
   getDrugsHandler,
   deleteDrugHandler,
-  updateDrugHandler,
+  putDrugHandler,
+  patchDrugHandler,
   getFormsHandler
 } from './drug.controller'
 import {
   deleteDrugSchema,
+  updateDrugSchema,
   getDrugSchema,
-  updateDrugSchema
+  putDrugSchema
 } from './drug.schema'
 
 const router = Router()
@@ -38,8 +40,14 @@ const router = Router()
  */
 router.put(
   '/api/drugs/:drugId',
+  [/* requireUser, */ validateResource(putDrugSchema)],
+  putDrugHandler
+)
+
+router.patch(
+  '/api/drugs/:drugId',
   [/* requireUser, */ validateResource(updateDrugSchema)],
-  updateDrugHandler
+  patchDrugHandler
 )
 
 router.get('/api/drugs', getDrugsHandler)

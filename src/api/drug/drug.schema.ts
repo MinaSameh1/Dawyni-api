@@ -62,8 +62,12 @@ export const createDrugSchema = object({
   ...payload
 })
 
-export const updateDrugSchema = object({
+export const putDrugSchema = object({
   ...payload,
+  ...params
+})
+
+export const patchDrugSchema = object({
   ...params
 })
 
@@ -76,6 +80,6 @@ export const getDrugSchema = object({
 })
 
 export type CreateDrugInput = TypeOf<typeof createDrugSchema>
-export type UpdateDrugInput = TypeOf<typeof updateDrugSchema>
+export type PutDrugInput = TypeOf<typeof putDrugSchema>
 export type ReadDrugInput = TypeOf<typeof getDrugSchema>
 export type DeleteDrugInput = TypeOf<typeof deleteDrugSchema>

@@ -18,7 +18,7 @@ export async function getDrugs(
   }
 }
 
-export async function createProduct(input: drug) {
+export async function createDrug(input: drug) {
   return await DrugModel.create(input)
 }
 
@@ -41,6 +41,6 @@ export async function getUniqueForms() {
   return DrugModel.distinct('forms.form').lean()
 }
 
-export async function deleteDrug(query: FilterQuery<drug>) {
+export async function findAndDeleteDrug(query: FilterQuery<drug>) {
   return DrugModel.deleteOne(query)
 }
