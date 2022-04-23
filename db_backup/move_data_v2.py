@@ -4,32 +4,30 @@ from operator import itemgetter
 from random import randint, randrange, uniform, choice
 import sys
 
+import urllib
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.collection import Collection
 
 
-db_name = "PIS"
+db_name = "node"
 
 
-def get_db() -> Collection:
+def get_db():
     """
     Responsible for database connection and document creation.
 
     @return MongoClient
     """
     con_string: str = (
-        "mongodb://"
-        + "127.0.0.1:27017/"
-        + "?directConnection=true&serverSelectionTimeoutMS=2000"
+        "mongodb+srv://root:"
+        + urllib.parse.quote("PASSWORD")
+        + "@node.ch7z5.mongodb.net/node?retryWrites=true&w=majority&maxIdleTimeMS=10000"
     )
 
     client = MongoClient(con_string)
 
-    # Create the db
-    db = client[db_name]
-    db["drugs"].delete_many({})
-    return db["drugs"]
+    return client
 
 
 def getRandomPrice():
@@ -124,59 +122,68 @@ def main() -> None:
             open("BackupData.csv", "w", encoding="utf8"),
             # open("BackupData.json", "w", encoding="utf8") as json_file,
         ):
-            products = pd.read_table(prods)
-            market_stat = pd.read_table(market_stat_file)
-            mongo = get_db()
-            db_rows: list[dict] = []
-            json_rows = {"drugs": []}
-            for index, row in products.iterrows():
-                if market_stat.loc[index][1] == row[0]:
-                    stat: str = get_marketing_status(market_stat.loc[index][2])
-                else:
-                    stat: str = get_marketing_status(4)
-                """
-                This is how I will model the data:
-                {
-                    DrugName: string
-                    Form: [{}]
-                    Strength: []
-                    ActiveIngredient: [{}]
-                    stats: string
-                }
-                """
-                # Create a dict object how we want it.
-                unclean = str(row[6])
-                ingredients: list = []
-                for item in unclean.split(";"):
-                    ingredients.append(item)
-                # Delete this
-                unclean = None
-                del unclean
-                id = randrange(1, 10000000)
-                while id in db_rows:
+            db_con = get_db()
+            try:
+                products = pd.read_table(prods)
+                market_stat = pd.read_table(market_stat_file)
+                db_itself = db_con.get_database("node")
+                mongo = db_itself.drugs
+                db_rows: list[dict] = []
+                json_rows = {"drugs": []}
+                for index, row in products.iterrows():
+                    if market_stat.loc[index][1] == row[0]:
+                        stat: str = get_marketing_status(
+                            market_stat.loc[index][2]
+                        )
+                    else:
+                        stat: str = get_marketing_status(4)
+                    """
+                    This is how I will model the data:
+                    {
+                        DrugName: string
+                        Form: [{}]
+                        Strength: []
+                        ActiveIngredient: [{}]
+                        stats: string
+                    }
+                    """
+                    # Create a dict object how we want it.
+                    unclean = str(row[6])
+                    ingredients: list = []
+                    for item in unclean.split(";"):
+                        ingredients.append(item)
+                    # Delete this
+                    unclean = None
+                    del unclean
                     id = randrange(1, 10000000)
-                db_row = {
-                    "drug_name": row[5],
-                    "forms": get_form(),
-                    "strength": str(row[3]),
-                    "active_ingredients": ingredients,
-                    "status": stat,
-                    "price": getRandomPrice(),
-                }
-                db_rows.append(db_row)
-                # json_rows["drugs"].append(db_row)
-                # Insert many every 1k rows to make it faster
-                if len(db_rows) == 1000:
-                    mongo.insert_many(db_rows)
-                    for _id in json_rows["drugs"]:
-                        _id["_id"] = str(_id["_id"])
-                    # Uncomment these lines to create a json file
-                    # json.dump(
-                    #     json_rows, json_file, ensure_ascii=False, indent=2
-                    # )
-                    db_rows = []
-                sys.stdout.write("\033[K" + "Index: " + str(index) + "\r")
-            sys.stdout.write("\n")
+                    while id in db_rows:
+                        id = randrange(1, 10000000)
+                    db_row = {
+                        "drug_name": row[5],
+                        "forms": get_form(),
+                        "strength": str(row[3]),
+                        "active_ingredients": ingredients,
+                        "status": stat,
+                        "price": getRandomPrice(),
+                    }
+                    db_rows.append(db_row)
+                    # json_rows["drugs"].append(db_row)
+                    # Insert many every 1k rows to make it faster
+                    if len(db_rows) == 1000:
+                        mongo.insert_many(db_rows, ordered=False)
+                        # for _id in json_rows["drugs"]:
+                        #     _id["_id"] = str(_id["_id"])
+                        # Uncomment these lines to create a json file
+                        # json.dump(
+                        #     json_rows, json_file, ensure_ascii=False, indent=2
+                        # )
+                        db_rows = []
+                    sys.stdout.write("\033[K" + "Index: " + str(index) + "\r")
+                sys.stdout.write("\n")
+            except Exception as err:
+                print(err)
+            finally:
+                db_con.close()
     except IOError as error:
         print("Failed to open files: %s" % error.strerror)
         logging.error("Failed to open files: %s", error.strerror)
