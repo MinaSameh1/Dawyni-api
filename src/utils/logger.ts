@@ -14,6 +14,10 @@ const logger = pino(
 )
 
 // Set the level in config/default.ts
-logger.level = process.env.PINO_LOG_LEVEL || config.get<string>('loggingLevel')
+if (config.has('loggingLevel')) {
+  logger.level = config.get<string>('loggingLevel')
+} else {
+  logger.level = process.env.PINO_LOG_LEVEL || 'info'
+}
 
 export default logger

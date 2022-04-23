@@ -5,13 +5,14 @@
   "main": "build/index.js",
   "scripts": {
     "start": "node ./build/src/index.js",
-    "build": "cross-env NODE_ENV=production tsc",
+    "build": "tsc",
     "watch": "tsc -w",
     "dev": "ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
     "debug": "ts-node-dev --transpile-only --respawn --inspect=9229 src/index.ts",
     "pre-commit": "lint-staged",
     "test": "cross-env NODE_ENV=development jest"
   },
+  "web": "node build/index.js",
   "lint-staged": {
     "src/**/*.ts": [
       "eslint --ext .ts ./src --fix"
