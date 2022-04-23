@@ -73,11 +73,11 @@ app.use(
   }
 )
 
-// In case of invalid request
-app.use((_, res) => {
-  res.status(404).json({
-    message: '404! This Request Was not found!'
-  })
-})
+// // In case of invalid request
+// app.use((_, res) => {
+//   res.status(404).json({
+//     message: '404! This Request Was not found!'
+//   })
+// })
 
 export default app

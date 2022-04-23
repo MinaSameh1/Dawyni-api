@@ -32,15 +32,17 @@ const options: swaggerJSDoc.Options = {
 const swaggerSpec = swaggerJSDoc(options)
 
 function swaggerDocs(app: Express, port: number) {
+  const Route = '/api/docs'
+
   // Swagger Page
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  app.use(Route, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
   // Docs in JSON format
-  app.get('/api/docs.json', (_, res) => {
+  app.get(`${Route}.json`, (_, res) => {
     res.setHeader('Content-Type', 'application/json')
     res.send(swaggerSpec)
   })
-  logger.info(`Docs are available at http://localhost:${port}/api/docs`)
+  logger.info(`Docs are available at http://localhost:${port}${Route}`)
 }
 
 export default swaggerDocs
