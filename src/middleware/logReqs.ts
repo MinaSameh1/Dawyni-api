@@ -7,6 +7,7 @@ import logger from '../utils/logger'
 function logReqs(req: Request, res: Response, next: NextFunction) {
   res.on('finish', () => {
     logger.info(`${req.baseUrl + req.path} ${req.method} ${res.statusCode}`)
+    return
   })
 
   return next()
