@@ -20,4 +20,11 @@ const firebase = admin.initializeApp(firebaseConfig)
 
 const auth = firebase.auth()
 
+/**
+ * disconnect from firebase
+ */
+export async function disconnect() {
+  await firebase.delete()
+}
+
 export { auth, firebase }

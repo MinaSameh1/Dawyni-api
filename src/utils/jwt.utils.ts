@@ -3,8 +3,6 @@ import config from 'config'
 import logger from './logger'
 import { auth } from './firebase'
 
-// import logger from './logger'
-
 const privateKey = config.get<string>('privateKey')
 const publicKey = config.get<string>('publicKey')
 
@@ -27,7 +25,7 @@ export function verifyJwt(token: string) {
       decoded
     }
   } catch (e: any) {
-    // logger.error(e)
+    logger.error(e)
     return {
       valid: false,
       expired: e.message === 'jwt expired',

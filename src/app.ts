@@ -1,24 +1,22 @@
-import express from 'express'
 import cors from 'cors'
-import helmet from 'helmet'
+import 'dotenv/config'
+import express from 'express'
 import pino from 'express-pino-logger'
+import helmet from 'helmet'
+import deseralizeUser from './middleware/deseralizeUser'
+import logReqs from './middleware/logReqs'
 import { getFilesWithKeyword } from './utils/getFilesWithKeyword'
+import logger from './utils/logger'
+
+/************************************************************************************
+ *                              Main Server Config File
+ ***********************************************************************************/
 
 const app = express()
 
 /************************************************************************************
- *                              Setting Environment Variables
- ***********************************************************************************/
-process.env['NODE_CONFIG_DIR'] = __dirname + '/utils/constants/'
-import 'dotenv/config'
-
-/************************************************************************************
  *                              Basic Express Middlewares
  ***********************************************************************************/
-import logger from './utils/logger'
-import config from 'config'
-import deseralizeUser from './middleware/deseralizeUser'
-import logReqs from './middleware/logReqs'
 
 app.set('json spaces', 2)
 app.use(express.json())
@@ -36,8 +34,8 @@ app.use(logReqs)
 // User authentication
 app.use(deseralizeUser)
 
-// Logger, must be last on the list.
-if (config.get<string>('NODE_ENV') == 'dev') app.use(pino(logger))
+// Logger, only enable request
+if (process.env['NODE_ENV'] == 'development') app.use(pino(logger))
 
 /************************************************************************************
  *                               Register all routes
@@ -72,12 +70,5 @@ app.use(
     })
   }
 )
-
-// // In case of invalid request
-// app.use((_, res) => {
-//   res.status(404).json({
-//     message: '404! This Request Was not found!'
-//   })
-// })
 
 export default app

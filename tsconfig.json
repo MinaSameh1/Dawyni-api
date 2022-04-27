@@ -66,7 +66,8 @@
     "src/**/*.tsx",
     "src/**/*.jsx",
     "src/**/*.js",
-    "src/**/*.json"
+    "src/**/*.json",
+    "config/**/*.json"
   ],
   "exclude": ["build", "**/*.spec.ts"]
 }
