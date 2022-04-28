@@ -9,7 +9,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
-    "debug": "cross-env NODE_ENV=development ts-node-dev --transpile-only --respawn --inspect=9229 src/index.ts",
+    "debug": "ts-node-dev --transpile-only --respawn --inspect=9229 src/index.ts",
     "test": "cross-env NODE_ENV=development jest --detectOpenHandles ",
     "test:watch": "cross-env NODE_ENV=development jest --watch --detectOpenHandles",
     "test:debug": "cross-env NODE_ENV=development node --inspect ./node_modules/.bin/jest --detectOpenHandles --runInBand --watchAll=false",

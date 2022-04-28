@@ -2,12 +2,14 @@ import { Request, Response } from 'express'
 import { parseInt } from 'lodash'
 import logger from '../../utils/logger'
 import mongoose from 'mongoose'
+import { CreateDrugInput } from './drug.schema'
 import {
   getDrugs,
   getUniqueForms,
   findAndUpdateDrug,
   findAndDeleteDrug,
-  findDrug
+  findDrug,
+  createDrug
 } from './drug.service'
 
 // exported getDrugsHandler
@@ -27,6 +29,10 @@ export async function getDrugsHandler(req: Request, res: Response) {
 
     if (typeof req.query.form === 'string') {
       query['forms.form'] = req.query.form
+    }
+
+    if (typeof req.query.name === 'string') {
+      query['drug_name'] = req.query.name
     }
 
     if (typeof req.params.drugId === 'string') {
@@ -60,6 +66,20 @@ export async function getDrugsHandler(req: Request, res: Response) {
       message: 'something went wrong'
     })
   }
+}
+
+/**
+ * createDrugHandler
+ *
+ * @param req:Request, res: Response
+ * @return
+ */
+export async function createDrugHandler(
+  req: Request<{}, {}, CreateDrugInput['body']>,
+  res: Response
+) {
+  const drug = await createDrug(req.body)
+  return res.send(drug)
 }
 
 export async function getFormsHandler(_: Request, res: Response) {

@@ -6,13 +6,15 @@ import {
   deleteDrugHandler,
   putDrugHandler,
   patchDrugHandler,
-  getFormsHandler
+  getFormsHandler,
+  createDrugHandler
 } from './drug.controller'
 import {
   deleteDrugSchema,
   patchDrugSchema,
   getDrugSchema,
-  putDrugSchema
+  putDrugSchema,
+  createDrugSchema
 } from './drug.schema'
 
 const router = Router()
@@ -42,6 +44,12 @@ router.put(
   '/api/drugs/:drugId',
   [/* requireUser, */ validateResource(putDrugSchema)],
   putDrugHandler
+)
+
+router.post(
+  '/api/drugs/',
+  [/* requireUser, */ validateResource(createDrugSchema)],
+  createDrugHandler
 )
 
 router.patch(
