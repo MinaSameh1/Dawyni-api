@@ -12,7 +12,7 @@ jobs:
         os: [ubuntu-latest] # No need to add windows or mac
         node-version: [16.x]
         mongodb-version: ['5.0.6']
-        
+
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository
@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
-            
+
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.7.0
         with:
@@ -42,7 +42,7 @@ jobs:
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'  # From https://pnpm.io/continuous-integration
+          cache: 'pnpm' # From https://pnpm.io/continuous-integration
 
       - name: Install deps
         run: pnpm i --frozen-lockfile --strict-peer-dependencies

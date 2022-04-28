@@ -7,12 +7,8 @@
     "strict": true,
     "baseUrl": "./src",
     "paths": {
-      "@App/*": [
-        "./*"
-      ],
-      "@db": [
-        "./utils/db.ts"
-      ]
+      "@App/*": ["./*"],
+      "@db": ["./utils/db.ts"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -28,8 +24,5 @@
     "src/**/*.json",
     "config/**/*.json"
   ],
-  "exclude": [
-    "build",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["build", "**/*.spec.ts"]
 }
