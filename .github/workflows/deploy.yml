@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -68,5 +70,6 @@ jobs:
         run: heroku git:remote --app $HEROKU_APP_NAME
         env:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      - run: git checkout main
       - name: Push to Heroku
         run: git push heroku main
