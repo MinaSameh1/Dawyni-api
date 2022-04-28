@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "description": "Grad Project api",
   "main": "build/index.js",
+  "web": "node build/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./build/src/index.js",
     "build": "tsc",
-    "watch": "tsc -w",
+    "build:watch": "tsc -w",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
     "debug": "cross-env NODE_ENV=development ts-node-dev --transpile-only --respawn --inspect=9229 src/index.ts",
-    "pre-commit": "lint-staged",
-    "test": "cross-env NODE_ENV=development ENV_FILE=.env.test jest"
+    "test": "cross-env NODE_ENV=development jest --detectOpenHandles ",
+    "test:watch": "cross-env NODE_ENV=development jest --watch --config config/jest.config.js --detectOpenHandles",
+    "test:debug": "cross-env NODE_ENV=development node --inspect ./node_modules/.bin/jest --detectOpenHandles --runInBand --watchAll=false",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
-  "web": "node build/index.js",
   "lint-staged": {
     "src/**/*.ts": [
       "eslint --ext .ts ./src --fix"
