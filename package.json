@@ -10,7 +10,7 @@
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
     "debug": "cross-env NODE_ENV=development ts-node-dev --transpile-only --respawn --inspect=9229 src/index.ts",
     "pre-commit": "lint-staged",
-    "test": "cross-env NODE_ENV=development jest"
+    "test": "cross-env NODE_ENV=development ENV_FILE=.env.test jest"
   },
   "web": "node build/index.js",
   "lint-staged": {
