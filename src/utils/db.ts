@@ -13,8 +13,14 @@ export async function connect(dbUri: string) {
 }
 
 export async function disconnect() {
-  logger.info('Disconnected')
-  await mongoose.connection.close()
+  try {
+    await mongoose.disconnect()
+    await mongoose.connection.close()
+    logger.info('Disconnected from mongodb')
+  } catch (err) {
+    logger.fatal('Failed to disconnect mongodb')
+    logger.fatal(err)
+  }
 }
 
 export default connect
