@@ -1,7 +1,7 @@
 import request from 'supertest'
-import { connect, disconnect } from '../../src/utils/db'
+import { connect, disconnect } from '@db'
 import config from 'config'
-import app from '../../src/app'
+import app from '@App/app'
 
 describe('checks the server is running correctly', () => {
   beforeAll(async () => {
