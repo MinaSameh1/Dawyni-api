@@ -4,18 +4,18 @@ on:
     branches:
       - main
   workflow_dispatch:
-  
+
 jobs:
- deploy_to_heroku:
+  deploy_to_heroku:
     strategy:
       matrix:
-          os: [ubuntu-latest] # No need to add windows or mac
-          node-version: [16.x] 
+        os: [ubuntu-latest] # No need to add windows or mac
+        node-version: [16.x]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-        
+
       - name: Cache pnpm modules
         uses: actions/cache@v2
         with:
@@ -23,27 +23,27 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
-            
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.32.11
-            
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm' # From https://pnpm.io/continuous-integration
-          
+          cache: 'pnpm'  # From https://pnpm.io/continuous-integration
+
       - name: Install deps
         run: pnpm i --frozen-lockfile --strict-peer-dependencies
-        
+
       - name: build the app
         run: pnpm run build
-        
+
       - name: Check that the app starts
-        run: pnpm start
-        
+        run: pnpm test
+
       - name: Login heroku
         run: |
           cat > ~/.netrc <<EOF
