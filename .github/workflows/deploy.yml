@@ -11,6 +11,8 @@ jobs:
       matrix:
         os: [ubuntu-latest] # No need to add windows or mac
         node-version: [16.x]
+        mongodb-version: ['5.0.6']
+        
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository
@@ -23,6 +25,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
+            
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2.1.0
@@ -43,8 +50,6 @@ jobs:
 
       - name: Check that the app starts
         run: pnpm test
-        env:
-          DB_URI: ${{ secrets.DB_URI }}
 
       - name: Login heroku
         run: |
