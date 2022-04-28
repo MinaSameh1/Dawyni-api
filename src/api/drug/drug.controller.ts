@@ -32,7 +32,7 @@ export async function getDrugsHandler(req: Request, res: Response) {
     }
 
     if (typeof req.query.name === 'string') {
-      query['drug_name'] = req.query.name
+      query['drug_name'] = { $regex: req.query.name, $options: 'i' }
     }
 
     if (typeof req.params.drugId === 'string') {
@@ -75,7 +75,7 @@ export async function getDrugsHandler(req: Request, res: Response) {
  * @return
  */
 export async function createDrugHandler(
-  req: Request<{}, {}, CreateDrugInput['body']>,
+  req: Request<unknown, unknown, CreateDrugInput['body']>,
   res: Response
 ) {
   const drug = await createDrug(req.body)
