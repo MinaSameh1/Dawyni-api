@@ -1,4 +1,4 @@
-import { object, number, string, TypeOf, array } from 'zod'
+import { object, number, string, TypeOf, any } from 'zod'
 
 /**
  * @openapi
@@ -45,12 +45,14 @@ const payload = {
     strength: string({
       required_error: 'strength is required'
     }),
-    active_ingredients: array(string()).nonempty({
-      message: 'Active ingredients cannot be empty'
-    }),
-    forms: array(object({ form: string(), image: string() })).nonempty({
-      message: 'Forms cannot be empty'
-    })
+    active_ingredients: any(),
+    // active_ingredients: array(string()).nonempty({
+    //   message: 'Active ingredients cannot be empty'
+    // }),
+    forms: any()
+    // forms: array(object({ form: string(), image: string() })).nonempty({
+    //   message: 'Forms cannot be empty'
+    // })
   })
 }
 
