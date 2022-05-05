@@ -132,13 +132,11 @@ export async function putDrugHandler(req: Request, res: Response) {
       return res.status(404).json({ message: "Drug doesn't exist!" })
     }
 
-    const result = findAndUpdateDrug({ _id: drugId }, req.body)
+    const result = await findAndUpdateDrug({ _id: drugId }, req.body)
 
-    return res.status(200).json({
-      result: result
-    })
+    return res.status(200).json(result)
   } catch (e) {
-    logger.error('Error in updateDrugHandler: ' + e)
+    logger.error('Error in putDrugHandler: ' + e)
 
     if (e === 'CastError') {
       return res.status(404).json({ message: 'object not found!' })
@@ -169,9 +167,7 @@ export async function patchDrugHandler(req: Request, res: Response) {
 
     const result = await findAndUpdateDrug({ _id: drugId }, req.body)
 
-    return res.status(200).json({
-      result: result
-    })
+    return res.status(200).json(result)
   } catch (e) {
     logger.error('Error in updateDrugHandler: ' + e)
 
@@ -188,6 +184,9 @@ export async function patchDrugHandler(req: Request, res: Response) {
 
 export async function deleteDrugHandler(req: Request, res: Response) {
   const drugId = req.params.drugId
+  if (!mongoose.Types.ObjectId.isValid(drugId)) {
+    return res.status(401).json({ message: 'Bad ObjectID' })
+  }
   const drug = await findDrug({ _id: drugId })
   if (drug) {
     try {

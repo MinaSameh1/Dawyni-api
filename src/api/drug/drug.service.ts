@@ -22,7 +22,7 @@ export async function getDrugs(
 }
 
 export async function createDrug(input: drug) {
-  return await DrugModel.create(input)
+  return DrugModel.create(input)
 }
 
 export async function findDrug(
@@ -30,13 +30,18 @@ export async function findDrug(
   options: QueryOptions = { lean: true }
 ) {
   // To handle _id being buffer
-  return JSON.parse(JSON.stringify(await DrugModel.findOne(query, {}, options)))
+  const result = await DrugModel.findOne(query, {}, options)
+  if (result) {
+    result._id = result._id.toString()
+    return result
+  }
+  return null
 }
 
 export async function findAndUpdateDrug(
   query: FilterQuery<drug>,
   update: UpdateQuery<drug>,
-  options: QueryOptions = { lean: true }
+  options: QueryOptions = { lean: true, new: true }
 ) {
   return DrugModel.findOneAndUpdate(query, update, options)
 }
