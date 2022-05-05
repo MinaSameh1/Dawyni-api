@@ -11,7 +11,10 @@ export async function getDrugs(
   const TotalPages = Math.ceil(DrugsCollectionCount / limit)
   const CurrentPage = Math.ceil(offset / limit)
   return {
-    data: await DrugModel.find(query, {}, options).skip(offset).limit(limit),
+    data: await DrugModel.find(query, {}, options)
+      .skip(offset)
+      .limit(limit)
+      .sort({ _id: -1 }),
     total: DrugsCollectionCount,
     pages: TotalPages,
     CurrentPage: CurrentPage
