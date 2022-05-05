@@ -1,4 +1,4 @@
-import { createDrug } from '@App/api/drug/drug.service'
+import { createDrug, findAndDeleteDrug } from '@App/api/drug/drug.service'
 import app from '@App/app'
 import { connect, disconnect } from '@db'
 import faker from '@faker-js/faker'
@@ -6,26 +6,26 @@ import config from 'config'
 import { toNumber } from 'lodash'
 import request from 'supertest'
 
-describe('Test for drug route', () => {
-  const data = {
+function createData() {
+  return {
     drug_name: faker.commerce.productName(),
     forms: [
       {
-        form: 'ORAL',
-        image: faker.internet.avatar()
-      },
-      {
-        form: 'NASAL',
+        form: faker.name.lastName(),
         image: faker.internet.avatar()
       }
     ],
     strength: '125MG',
-    active_ingredients: ['DESOXYCORTICOSTERONE ACETATE', 'ESTRONE'],
+    active_ingredients: ['DESOXYCORTICOSTERONE ACETATE'],
     status: 'Prescription',
     price: toNumber(faker.commerce.price(100, 200))
   }
+}
 
-  let id: string
+describe('Test for drug route', () => {
+  const data = createData()
+  let id = ''
+
   beforeAll(async () => {
     await connect(config.get<string>('dbUri'))
     const drug = await createDrug(data)
@@ -34,18 +34,23 @@ describe('Test for drug route', () => {
 
   afterAll(async () => {
     await disconnect()
+    if (id != '') await findAndDeleteDrug({ _id: id })
   })
 
   describe('Test for get route', () => {
-    describe('given the product does not exist', () => {
-      it('should return a 404', async () => {
+    describe('given the drug does not exist', () => {
+      it('Should not allow an ID with bad ObjectId', async () => {
         const drugId = 'drug-123'
+        await request(app).get(`/api/drugs/${drugId}`).expect(401)
+      })
 
-        await request(app).get(`/api/products/${drugId}`).expect(404)
+      it('should return a 404', async () => {
+        const drugId = '924baa1a351bbd33e4c5a698'
+        await request(app).get(`/api/drugs/${drugId}`).expect(404)
       })
     })
 
-    describe('given the product exists', () => {
+    describe('given the drug exists', () => {
       it('test for a normal get req', async () => {
         const res = await request(app)
           .get('/api/drugs')
@@ -71,38 +76,25 @@ describe('Test for drug route', () => {
 
       expect(res.statusCode).toBe(200)
 
-      expect(res.body).toEqual({
-        data: expect.any(Array),
-        paging: {
-          total: expect.any(Number),
-          page: expect.any(Number),
-          pages: expect.any(Number)
-        }
-      })
+      expect(res.body.price).toEqual(expect.any(String)) // Check that it exists
+      res.body.price = toNumber(res.body.price)
+      expect(res.body).toEqual({ _id: id, ...data })
     })
   })
 
-  // TODO: Post
   describe('Post Request', () => {
     it('test for normal post request', async () => {
-      const toBeCreated = {
-        drug_name: faker.commerce.productName(),
-        forms: [
-          {
-            form: faker.name.lastName(),
-            image: faker.internet.avatar()
-          }
-        ],
-        strength: '125MG',
-        active_ingredients: ['DESOXYCORTICOSTERONE ACETATE'],
-        status: 'Prescription',
-        price: faker.commerce.price(100, 200)
-      }
+      const toBeCreated = createData()
 
-      const res = await request(app).post('/api/drug').send(toBeCreated)
+      const res = await request(app).post('/api/drugs').send(toBeCreated)
 
       expect(res.statusCode).toBe(200)
-      console.error(res)
+      expect(res.body.price).toEqual(expect.any(String)) // Check that it exists
+      res.body.price = toNumber(res.body.price)
+      expect(res.body).toEqual({
+        _id: expect.any(String),
+        ...toBeCreated,
+      })
     })
   })
 

@@ -29,7 +29,8 @@ export async function findDrug(
   query: FilterQuery<drug>,
   options: QueryOptions = { lean: true }
 ) {
-  return await DrugModel.findOne(query, {}, options)
+  // To handle _id being buffer
+  return JSON.parse(JSON.stringify(await DrugModel.findOne(query, {}, options)))
 }
 
 export async function findAndUpdateDrug(

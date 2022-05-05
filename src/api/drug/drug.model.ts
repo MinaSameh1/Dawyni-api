@@ -27,6 +27,8 @@ export class drug {
   public price?: number
 }
 
-const DrugModel = getModelForClass(drug)
+const DrugModel = getModelForClass(drug, {
+  schemaOptions: { versionKey: false }
+})
 
 export default DrugModel

@@ -35,13 +35,6 @@ export async function getDrugsHandler(req: Request, res: Response) {
       query['drug_name'] = { $regex: req.query.name, $options: 'i' }
     }
 
-    if (typeof req.params.drugId === 'string') {
-      if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
-        return res.status(401).json({ message: 'Bad ObjectID' })
-      }
-      query['_id'] = req.params.drugId
-    }
-
     const result = await getDrugs(query, offset * page, limit)
 
     if (result.CurrentPage > result.pages) {
@@ -111,9 +104,11 @@ export async function createDrugHandler(
   res: Response
 ) {
   try {
+    const drug = await findDrug({ drug_name: req.body.drug_name })
+    if (drug) return res.status(401).json({ message: 'Drug already exists!' })
     return res.status(200).json(await createDrug(req.body))
   } catch (err: unknown) {
-    return res.status(503).json({ message: 'Something went wrong error side' })
+    return res.status(500).json({ message: 'Something went wrong error side' })
   }
 }
 
@@ -133,11 +128,11 @@ export async function putDrugHandler(req: Request, res: Response) {
       return res.status(401).json({ message: 'nothing to update!' })
     }
     const drugId = req.params.drugId
-    if (!(await findDrug({ drugId }))) {
+    if (!(await findDrug({ _id: drugId }))) {
       return res.status(404).json({ message: "Drug doesn't exist!" })
     }
 
-    const result = findAndUpdateDrug({ drugId }, req.body)
+    const result = findAndUpdateDrug({ _id: drugId }, req.body)
 
     return res.status(200).json({
       result: result
@@ -168,11 +163,11 @@ export async function patchDrugHandler(req: Request, res: Response) {
 
     const drugId = req.params.drugId
 
-    if (!(await findDrug({ drugId }))) {
+    if (!(await findDrug({ _id: drugId }))) {
       return res.status(404).json({ message: "Drug doesn't exist!" })
     }
 
-    const result = await findAndUpdateDrug({ drugId }, req.body)
+    const result = await findAndUpdateDrug({ _id: drugId }, req.body)
 
     return res.status(200).json({
       result: result
@@ -193,19 +188,19 @@ export async function patchDrugHandler(req: Request, res: Response) {
 
 export async function deleteDrugHandler(req: Request, res: Response) {
   const drugId = req.params.drugId
+  const drug = await findDrug({ _id: drugId })
+  if (drug) {
+    try {
+      await findAndDeleteDrug({ _id: drugId })
+      return res.status(200).json({ message: 'Successfully deleted.' })
+    } catch (e) {
+      logger.error('Error in deleteDrugsHandler:' + e)
 
-  if (!(await findDrug({ drugId }))) {
-    return res.status(404).json({ message: "Drug doesn't exist!" })
+      return res.status(500).json({
+        message: 'something went wrong serverside'
+      })
+    }
   }
 
-  try {
-    await findAndDeleteDrug({ drugId })
-    return res.status(200).json({ message: 'Successfully deleted.' })
-  } catch (e) {
-    logger.error('Error in deleteDrugsHandler:' + e)
-
-    return res.status(500).json({
-      message: 'something went wrong serverside'
-    })
-  }
+  return res.status(404).json({ message: "Drug doesn't exist!" })
 }
