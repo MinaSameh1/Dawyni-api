@@ -36,6 +36,7 @@ const payload = {
     drug_name: string({
       required_error: 'drug_name is required'
     }),
+    forms: any(),
     price: number({
       required_error: 'price is required'
     }),
@@ -45,11 +46,10 @@ const payload = {
     strength: string({
       required_error: 'strength is required'
     }),
-    active_ingredients: any(),
+    active_ingredients: any()
     // active_ingredients: array(string()).nonempty({
     //   message: 'Active ingredients cannot be empty'
     // }),
-    forms: any()
     // forms: array(object({ form: string(), image: string() })).nonempty({
     //   message: 'Forms cannot be empty'
     // })

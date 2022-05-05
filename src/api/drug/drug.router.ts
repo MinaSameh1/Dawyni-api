@@ -3,6 +3,7 @@ import { Router } from 'express'
 import validateResource from '../../middleware/validateResource'
 import {
   getDrugsHandler,
+  getDrugIdHandler,
   deleteDrugHandler,
   putDrugHandler,
   patchDrugHandler,
@@ -64,7 +65,7 @@ router.get('/api/drugs/forms', getFormsHandler)
 router.get(
   '/api/drugs/:drugId',
   validateResource(getDrugSchema),
-  getDrugsHandler
+  getDrugIdHandler
 )
 
 router.get('/api/drugs/', getDrugsHandler)

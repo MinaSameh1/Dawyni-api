@@ -11,13 +11,13 @@ export class drug {
   @prop({ unique: true, required: true, type: () => [String] })
   public drug_name?: string
 
-  @prop({ required: true, type: () => form })
+  @prop({ required: true, type: () => Array })
   public forms?: form[]
 
   @prop({ required: true, type: () => String })
   public strength?: string
 
-  @prop({ required: true, type: () => [String] })
+  @prop({ required: true, type: () => Array })
   public active_ingredients?: Array<string>
 
   @prop({ required: true, type: () => String })

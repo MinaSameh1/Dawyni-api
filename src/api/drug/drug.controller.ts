@@ -68,6 +68,38 @@ export async function getDrugsHandler(req: Request, res: Response) {
   }
 }
 
+// exported getDrugsHandler
+export async function getDrugIdHandler(req: Request, res: Response) {
+  try {
+    const query: Record<string, unknown> = {}
+
+    if (typeof req.params.drugId === 'string') {
+      if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
+        return res.status(401).json({ message: 'Bad ObjectID' })
+      }
+      query['_id'] = req.params.drugId
+    }
+
+    const result = await findDrug(query)
+
+    if (result) {
+      return res.status(200).json(result)
+    }
+    return res.status(404).json({
+      message: 'Drug not found!'
+    })
+  } catch (e) {
+    if (e == 'CastError') {
+      return res.status(404).json({ message: 'object not found!' })
+    }
+
+    logger.error('Error in getDrugs' + e)
+    return res.status(500).json({
+      message: 'something went wrong'
+    })
+  }
+}
+
 /**
  * createDrugHandler
  *
@@ -78,8 +110,11 @@ export async function createDrugHandler(
   req: Request<unknown, unknown, CreateDrugInput['body']>,
   res: Response
 ) {
-  const drug = await createDrug(req.body)
-  return res.send(drug)
+  try {
+    return res.status(200).json(await createDrug(req.body))
+  } catch (err: unknown) {
+    return res.status(503).json({ message: 'Something went wrong error side' })
+  }
 }
 
 export async function getFormsHandler(_: Request, res: Response) {
