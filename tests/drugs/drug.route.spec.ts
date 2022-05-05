@@ -93,7 +93,7 @@ describe('Test for drug route', () => {
       res.body.price = toNumber(res.body.price)
       expect(res.body).toEqual({
         _id: expect.any(String),
-        ...toBeCreated,
+        ...toBeCreated
       })
     })
   })
