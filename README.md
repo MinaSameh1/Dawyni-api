@@ -3,11 +3,12 @@
 ## First steps
 
 ```bash
-npm i 
+npm i
 npm run build
 npm start
 ```
-*if intending to work on it run `npm run prepare`*
+
+_if intending to work on it run `npm run prepare`_
 
 ## API Endpoints
 
