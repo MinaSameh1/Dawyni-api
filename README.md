@@ -2,13 +2,12 @@
 
 ## First steps
 
-Upon cloning the repo prepare husky first if you intend to work on it.
-
 ```bash
-npm run prepare
+npm i 
+npm run build
+npm start
 ```
-
-Then `npm start` to start the api server
+*if intending to work on it run `npm run prepare`*
 
 ## API Endpoints
 
