@@ -57,4 +57,4 @@ _if intending to work on it run `npm run prepare`_
 | --------- | -------- | ------------------------ |
 | message   | String   | Error on what went wrong |
 
-**ANY 5XX Code WILL NOT return the error, only `internal server error`**
+**ANY 5XX Code WILL NOT return the error, only `internal server error`, the error is logged server side.**
