@@ -38,7 +38,7 @@ export async function getDrugsHandler(req: Request, res: Response) {
     const result = await getDrugs(query, offset * page, limit)
 
     if (result.CurrentPage > result.pages) {
-      return res.status(401).json({ message: 'No More Pages!' })
+      return res.status(400).json({ message: 'No More Pages!' })
     }
 
     return res.status(200).json({
@@ -68,7 +68,7 @@ export async function getDrugIdHandler(req: Request, res: Response) {
 
     if (typeof req.params.drugId === 'string') {
       if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
-        return res.status(401).json({ message: 'Bad ObjectID' })
+        return res.status(400).json({ message: 'Bad ObjectID' })
       }
       query['_id'] = req.params.drugId
     }
@@ -105,7 +105,7 @@ export async function createDrugHandler(
 ) {
   try {
     const drug = await findDrug({ drug_name: req.body.drug_name })
-    if (drug) return res.status(401).json({ message: 'Drug already exists!' })
+    if (drug) return res.status(406).json({ message: 'Drug already exists!' })
     return res.status(200).json(await createDrug(req.body))
   } catch (err: unknown) {
     return res.status(500).json({ message: 'Something went wrong error side' })
@@ -122,10 +122,10 @@ export async function getFormsHandler(_: Request, res: Response) {
 export async function putDrugHandler(req: Request, res: Response) {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
-      return res.status(401).json({ message: 'Bad ObjectID' })
+      return res.status(400).json({ message: 'Bad ObjectID' })
     }
     if (req.body === null) {
-      return res.status(401).json({ message: 'nothing to update!' })
+      return res.status(400).json({ message: 'nothing to update!' })
     }
     const drugId = req.params.drugId
     if (!(await findDrug({ _id: drugId }))) {
@@ -152,11 +152,11 @@ export async function putDrugHandler(req: Request, res: Response) {
 export async function patchDrugHandler(req: Request, res: Response) {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.drugId)) {
-      return res.status(401).json({ message: 'Bad ObjectID' })
+      return res.status(400).json({ message: 'Bad ObjectID' })
     }
 
     if (req.body === null) {
-      return res.status(401).json({ message: 'No data to update with!' })
+      return res.status(400).json({ message: 'No data to update with!' })
     }
 
     const drugId = req.params.drugId
@@ -185,7 +185,7 @@ export async function patchDrugHandler(req: Request, res: Response) {
 export async function deleteDrugHandler(req: Request, res: Response) {
   const drugId = req.params.drugId
   if (!mongoose.Types.ObjectId.isValid(drugId)) {
-    return res.status(401).json({ message: 'Bad ObjectID' })
+    return res.status(400).json({ message: 'Bad ObjectID' })
   }
   const drug = await findDrug({ _id: drugId })
   if (drug) {

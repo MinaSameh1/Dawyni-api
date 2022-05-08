@@ -15,7 +15,7 @@ export async function scannerPostHandler(req: Request, res: Response) {
       const { buffer } = req.file
       const {
         data: { text }
-      } = await Tesseract.recognize(buffer, 'eng', {
+      } = await Tesseract.recognize(buffer, 'eng+ara', {
         logger: m => logger.info(m)
       })
       // split the text and search for drugs
