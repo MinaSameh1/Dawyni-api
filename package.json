@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "web": "node build/index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./build/src/index.js",
+    "start": "cross-env NODE_ENV=production node --max_old_space_size=512 ./build/src/index.js",
     "build": "tsc",
     "build:watch": "tsc -w",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --exit-child --watch src src/index.ts",
