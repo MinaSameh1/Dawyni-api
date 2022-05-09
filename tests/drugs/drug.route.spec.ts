@@ -36,7 +36,7 @@ describe('Test for drug route', () => {
     describe('given the drug does not exist', () => {
       it('Should not allow an ID with bad ObjectId', async () => {
         const drugId = 'drug-123'
-        await request(app).get(`/api/drugs/${drugId}`).expect(401)
+        await request(app).get(`/api/drugs/${drugId}`).expect(400)
       })
 
       it('should return a 404', async () => {
