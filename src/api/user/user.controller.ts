@@ -4,6 +4,7 @@ import { get } from 'lodash'
 import {
   createUserUsingEmailPassFB,
   deleteUser,
+  findUserByEmail,
   getAllUsersFB,
   getUserByUID,
   updateUser
@@ -11,6 +12,9 @@ import {
 
 export async function CreateUserByEmailHandler(req: Request, res: Response) {
   try {
+    const findUser = await findUserByEmail(req.body.email)
+    if (findUser)
+      return res.status(400).json({ message: 'user already exists!' })
     const { user, err } = await createUserUsingEmailPassFB(req.body)
     if (err) {
       return res.status(err.status).json({ message: err.message })

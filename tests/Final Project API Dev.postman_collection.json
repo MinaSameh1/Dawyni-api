@@ -1,0 +1,394 @@
+{
+  "info": {
+    "_postman_id": "6996645f-fe38-44eb-b0cc-870c4492e0d7",
+    "name": "Final Project API Dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Create USER",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bob@example.com\",\n  \"username\": \"bob\",\n  \"password\": \"123456\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\",\n  \"confirmPassword\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"username\": \"janedoe\",\n  \"password\": \"123456\",\n  \"confirmPassword\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUser",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/user/f5RlbSTfqParMu4vdpQivvaHizF3",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "f5RlbSTfqParMu4vdpQivvaHizF3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bob@example.com\",\n  \"username\": \"bob\",\n  \"password\": \"123456\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user/ciKSddjlWgYNqqE2s9T1MjeCeAa2",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "ciKSddjlWgYNqqE2s9T1MjeCeAa2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user by uuid",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/user/ciKSddjlWgYNqqE2s9T1MjeCeAa2",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "ciKSddjlWgYNqqE2s9T1MjeCeAa2"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Server",
+      "item": [
+        {
+          "name": "Docs JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8000/api/docs.json",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "docs.json"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Checkhealth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/checkhealth",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "checkhealth"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Drugs",
+      "item": [
+        {
+          "name": "getAllDrugs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs?page=0",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetForms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/forms",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "forms"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllDrugsByForm",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs?form=INJECTION&page=500",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs"],
+              "query": [
+                {
+                  "key": "form",
+                  "value": "INJECTION"
+                },
+                {
+                  "key": "page",
+                  "value": "500"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDrugByName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/?name=the",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", ""],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "the"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDrugById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a6e3",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "624bea1a351bbd33e4c5a6e3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Drug by sending some",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"Drug Test Test Test Test {Test}[test]<>=%\",\n    \"forms\": [\n        {\n        \"form\": \"ORAL\",\n        \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [\n        \"ESTRONE\"\n    ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/62743c88208dc11c4b8ace60",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "62743c88208dc11c4b8ace60"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateDrug",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"Drug Test 2\",\n    \"forms\": [\n        {\n            \"form\": \"ORAL\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [\n        \"ESTRONE\"\n    ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/627460024ef152021994cc37",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "627460024ef152021994cc37"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createDrug",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"Drug Test\",\n    \"forms\": [\n        {\n            \"form\": \"ORAL\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [ \"ESTRONE\", \"DESOXYCORTICOSTERONE ACETATE\" ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Drug",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/627454a2097dbec96b7a9b79",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "627454a2097dbec96b7a9b79"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Scanner",
+      "item": [
+        {
+          "name": "send image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "img",
+                  "type": "file",
+                  "src": "/home/mina/Documents/stuff/college/y4/FinalProject/img3.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/scanner",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "scanner"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "endpoint",
+      "value": "http://localhost:8000",
+      "type": "default"
+    },
+    {
+      "key": "endpointDev",
+      "value": "http://localhost:8000",
+      "type": "default",
+      "disabled": true
+    }
+  ]
+}

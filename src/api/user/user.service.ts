@@ -4,6 +4,10 @@ import { auth } from '../../utils/firebase'
 import logger from '../../utils/logger'
 import UserModel, { UserInput } from './user.model'
 
+export async function findUserByEmail(email: string) {
+  return await auth().getUserByEmail(email)
+}
+
 /*
  * Checks if user exists or not
  */
