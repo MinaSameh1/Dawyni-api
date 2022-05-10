@@ -19,7 +19,7 @@ import {
 } from './drug.schema'
 
 const router = Router()
-const DRUG_ENDPOINT = '/api/drug'
+const DRUG_ENDPOINT = '/api/drugs'
 
 /**
  * @openapi
