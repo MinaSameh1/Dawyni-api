@@ -1,24 +1,12 @@
 import * as admin from 'firebase-admin'
 
-const firebaseConfig = {
-  apiKey: process.env['apiKey'],
-  authDomain: process.env['authDomain'],
-  projectId: process.env['projectId'],
-  storageBucket: process.env['storageBucket'],
-  messagingSenderId: process.env['messagingSenderId'],
-  appId: process.env['appId'],
-  measurementId: process.env['measurementId']
-}
+const account = JSON.parse(process.env['fbJson'] || '')
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const account = require('./constants/fb.json')
+const firebase = admin.initializeApp({
+  credential: admin.credential.cert(account)
+})
 
-const firebase = admin.initializeApp(firebaseConfig)
-// const firebase = admin.initializeApp({
-//   credential: admin.credential.cert(account)
-// })
-
-const auth = firebase.auth()
+const auth = firebase.auth
 
 /**
  * disconnect from firebase

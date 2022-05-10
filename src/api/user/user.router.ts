@@ -1,8 +1,7 @@
-import 'dotenv/config'
 import { Router } from 'express'
 import validateResource from '../../middleware/validateResource'
-import { CreateUserHandler, GetAllUsersHandler } from './user.controller'
-import { createUserSchema } from './user.schema'
+import { CreateUserByEmailHandler, GetAllUsersHandler } from './user.controller'
+import { createUserEmailSchema } from './user.schema'
 
 const router = Router()
 const USER_ENDPOINT = '/api/user'
@@ -36,8 +35,8 @@ const USER_ENDPOINT = '/api/user'
  */
 router.post(
   USER_ENDPOINT,
-  validateResource(createUserSchema),
-  CreateUserHandler
+  validateResource(createUserEmailSchema),
+  CreateUserByEmailHandler
 )
 
 router.get(USER_ENDPOINT, GetAllUsersHandler)

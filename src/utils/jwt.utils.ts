@@ -43,7 +43,6 @@ export async function FBverifyIdToken(idToken: string) {
       decoded
     }
   } catch (err: any) {
-    // logger.error(e)
     logger.error('FB verifyToken error:' + err.message)
     return {
       valid: false,

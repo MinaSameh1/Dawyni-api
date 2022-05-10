@@ -14,10 +14,10 @@ export interface UserInput {
   role?: roles
 }
 
-interface User extends UserInput {
+export interface UserDocument extends UserInput {
   uid?: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
   // comparePass(candidatePass: string): Promise<boolean>
 }
 
@@ -35,7 +35,7 @@ interface User extends UserInput {
 
   return next()
 })
-class User extends TimeStamps implements User {
+export class User extends TimeStamps implements UserDocument {
   @prop({ unique: true, type: () => [String] })
   public uid?: string // FB user UID
 
@@ -53,11 +53,20 @@ class User extends TimeStamps implements User {
   @prop({ select: false, required: true, type: () => [String] })
   public password?: string
 
+  @prop({ required: true, type: () => Date })
+  public dob?: Date
+
+  @prop({ required: true, type: () => Boolean })
+  public isMale?: boolean
+
   @prop({
     type: () => [String],
     default: () => 'user'
   })
   public role?: roles
+
+  @prop({ required: false, type: () => String })
+  public deviceToken?: string
 
   public async comparePass(candidatePass: string): Promise<boolean> {
     if (this.password != null)
@@ -68,6 +77,11 @@ class User extends TimeStamps implements User {
   }
 }
 
-const UserModel = getModelForClass(User)
+const UserModel = getModelForClass(User, {
+  schemaOptions: {
+    versionKey: false,
+    timestamps: true
+  }
+})
 
 export default UserModel

@@ -19,6 +19,8 @@ import {
 } from './drug.schema'
 
 const router = Router()
+const DRUG_ENDPOINT = '/api/drug'
+
 /**
  * @openapi
  * '/api/drugs/{drugId}':
@@ -42,36 +44,36 @@ const router = Router()
  *         description: Drug not found
  */
 router.put(
-  '/api/drugs/:drugId',
+  `${DRUG_ENDPOINT}/:drugId`,
   [/* requireUser, */ validateResource(putDrugSchema)],
   putDrugHandler
 )
 
 router.post(
-  '/api/drugs/',
+  DRUG_ENDPOINT,
   [/* requireUser, */ validateResource(createDrugSchema)],
   createDrugHandler
 )
 
 router.patch(
-  '/api/drugs/:drugId',
+  `${DRUG_ENDPOINT}/:drugId`,
   [/* requireUser, */ validateResource(patchDrugSchema)],
   patchDrugHandler
 )
 
-router.get('/api/drugs', getDrugsHandler)
-router.get('/api/drugs/forms', getFormsHandler)
+router.get(DRUG_ENDPOINT, getDrugsHandler)
+router.get(`${DRUG_ENDPOINT}/forms`, getFormsHandler)
 
 router.get(
-  '/api/drugs/:drugId',
+  `${DRUG_ENDPOINT}/:drugId`,
   validateResource(getDrugSchema),
   getDrugIdHandler
 )
 
-router.get('/api/drugs/', getDrugsHandler)
+router.get(DRUG_ENDPOINT, getDrugsHandler)
 
 router.delete(
-  '/api/drugs/:drugId',
+  `${DRUG_ENDPOINT}/:drugId`,
   [/* requireUser, */ validateResource(deleteDrugSchema)],
   deleteDrugHandler
 )

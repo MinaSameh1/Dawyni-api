@@ -1,4 +1,4 @@
-import { object, optional, string, TypeOf } from 'zod'
+import { boolean, object, optional, string, TypeOf } from 'zod'
 
 /**
  * @openapi
@@ -38,7 +38,7 @@ import { object, optional, string, TypeOf } from 'zod'
  *        updatedAt:
  *          type: string
  */
-export const createUserSchema = object({
+export const createUserEmailSchema = object({
   body: object({
     username: string({
       required_error: 'username is required!',
@@ -54,6 +54,22 @@ export const createUserSchema = object({
       required_error: 'confirmPassword is required!',
       invalid_type_error: 'confirmPassword must be string'
     }),
+    isMale: boolean({
+      required_error: 'isMale is required(Boolean)'
+    }),
+    dob: string({
+      required_error: 'Required dob(Date of birth) as string'
+    }),
+    deviceToken: optional(
+      string({
+        invalid_type_error: 'deviceToken must be string'
+      })
+    ),
+    phoneNumber: optional(
+      string({
+        invalid_type_error: 'Needs to be string format : +20115554444'
+      })
+    ),
     email: string({
       required_error: 'Email is required'
     }),
@@ -70,6 +86,6 @@ export const createUserSchema = object({
   })
 })
 
-export type CreateUserInput = TypeOf<
-  Omit<typeof createUserSchema, 'body.confirmPassword'>
+export type CreateUserEmailInput = TypeOf<
+  Omit<typeof createUserEmailSchema, 'body.confirmPassword'>
 >
