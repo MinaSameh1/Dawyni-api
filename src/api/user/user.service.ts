@@ -69,6 +69,22 @@ export async function createUserUsingEmailPassFB(input: UserInput) {
   }
 }
 
+export async function getUserByUID(uid: string) {
+  return UserModel.findOne({ uid: uid })
+}
+
+export async function updateUser(uid: string, input: UserInput) {
+  return auth()
+    .updateUser(uid, input)
+    .then(async userRecord => {
+      logger.info(userRecord)
+      return await UserModel.findOneAndUpdate({ uid: uid }, input)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
 export async function deleteUser(uid: string) {
   return auth()
     .deleteUser(uid)

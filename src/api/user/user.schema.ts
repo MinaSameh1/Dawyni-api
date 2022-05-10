@@ -86,7 +86,7 @@ export const createUserEmailSchema = object({
   })
 })
 
-export const DeleteUserParams = object({
+export const UserParams = object({
   params: object({
     uid: string({
       required_error: 'DrugID is required'
