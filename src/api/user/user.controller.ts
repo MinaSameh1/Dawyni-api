@@ -34,14 +34,14 @@ export async function UpdateUserByUidHandler(req: Request, res: Response) {
       const result = await updateUser(uid, req.body)
       logger.info(result)
       if (result) {
-        return res.status(200).json({ message: 'User deleted' })
+        return res.status(200).json({ message: 'User updated' })
       }
     }
     return res.status(400).json({ message: "user doesn't exist!" })
   }
   return res
     .status(400)
-    .json({ message: "missing uid of user or user doesn' exist!" })
+    .json({ message: "missing uid of user or user doesn't exist!" })
 }
 
 export async function DeleteUserByUidHandler(req: Request, res: Response) {
@@ -59,7 +59,7 @@ export async function DeleteUserByUidHandler(req: Request, res: Response) {
   }
   return res
     .status(400)
-    .json({ message: "missing uid of user or user doesn' exist!" })
+    .json({ message: "missing uid of user or user doesn't exist!" })
 }
 
 export async function GetUserByUidHandler(req: Request, res: Response) {
