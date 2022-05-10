@@ -1,7 +1,11 @@
 import { Router } from 'express'
 import validateResource from '../../middleware/validateResource'
-import { CreateUserByEmailHandler, GetAllUsersHandler } from './user.controller'
-import { createUserEmailSchema } from './user.schema'
+import {
+  CreateUserByEmailHandler,
+  DeleteUserByUid,
+  GetAllUsersHandler
+} from './user.controller'
+import { createUserEmailSchema, DeleteUserParams } from './user.schema'
 
 const router = Router()
 const USER_ENDPOINT = '/api/user'
@@ -37,6 +41,12 @@ router.post(
   USER_ENDPOINT,
   validateResource(createUserEmailSchema),
   CreateUserByEmailHandler
+)
+
+router.delete(
+  USER_ENDPOINT + '/:uid',
+  validateResource(DeleteUserParams),
+  DeleteUserByUid
 )
 
 router.get(USER_ENDPOINT, GetAllUsersHandler)

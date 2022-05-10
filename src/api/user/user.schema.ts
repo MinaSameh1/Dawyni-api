@@ -86,6 +86,14 @@ export const createUserEmailSchema = object({
   })
 })
 
+export const DeleteUserParams = object({
+  params: object({
+    uid: string({
+      required_error: 'DrugID is required'
+    })
+  })
+})
+
 export type CreateUserEmailInput = TypeOf<
   Omit<typeof createUserEmailSchema, 'body.confirmPassword'>
 >

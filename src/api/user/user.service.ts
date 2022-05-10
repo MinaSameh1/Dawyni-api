@@ -69,6 +69,18 @@ export async function createUserUsingEmailPassFB(input: UserInput) {
   }
 }
 
+export async function deleteUser(uid: string) {
+  return auth()
+    .deleteUser(uid)
+    .then(async () => {
+      return await UserModel.deleteOne({ uid: uid })
+    })
+    .catch(error => {
+      logger.error(error)
+      return null
+    })
+}
+
 /**
  * Get a list of users
  *
