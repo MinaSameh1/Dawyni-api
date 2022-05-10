@@ -36,7 +36,7 @@ export function verifyJwt(token: string) {
 
 export async function FBverifyIdToken(idToken: string) {
   try {
-    const decoded = await auth.verifyIdToken(idToken)
+    const decoded = await auth().verifyIdToken(idToken)
     return {
       valid: true,
       expired: false,
