@@ -4,14 +4,14 @@ import { auth } from '../../utils/firebase'
 import logger from '../../utils/logger'
 import UserModel, { UserInput } from './user.model'
 
-export async function findUserByEmail(email: string) {
-  return await auth().getUserByEmail(email)
+export function findUserByEmail(email: string) {
+  return UserModel.findOne({ email: email })
 }
 
 /*
  * Checks if user exists or not
  */
-export async function checkUser(username: string, email: string) {
+export function checkUser(username: string, email: string) {
   return UserModel.exists({
     $or: [
       {
@@ -73,7 +73,7 @@ export async function createUserUsingEmailPassFB(input: UserInput) {
   }
 }
 
-export async function getUserByUID(uid: string) {
+export function getUserByUID(uid: string) {
   return UserModel.findOne({ uid: uid })
 }
 
