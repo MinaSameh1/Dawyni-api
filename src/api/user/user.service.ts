@@ -64,7 +64,8 @@ export async function createUserUsingEmailPassFB(input: UserInput) {
     uid: userRecord.uid,
     isMale: get(input, 'isMale'),
     dob: get(input, 'dob'),
-    username: get(input, 'username')
+    username: get(input, 'username'),
+    phoneNumber: get(input, 'phoneNumber')
   })
 
   return {
