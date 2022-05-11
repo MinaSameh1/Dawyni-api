@@ -12,6 +12,7 @@ export interface UserInput {
   email?: string
   password?: string
   role?: roles
+  phoneNumber?: string
   dob?: string
   isMale?: boolean
   deviceToken?: string
@@ -52,6 +53,9 @@ export class User extends TimeStamps implements UserDocument {
 
   @prop({ unique: true, required: true, type: () => [String] })
   public email?: string
+
+  @prop({ required: false, type: () => String })
+  phoneNumber?: string
 
   @prop({ select: false, required: true, type: () => [String] })
   public password?: string
