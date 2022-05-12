@@ -101,17 +101,12 @@ export async function DeleteUserByUidHandler(req: Request, res: Response) {
 }
 
 export async function GetUserByUidHandler(req: Request, res: Response) {
-  if (req.params.uid) {
-    const uid = get(req.params, 'uid')
-    const user = await getUserByUID(uid)
-    if (user) {
-      return res.status(200).json({ result: user })
-    }
-    return res.status(400).json({ message: "user doesn't exist!" })
+  const uid = get(req.params, 'uid')
+  const user = await getUserByUID(uid)
+  if (user) {
+    return res.status(200).json({ result: user })
   }
-  return res
-    .status(400)
-    .json({ message: "missing uid of user or user doesn' exist!" })
+  return res.status(400).json({ message: "user doesn't exist!" })
 }
 
 export async function GetAllUsersHandler(_: Request, res: Response) {

@@ -79,6 +79,7 @@ router.put(
 
 router.get(
   USER_ENDPOINT + '/:uid',
+  requireUser,
   validateResource(UserParams),
   GetUserByUidHandler
 )
