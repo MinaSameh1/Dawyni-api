@@ -77,12 +77,7 @@ router.put(
   UpdateUserByUidHandler
 )
 
-router.get(
-  USER_ENDPOINT,
-  requireUser,
-  validateResource(UserParams),
-  GetUserByUidHandler
-)
+router.get(USER_ENDPOINT, requireUser, GetUserByUidHandler)
 
 router.delete(
   USER_ENDPOINT + '/:uid',
