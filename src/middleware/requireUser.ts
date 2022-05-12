@@ -10,11 +10,9 @@ const requireUser = (_req: Request, res: Response, next: NextFunction) => {
     return next()
   }
 
-  return res.status(403).json([
-    {
-      message: 'Please Log in or invalid token!'
-    }
-  ])
+  return res.status(401).json({
+    message: 'Please Log in or invalid token!'
+  })
 }
 
 export default requireUser
