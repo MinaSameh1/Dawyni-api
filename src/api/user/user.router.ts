@@ -78,7 +78,7 @@ router.put(
 )
 
 router.get(
-  USER_ENDPOINT + '/:uid',
+  USER_ENDPOINT,
   requireUser,
   validateResource(UserParams),
   GetUserByUidHandler
@@ -90,6 +90,6 @@ router.delete(
   DeleteUserByUidHandler
 )
 
-router.get(USER_ENDPOINT, GetAllUsersHandler)
+router.get(USER_ENDPOINT + '/all', GetAllUsersHandler)
 
 export = { router }
