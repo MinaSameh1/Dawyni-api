@@ -1,13 +1,22 @@
 import { Router } from 'express'
+import requireUser from '../../middleware/requireUser'
 import validateResource from '../../middleware/validateResource'
 import {
+  TestTokenHandler,
   CreateUserByEmailHandler,
-  DeleteUserByUidHandler,
-  UpdateUserByUidHandler,
+  CreateUserByPhone,
+  CreateTokenHandler,
   GetAllUsersHandler,
-  GetUserByUidHandler
+  GetUserByUidHandler,
+  UpdateUserByUidHandler,
+  DeleteUserByUidHandler
 } from './user.controller'
-import { createUserEmailSchema, UserParams } from './user.schema'
+import {
+  createUserEmailSchema,
+  createUserPhoneSchema,
+  createTokenSchema,
+  UserParams
+} from './user.schema'
 
 const router = Router()
 const USER_ENDPOINT = '/api/user'
@@ -45,9 +54,26 @@ router.post(
   CreateUserByEmailHandler
 )
 
+router.post(
+  USER_ENDPOINT + '/phone',
+  validateResource(createUserPhoneSchema),
+  CreateUserByPhone
+)
+
+// Get a custom token
+router.post(
+  USER_ENDPOINT + '/token',
+  validateResource(createTokenSchema),
+  CreateTokenHandler
+)
+
+// Testing route for token
+router.get(USER_ENDPOINT + '/token', requireUser, TestTokenHandler)
+
 router.put(
   USER_ENDPOINT + '/:uid',
   validateResource(UserParams),
+  requireUser,
   UpdateUserByUidHandler
 )
 

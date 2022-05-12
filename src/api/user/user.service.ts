@@ -11,7 +11,11 @@ export function findUserByEmail(email: string) {
 /*
  * Checks if user exists or not
  */
-export function checkUser(username: string, email: string) {
+export function checkUser(
+  username: string,
+  email: string,
+  phoneNumber: string
+) {
   return UserModel.exists({
     $or: [
       {
@@ -19,6 +23,9 @@ export function checkUser(username: string, email: string) {
       },
       {
         username: username
+      },
+      {
+        phoneNumber: phoneNumber
       }
     ]
   })
@@ -31,12 +38,13 @@ export function checkUser(username: string, email: string) {
  * @returns { Promise<CreateUserResponse> } [ User ]
  * @memberof UserService
  */
-export async function createUserUsingEmailPassFB(input: UserInput) {
+export async function createUser(input: UserInput) {
   logger.info(`Gonna Check for ${input.email}`)
 
   const check = await checkUser(
     get(input, 'username', ''),
-    get(input, 'email', '')
+    get(input, 'email', ''),
+    get(input, 'phoneNumber', '')
   )
   if (check) {
     return {
@@ -51,6 +59,7 @@ export async function createUserUsingEmailPassFB(input: UserInput) {
   const userRecord = await auth().createUser({
     email: get(input, 'email'),
     emailVerified: true,
+    phoneNumber: get(input, 'phoneNumber'),
     password: get(input, 'password'),
     displayName: get(input, 'username'),
     disabled: false
@@ -74,13 +83,55 @@ export async function createUserUsingEmailPassFB(input: UserInput) {
   }
 }
 
+export async function createUserMongo(input: UserInput) {
+  const check = await checkUser(
+    get(input, 'username', ''),
+    get(input, 'email', ''),
+    get(input, 'phoneNumber', '')
+  )
+  if (check) {
+    return {
+      err: {
+        status: 400,
+        message: 'Email or Username Already Exists!'
+      },
+      user: null
+    }
+  }
+  const newUser = await UserModel.create({
+    email: get(input, 'email'),
+    password: get(input, 'password'),
+    uid: get(input, 'uid'),
+    isMale: get(input, 'isMale'),
+    dob: get(input, 'dob'),
+    username: get(input, 'username'),
+    phoneNumber: get(input, 'phoneNumber')
+  })
+
+  return {
+    err: null,
+    user: omit(newUser.toJSON(), 'password')
+  }
+}
+
+export function findUserByPhone(phone: string) {
+  return UserModel.findOne({ phoneNumber: phone })
+}
+
 export function getUserByUID(uid: string) {
   return UserModel.findOne({ uid: uid })
 }
 
 export async function updateUser(uid: string, input: UserInput) {
+  const fb_update = {
+    email: get(input, 'email'),
+    phoneNumber: get(input, 'phoneNumber'),
+    password: get(input, 'password'),
+    displayName: get(input, 'username')
+  }
+
   return auth()
-    .updateUser(uid, input)
+    .updateUser(uid, fb_update)
     .then(async userRecord => {
       logger.info(userRecord)
       return await UserModel.findOneAndUpdate({ uid: uid }, input)
@@ -118,4 +169,14 @@ export async function getAllUsersFB(
     .catch(err => {
       logger.error('Error getting users:' + err)
     })
+}
+
+export async function verifyEmailAndPass(email: string, pass: string) {
+  const user = await UserModel.findOne({ email: email })
+  if (user?.comparePass(pass)) return user
+  return null
+}
+
+export async function getToken(uid: string) {
+  return auth().createCustomToken(uid)
 }

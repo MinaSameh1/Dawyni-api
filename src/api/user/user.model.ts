@@ -40,7 +40,7 @@ export interface UserDocument extends UserInput {
   return next()
 })
 export class User extends TimeStamps implements UserDocument {
-  @prop({ unique: true, type: () => [String] })
+  @prop({ unique: true, required: true, type: () => [String] })
   public uid?: string // FB user UID
 
   @prop({
@@ -51,7 +51,7 @@ export class User extends TimeStamps implements UserDocument {
   })
   public username?: string
 
-  @prop({ unique: true, required: true, type: () => [String] })
+  @prop({ unique: true, type: () => [String] })
   public email?: string
 
   @prop({ required: false, type: () => String })
