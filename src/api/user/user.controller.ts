@@ -16,7 +16,11 @@ import {
 
 export async function CreateUserByEmailHandler(req: Request, res: Response) {
   try {
-    const findUser = await findUserByEmail(req.body.email)
+    // If user isn't admin/loggedin force set role as user.
+    if (res.locals.user?.role != 'admin') {
+      req.body.role = 'user'
+    }
+    const findUser = await findUserByEmail(get(req.body, 'email'))
     if (findUser)
       return res.status(400).json({ message: 'user already exists!' })
     const { user, err } = await createUser(req.body)
