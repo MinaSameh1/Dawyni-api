@@ -9,39 +9,36 @@ export interface ItemInput {
 
 export interface CartInput {
   user_uid: string
+  purchased: boolean
   items: [ItemInput]
 }
 
-class Item {
-  @prop({ required: true, type: () => String })
+export class Item {
+  // @prop({ required: true, type: () => String })
   drugId?: string
 
-  @prop({ required: true, default: 1, type: () => Number })
-  quantity?: number
+  // @prop({ required: true, default: 1, type: () => Number })
+  quantity = 1
 
-  @prop({ required: true, type: () => Number })
-  price?: number
+  // @prop({ required: true, type: () => Number })
+  price = 1
 
-  @prop({ required: true, type: () => Number })
+  // @prop({ required: true, type: () => Number })
   total?: number
 }
 
-export const ItemModel = getModelForClass(Item, {
-  schemaOptions: {
-    versionKey: false,
-    timestamps: true
-  }
-})
-
-class Cart {
+export class Cart {
   @prop({ required: true, type: () => String })
   user_uid?: string
 
-  @prop({ required: true, type: () => [ItemModel] })
-  items?: [typeof ItemModel]
+  @prop({ required: true, type: () => Array })
+  items?: Array<Item>
 
   @prop({ required: true, default: false, type: () => Boolean })
   purchased?: boolean
+
+  @prop({ type: () => Number })
+  subTotal?: number
 }
 
 const CartModel = getModelForClass(Cart, {

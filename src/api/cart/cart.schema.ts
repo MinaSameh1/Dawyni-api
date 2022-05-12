@@ -1,24 +1,29 @@
-import { object, string, number, array } from 'zod'
+import { object, string, optional, number, array } from 'zod'
 
 const itemSchema = object({
   drugId: string({
     required_error: 'Drug id is needed'
   }),
-  quantity: number({
-    required_error: 'Drug quantity is required'
-  }),
-  price: number({
-    required_error: 'Price is required'
-  }),
-  total: number({
-    required_error: 'total is required!'
-  })
+  quantity: optional(
+    number({
+      required_error: 'Drug quantity is required'
+    })
+      .min(1, 'Cannot be negative!')
+      .max(20, 'Cannot sell more than 20 quantities!')
+  )
 })
 
 export const cartItemSchema = object({
   body: itemSchema
 })
 
+export const deleteItemSchema = object({
+  body: object({
+    drugId: string({
+      required_error: 'Requires drugId'
+    })
+  })
+})
 export const cartItemsSchema = object({
   body: array(itemSchema)
 })

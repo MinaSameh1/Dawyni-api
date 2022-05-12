@@ -39,7 +39,9 @@ const payload = {
     forms: any(),
     price: number({
       required_error: 'price is required'
-    }),
+    })
+      .min(10, 'must be atleast 10')
+      .max(1000, 'price cannot be above 1000'),
     status: string({
       required_error: 'status is required'
     }),

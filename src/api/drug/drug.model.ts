@@ -24,7 +24,7 @@ export class drug {
   public status?: string
 
   @prop({ required: true, type: () => String })
-  public price?: number
+  public price = 1
 }
 
 const DrugModel = getModelForClass(drug, {
