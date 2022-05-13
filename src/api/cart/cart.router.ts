@@ -30,7 +30,7 @@ router.patch(
 
 router.post(CART_ENDPOINT, requireUser, PurchaseCartHandler)
 
-router.post(
+router.delete(
   CART_ENDPOINT,
   requireUser,
   validateResource(deleteItemSchema),
