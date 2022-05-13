@@ -142,7 +142,11 @@ export async function getUserByPhoneNumber(phone: string) {
   try {
     return await auth().getUserByPhoneNumber(phone)
   } catch (err: any) {
-    if (err.message == 'auth/user-not-found') return null
+    if (
+      err.message ===
+      'There is no user record corresponding to the provided identifier.'
+    )
+      return null
     logger.error(err)
     throw err
   }
@@ -152,7 +156,11 @@ export async function getUserByEmail(email: string) {
   try {
     return await auth().getUserByEmail(email)
   } catch (err: any) {
-    if (err.message == 'auth/user-not-found') return null
+    if (
+      err.message ===
+      'There is no user record corresponding to the provided identifier.'
+    )
+      return null
     logger.error(err)
     throw err
   }
