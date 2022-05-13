@@ -5,7 +5,6 @@ import { ItemInput } from './cart.model'
 import {
   getCartHistory,
   getCarts,
-  getCart,
   AddItemToCart,
   getOneCart,
   purchaseCart,
@@ -22,7 +21,7 @@ export async function GetUserHistoryHandler(_: Request, res: Response) {
 }
 
 export async function GetUserCartHandler(_: Request, res: Response) {
-  const result = await getCart({
+  const result = await getOneCart({
     user_uid: res.locals.user.uid,
     purchased: false
   })
