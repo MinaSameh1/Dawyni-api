@@ -16,7 +16,7 @@ import {
 export async function GetUserHistoryHandler(_: Request, res: Response) {
   const result = await getCartHistory(res.locals.user.uid)
   if (result) {
-    return res.status(200).json({ result: result })
+    return res.status(200).json(result)
   }
   return res.status(400).json({ message: "The user didn't make any purchase" })
 }
@@ -27,13 +27,13 @@ export async function GetUserCartHandler(_: Request, res: Response) {
     purchased: false
   })
   if (result) {
-    return res.status(200).json({ result: result })
+    return res.status(200).json(result)
   }
   return res.status(400).json({ message: "The user doesn't have any items" })
 }
 
 export async function GetAllCartsHandler(_: Request, res: Response) {
-  return res.status(200).json({ result: await getCarts() })
+  return res.status(200).json(getCarts())
 }
 
 export async function AddItemToCartHandler(
@@ -64,7 +64,7 @@ export async function AddItemToCartHandler(
         items: [item]
       })
       if (result) return res.status(200).json(result)
-      return res.status(400).json({ message: 'something went wrong' })
+      return res.status(500).json({ message: 'something went wrong' })
     }
     return res.status(400).json({ message: "Drug doesn't exist" })
   }
