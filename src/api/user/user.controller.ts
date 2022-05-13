@@ -63,10 +63,12 @@ export async function CreateUserByPhone(req: Request, res: Response) {
     if (err) {
       return res.status(err.status).json({ message: err.message })
     }
-    return res.status(200).json({ result: user })
+    return res.status(200).json({ is_error: false, ...user })
   } catch (err) {
     logger.error(err)
-    return res.status(500).json({ message: 'Something went wrong server side' })
+    return res
+      .status(500)
+      .json({ is_error: true, message: 'Something went wrong server side' })
   }
 }
 
