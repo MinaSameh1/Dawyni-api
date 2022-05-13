@@ -31,6 +31,10 @@ export async function getDrugsHandler(req: Request, res: Response) {
       query['forms.form'] = req.query.form
     }
 
+    if (typeof req.query.active_ingredient === 'string') {
+      query['active_ingredients'] = req.query.active_ingredient
+    }
+
     if (typeof req.query.name === 'string') {
       query['drug_name'] = { $regex: req.query.name, $options: 'i' }
     }
