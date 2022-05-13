@@ -14,14 +14,17 @@ async function deseralizeUser(req: Request, res: Response, next: NextFunction) {
     return next()
   }
 
-  const { decoded } = await FBverifyIdToken(headerToken)
+  try {
+    const { decoded } = await FBverifyIdToken(headerToken)
 
-  if (decoded) {
-    res.locals.user = decoded
+    if (decoded) {
+      res.locals.user = decoded
+      return next()
+    }
     return next()
+  } catch (err: unknown) {
+    return res.status(400).json({ message: 'Token malformed or error in fb' })
   }
-
-  return next()
 }
 
 export default deseralizeUser
