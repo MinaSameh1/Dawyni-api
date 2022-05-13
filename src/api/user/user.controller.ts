@@ -125,7 +125,7 @@ export async function DeleteUserByUidHandler(req: Request, res: Response) {
 export async function GetUserByUidHandler(_: Request, res: Response) {
   const user = await findUserByUid(res.locals.user.uid)
   if (user) {
-    return res.status(200).json({ result: user })
+    return res.status(200).json(user)
   }
   return res.status(400).json({ message: "user doesn't exist!" })
 }
@@ -138,6 +138,6 @@ export async function GetAllUsersHandler(_: Request, res: Response) {
 }
 
 export async function TestTokenHandler(_: Request, res: Response) {
-  if (res.locals.user) return res.status(200).json({ result: res.locals.user })
+  if (res.locals.user) return res.status(200).json(res.locals.user)
   return res.status(400).json({ message: 'Failed!' })
 }
