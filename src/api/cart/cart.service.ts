@@ -46,7 +46,9 @@ export async function AddItemToCart(cartId: string, item: ItemInput) {
           cart.items[index].quantity += item.quantity
           cart.items[index].total =
             cart.items[index].price * cart.items[index].quantity
-        } else cart.items.push(item) // Add it
+        } else {
+          cart.items.push(item) // Add it
+        }
         cart.subTotal = cart.items
           .map(item => (item.total ? item.total : 0))
           .reduce((acc, next) => acc + next)

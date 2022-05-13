@@ -2,6 +2,8 @@ import { getModelForClass, prop } from '@typegoose/typegoose'
 
 export interface ItemInput {
   drugId: string
+  drug_name: string
+  image: string
   quantity: number
   price: number
   total: number
@@ -19,6 +21,12 @@ export class Item {
 
   // @prop({ required: true, default: 1, type: () => Number })
   quantity = 1
+
+  // @prop({ required: true, type: () => String })
+  drug_name?: string
+
+  // @prop({ required: true, type: () => String })
+  image?: string
 
   // @prop({ required: true, type: () => Number })
   price = 1
