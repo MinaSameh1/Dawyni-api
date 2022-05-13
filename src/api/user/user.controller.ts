@@ -20,17 +20,18 @@ export async function CreateUserByEmailHandler(req: Request, res: Response) {
     if (res.locals.user?.role != 'admin') {
       req.body.role = 'user'
     }
-    const findUser = await checkIfUserExists(
-      req.body.username,
-      req.body.email,
-      req.body.phoneNumber
-    )
+    const findUser = await checkIfUserExists({
+      username: get(req.body, 'username', ''),
+      email: get(req.body, 'email', ''),
+      phoneNumber: get(req.body, 'phoneNumber', ''),
+      uid: ''
+    })
     if (findUser)
       return res.status(400).json({
         message:
-          'user already exists or some information like phone/email/usernmae already in use!'
+          'user already exists or same information like phone/email/usernmae already in use!'
       })
-    const findUserFirebase = await getUserByEmail(get(req.body, 'email'))
+    const findUserFirebase = await getUserByEmail(get(req.body, 'email', ''))
     if (findUserFirebase)
       return res.status(400).json({ message: 'user already exists in fb!' })
     const { user, err } = await createUser(req.body)
@@ -46,12 +47,12 @@ export async function CreateUserByEmailHandler(req: Request, res: Response) {
 
 export async function CreateUserByPhone(req: Request, res: Response) {
   try {
-    const findUser = await checkIfUserExists(
-      req.body.username,
-      req.body.email,
-      req.body.phoneNumber,
-      res.locals.user.uid
-    )
+    const findUser = await checkIfUserExists({
+      username: req.body.username,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      uid: res.locals.user.uid
+    })
     if (findUser)
       return res.status(400).json({
         message:

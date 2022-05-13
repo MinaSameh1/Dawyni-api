@@ -22,12 +22,17 @@ export function findOneUser(
 /*
  * Checks if user exists or not
  */
-export function checkIfUserExists(
-  username: string,
-  email: string,
-  phoneNumber: string,
+export function checkIfUserExists({
+  username,
+  email,
+  phoneNumber,
   uid = ''
-) {
+}: {
+  username: string
+  email: string
+  phoneNumber: string
+  uid: string
+}) {
   return UserModel.exists({
     $or: [
       {
@@ -56,11 +61,12 @@ export function checkIfUserExists(
 export async function createUser(input: UserInput) {
   logger.info(`Gonna Check for ${input.email}`)
 
-  const check = await checkIfUserExists(
-    get(input, 'username', ''),
-    get(input, 'email', ''),
-    get(input, 'phoneNumber', '')
-  )
+  const check = await checkIfUserExists({
+    username: get(input, 'username', ''),
+    email: get(input, 'email', ''),
+    phoneNumber: get(input, 'phoneNumber', ''),
+    uid: ''
+  })
   if (check) {
     return {
       err: {
@@ -100,11 +106,12 @@ export async function createUser(input: UserInput) {
 }
 
 export async function createUserMongo(input: UserInput) {
-  const check = await checkIfUserExists(
-    get(input, 'username', ''),
-    get(input, 'email', ''),
-    get(input, 'phoneNumber', '')
-  )
+  const check = await checkIfUserExists({
+    username: get(input, 'username', ''),
+    email: get(input, 'email', ''),
+    phoneNumber: get(input, 'phoneNumber', ''),
+    uid: ''
+  })
   if (check) {
     return {
       err: {
