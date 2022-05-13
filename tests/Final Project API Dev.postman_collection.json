@@ -1,741 +1,590 @@
 {
-	"info": {
-		"_postman_id": "abe4598c-4804-4f9a-b15f-85bb41432cf0",
-		"name": "Final Project API Dev",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "Create User using Phone",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"\",\n  \"phoneNumber\": \"+201288768405\",\n  \"uid\": \"string\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/user/phone",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"phone"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create USER",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"bob@example.com\",\n  \"username\": \"bob\",\n  \"password\": \"123456\",\n  \"phoneNumber\": \"+201288768405\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\",\n  \"confirmPassword\": \"123456\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/user",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Users",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"username\": \"janedoe\",\n  \"password\": \"123456\",\n  \"confirmPassword\": \"123456\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/user",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DeleteUser",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/user/VVD3AVqURVXSTxly1DlJdr3H2692",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"VVD3AVqURVXSTxly1DlJdr3H2692"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get user",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/user/Pg935RNKoJZdEZ7jEp8q1eX6K1D2",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"Pg935RNKoJZdEZ7jEp8q1eX6K1D2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Test Token",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQmlnQm9iIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Rlc3QtYWE3ODIiLCJhdWQiOiJ0ZXN0LWFhNzgyIiwiYXV0aF90aW1lIjoxNjUyMzYzMzcwLCJ1c2VyX2lkIjoiUGc5MzVSTktvSlpkRVo3akVwOHExZVg2SzFEMiIsInN1YiI6IlBnOTM1Uk5Lb0paZEVaN2pFcDhxMWVYNksxRDIiLCJpYXQiOjE2NTIzNjMzNzAsImV4cCI6MTY1MjM2Njk3MCwiZW1haWwiOiJib2JAbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfbnVtYmVyIjoiKzIwMTI4ODc2ODQwNSIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzIwMTI4ODc2ODQwNSJdLCJlbWFpbCI6WyJib2JAbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.L2aLThYDMR9hqB0XIrKz7-uCrxX4kNjA33A0UBReAUS8T_JPvKRe5IqQMqVpvoA0aTpPcgwbj4ZznT6FiXjY-vVm2icP8Gm3Pbi-tb5QVH-5EsoNgGaqVozr_UK4fV1EGpHJ5MbTOnVH5xIuzvcWg_A3TXbpmeK-UDyRD94AJbO9J5KTSoRQvT1T0vHBK2evI0zckfyCCcLU-RUUtJ5bz5Cf3XcSbzC_0ycGtKo_v3OjkV7EuFRZOxUVRvRNoi2GOiepPJmTyioYeULDxU7CTd35z5hDx8A15eeAt-lpT2Z-HdJ8wTOkbrkVPGvGQ87bSIxFaZcK-sKiVke2FS-SmA",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/user/token",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"token"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update User",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiYm9iIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Rlc3QtYWE3ODIiLCJhdWQiOiJ0ZXN0LWFhNzgyIiwiYXV0aF90aW1lIjoxNjUyMzYzMjQ0LCJ1c2VyX2lkIjoiUGc5MzVSTktvSlpkRVo3akVwOHExZVg2SzFEMiIsInN1YiI6IlBnOTM1Uk5Lb0paZEVaN2pFcDhxMWVYNksxRDIiLCJpYXQiOjE2NTIzNjMyNDQsImV4cCI6MTY1MjM2Njg0NCwiZW1haWwiOiJib2JAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfbnVtYmVyIjoiKzIwMTI4ODc2ODQwNSIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzIwMTI4ODc2ODQwNSJdLCJlbWFpbCI6WyJib2JAZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.TlRuqTDC0ihdza6AHadVluZETxw0X-_ue-n5ADxeoJJMYxh8TtebfsZh1fobfDxSzu5YeqsEkTJmBGGRcP-R8HwTe0O0EblLLvGgd-IyCskIp5zgGR1zycht_8WAfcYxhu15hSqVhRPmbtRh0Um_myl_1DWFfAMBLjhW7699-9SSgkjMdOYtFB_N6FqC4GDFztpqyS0WT-s6wDYPHMRPnW3kkq5ZfxT3u6xdJLofEWzb8LqXr1tK1E-gSrmIZxoNQL3mtAwZLQJ2StWdtfy0Wkd4_ccMFrNkaJUaBHE7RFuXSspT8gFNjikt3QWoiwcxXKPyQD9mz1Xky8fKPp9k8A",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"bob@mail.com\",\n  \"username\": \"BigBob\",\n  \"password\": \"1234567\",\n  \"phoneNumber\": \"+201288768405\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\",\n  \"confirmPassword\": \"1234567\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/user/Pg935RNKoJZdEZ7jEp8q1eX6K1D2",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"Pg935RNKoJZdEZ7jEp8q1eX6K1D2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Custom Token using email and password for signin",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"bob@example.com\",\n    \"pass\": \"123456\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/user/token",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"token"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Server",
-			"item": [
-				{
-					"name": "Docs JSON",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8000/api/docs.json",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"docs.json"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Checkhealth",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/checkhealth",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"checkhealth"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Drugs",
-			"item": [
-				{
-					"name": "getAllDrugs",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/drugs?page=0",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetForms",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/forms",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								"forms"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllDrugsByForm",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/drugs?form=INJECTION&page=500",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs"
-							],
-							"query": [
-								{
-									"key": "form",
-									"value": "INJECTION"
-								},
-								{
-									"key": "page",
-									"value": "500"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getDrugByName",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/?name=the",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								""
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "the"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getDrugById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a6e3",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								"624bea1a351bbd33e4c5a6e3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Drug by sending some",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"drug_name\": \"Drug Test Test Test Test {Test}[test]<>=%\",\n    \"forms\": [\n        {\n        \"form\": \"ORAL\",\n        \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [\n        \"ESTRONE\"\n    ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/62743c88208dc11c4b8ace60",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								"62743c88208dc11c4b8ace60"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UpdateDrug",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"drug_name\": \"Drug Test 2\",\n    \"forms\": [\n        {\n            \"form\": \"ORAL\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [\n        \"ESTRONE\"\n    ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/627460024ef152021994cc37",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								"627460024ef152021994cc37"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createDrug",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"drug_name\": \"Drug Test\",\n    \"forms\": [\n        {\n            \"form\": \"ORAL\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [ \"ESTRONE\", \"DESOXYCORTICOSTERONE ACETATE\" ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Drug",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/drugs/627454a2097dbec96b7a9b79",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"drugs",
-								"627454a2097dbec96b7a9b79"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Scanner",
-			"item": [
-				{
-					"name": "send image",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "img",
-									"type": "file",
-									"src": "/home/mina/Documents/stuff/college/y4/FinalProject/img3.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/scanner",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"scanner"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Cart",
-			"item": [
-				{
-					"name": "Get all carts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/cart/all",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"cart",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Purchased History",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/cart/history",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"cart",
-								"history"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get user current cart",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/cart",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"cart"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Item to cart And create Cart if not exists",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"drugId\" : \"62795ac721775054f502a9bb\",\n    \"quantity\": 2,\n    \"price\": 124,\n    \"total\": 248\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/cart",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"cart"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Remove item from cart",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"drugId\": \"62795ac721775054f502a9bb\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{endpoint}}/api/cart",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"cart"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Purchase Cart",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{endpoint}}/api/cart",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"api",
-								"cart"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "{{token}}",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "endpoint",
-			"value": "http://localhost:8000",
-			"type": "default"
-		},
-		{
-			"key": "endpointDev",
-			"value": "http://localhost:8000",
-			"type": "default",
-			"disabled": true
-		},
-		{
-			"key": "token",
-			"value": "None",
-			"type": "default"
-		}
-	]
+  "info": {
+    "_postman_id": "abe4598c-4804-4f9a-b15f-85bb41432cf0",
+    "name": "Final Project API Dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Create User using Phone",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"\",\n  \"phoneNumber\": \"+201288768405\",\n  \"uid\": \"string\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user/phone",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "phone"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create USER",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bob@example.com\",\n  \"username\": \"bob\",\n  \"password\": \"123456\",\n  \"phoneNumber\": \"+201288768405\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\",\n  \"confirmPassword\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane.doe@example.com\",\n  \"username\": \"janedoe\",\n  \"password\": \"123456\",\n  \"confirmPassword\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUser",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/user/VVD3AVqURVXSTxly1DlJdr3H2692",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "VVD3AVqURVXSTxly1DlJdr3H2692"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/user/Pg935RNKoJZdEZ7jEp8q1eX6K1D2",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "Pg935RNKoJZdEZ7jEp8q1eX6K1D2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test Token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQmlnQm9iIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Rlc3QtYWE3ODIiLCJhdWQiOiJ0ZXN0LWFhNzgyIiwiYXV0aF90aW1lIjoxNjUyMzYzMzcwLCJ1c2VyX2lkIjoiUGc5MzVSTktvSlpkRVo3akVwOHExZVg2SzFEMiIsInN1YiI6IlBnOTM1Uk5Lb0paZEVaN2pFcDhxMWVYNksxRDIiLCJpYXQiOjE2NTIzNjMzNzAsImV4cCI6MTY1MjM2Njk3MCwiZW1haWwiOiJib2JAbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfbnVtYmVyIjoiKzIwMTI4ODc2ODQwNSIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzIwMTI4ODc2ODQwNSJdLCJlbWFpbCI6WyJib2JAbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.L2aLThYDMR9hqB0XIrKz7-uCrxX4kNjA33A0UBReAUS8T_JPvKRe5IqQMqVpvoA0aTpPcgwbj4ZznT6FiXjY-vVm2icP8Gm3Pbi-tb5QVH-5EsoNgGaqVozr_UK4fV1EGpHJ5MbTOnVH5xIuzvcWg_A3TXbpmeK-UDyRD94AJbO9J5KTSoRQvT1T0vHBK2evI0zckfyCCcLU-RUUtJ5bz5Cf3XcSbzC_0ycGtKo_v3OjkV7EuFRZOxUVRvRNoi2GOiepPJmTyioYeULDxU7CTd35z5hDx8A15eeAt-lpT2Z-HdJ8wTOkbrkVPGvGQ87bSIxFaZcK-sKiVke2FS-SmA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/user/token",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "token"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJlYmYxMDBlYWRkYTMzMmVjOGZlYTU3ZjliNWJjM2E2YWIyOWY1NTUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiYm9iIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Rlc3QtYWE3ODIiLCJhdWQiOiJ0ZXN0LWFhNzgyIiwiYXV0aF90aW1lIjoxNjUyMzYzMjQ0LCJ1c2VyX2lkIjoiUGc5MzVSTktvSlpkRVo3akVwOHExZVg2SzFEMiIsInN1YiI6IlBnOTM1Uk5Lb0paZEVaN2pFcDhxMWVYNksxRDIiLCJpYXQiOjE2NTIzNjMyNDQsImV4cCI6MTY1MjM2Njg0NCwiZW1haWwiOiJib2JAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfbnVtYmVyIjoiKzIwMTI4ODc2ODQwNSIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsicGhvbmUiOlsiKzIwMTI4ODc2ODQwNSJdLCJlbWFpbCI6WyJib2JAZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.TlRuqTDC0ihdza6AHadVluZETxw0X-_ue-n5ADxeoJJMYxh8TtebfsZh1fobfDxSzu5YeqsEkTJmBGGRcP-R8HwTe0O0EblLLvGgd-IyCskIp5zgGR1zycht_8WAfcYxhu15hSqVhRPmbtRh0Um_myl_1DWFfAMBLjhW7699-9SSgkjMdOYtFB_N6FqC4GDFztpqyS0WT-s6wDYPHMRPnW3kkq5ZfxT3u6xdJLofEWzb8LqXr1tK1E-gSrmIZxoNQL3mtAwZLQJ2StWdtfy0Wkd4_ccMFrNkaJUaBHE7RFuXSspT8gFNjikt3QWoiwcxXKPyQD9mz1Xky8fKPp9k8A",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"bob@mail.com\",\n  \"username\": \"BigBob\",\n  \"password\": \"1234567\",\n  \"phoneNumber\": \"+201288768405\",\n  \"isMale\": true,\n  \"dob\": \"1/1/2000\",\n  \"confirmPassword\": \"1234567\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user/Pg935RNKoJZdEZ7jEp8q1eX6K1D2",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "Pg935RNKoJZdEZ7jEp8q1eX6K1D2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Custom Token using email and password for signin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bob@example.com\",\n    \"pass\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/user/token",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "user", "token"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Server",
+      "item": [
+        {
+          "name": "Docs JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8000/api/docs.json",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "docs.json"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Checkhealth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/checkhealth",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "checkhealth"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Drugs",
+      "item": [
+        {
+          "name": "getAllDrugs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs?page=0",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetForms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/forms",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "forms"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllDrugsByForm",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs?form=INJECTION&page=500",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs"],
+              "query": [
+                {
+                  "key": "form",
+                  "value": "INJECTION"
+                },
+                {
+                  "key": "page",
+                  "value": "500"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDrugByName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/?name=the",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", ""],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "the"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDrugById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/624bea1a351bbd33e4c5a6e3",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "624bea1a351bbd33e4c5a6e3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Drug by sending some",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"Drug Test Test Test Test {Test}[test]<>=%\",\n    \"forms\": [\n        {\n        \"form\": \"ORAL\",\n        \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [\n        \"ESTRONE\"\n    ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/62743c88208dc11c4b8ace60",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "62743c88208dc11c4b8ace60"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateDrug",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"Drug Test 2\",\n    \"forms\": [\n        {\n            \"form\": \"ORAL\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [\n        \"ESTRONE\"\n    ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/627460024ef152021994cc37",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "627460024ef152021994cc37"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createDrug",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drug_name\": \"Drug Test\",\n    \"forms\": [\n        {\n            \"form\": \"ORAL\",\n            \"image\": \"https://static.spineuniverse.com/sites/default/files/lead-images/article/47060-medications_tablets_capsules_mixed_otc_rx_lifetimestock-170963-l.jpg\"\n        }\n\n    ],\n    \"strength\": \"5MG/ML\",\n    \"active_ingredients\": [ \"ESTRONE\", \"DESOXYCORTICOSTERONE ACETATE\" ],\n    \"status\": \"Prescription\",\n    \"price\": 32.08\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Drug",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/drugs/627454a2097dbec96b7a9b79",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "drugs", "627454a2097dbec96b7a9b79"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Scanner",
+      "item": [
+        {
+          "name": "send image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "img",
+                  "type": "file",
+                  "src": "/home/mina/Documents/stuff/college/y4/FinalProject/img3.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/scanner",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "scanner"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get all carts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/cart/all",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "cart", "all"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Purchased History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/cart/history",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "cart", "history"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user current cart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/cart",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Item to cart And create Cart if not exists",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drugId\" : \"62795ac721775054f502a9bb\",\n    \"quantity\": 2,\n    \"price\": 124,\n    \"total\": 248\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/cart",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove item from cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"drugId\": \"62795ac721775054f502a9bb\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}/api/cart",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Purchase Cart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}/api/cart",
+              "host": ["{{endpoint}}"],
+              "path": ["api", "cart"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "endpoint",
+      "value": "http://localhost:8000",
+      "type": "default"
+    },
+    {
+      "key": "endpointDev",
+      "value": "http://localhost:8000",
+      "type": "default",
+      "disabled": true
+    },
+    {
+      "key": "token",
+      "value": "None",
+      "type": "default"
+    }
+  ]
 }

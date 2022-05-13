@@ -56,6 +56,7 @@ router.post(
 
 router.post(
   USER_ENDPOINT + '/phone',
+  requireUser,
   validateResource(createUserPhoneSchema),
   CreateUserByPhone
 )

@@ -7,11 +7,11 @@ import {
   deleteUser,
   verifyEmailAndPass,
   getToken,
-  findUserByEmail,
-  findUserByPhone,
   getAllUsersFB,
-  getUserByUID,
-  updateUser
+  findUserByUid,
+  updateUser,
+  checkIfUserExists,
+  getUserByEmail
 } from './user.service'
 
 export async function CreateUserByEmailHandler(req: Request, res: Response) {
@@ -20,9 +20,19 @@ export async function CreateUserByEmailHandler(req: Request, res: Response) {
     if (res.locals.user?.role != 'admin') {
       req.body.role = 'user'
     }
-    const findUser = await findUserByEmail(get(req.body, 'email'))
+    const findUser = await checkIfUserExists(
+      req.body.username,
+      req.body.email,
+      req.body.phoneNumber
+    )
     if (findUser)
-      return res.status(400).json({ message: 'user already exists!' })
+      return res.status(400).json({
+        message:
+          'user already exists or some information like phone/email/usernmae already in use!'
+      })
+    const findUserFirebase = await getUserByEmail(get(req.body, 'email'))
+    if (findUserFirebase)
+      return res.status(400).json({ message: 'user already exists in fb!' })
     const { user, err } = await createUser(req.body)
     if (err) {
       return res.status(err.status).json({ message: err.message })
@@ -36,9 +46,18 @@ export async function CreateUserByEmailHandler(req: Request, res: Response) {
 
 export async function CreateUserByPhone(req: Request, res: Response) {
   try {
-    const findUser = await findUserByPhone(req.body.phoneNumber)
+    const findUser = await checkIfUserExists(
+      req.body.username,
+      req.body.email,
+      req.body.phoneNumber,
+      res.locals.user.uid
+    )
     if (findUser)
-      return res.status(400).json({ message: 'user already exists!' })
+      return res.status(400).json({
+        message:
+          'user already exists or some information like phone/email/usernmae already in use!'
+      })
+    // get the user
     const { user, err } = await createUserMongo(req.body)
     if (err) {
       return res.status(err.status).json({ message: err.message })
@@ -67,7 +86,7 @@ export async function UpdateUserByUidHandler(req: Request, res: Response) {
     const uid = get(req.params, 'uid')
     if (uid != res.locals.user.uid)
       return res.status(401).json({ message: 'unauthroaized user!' })
-    const user = await getUserByUID(uid)
+    const user = await findUserByUid(uid)
     if (user) {
       const result = await updateUser(uid, req.body)
       logger.info(result)
@@ -85,7 +104,7 @@ export async function UpdateUserByUidHandler(req: Request, res: Response) {
 export async function DeleteUserByUidHandler(req: Request, res: Response) {
   if (req.params.uid) {
     const uid = get(req.params, 'uid')
-    const user = await getUserByUID(uid)
+    const user = await findUserByUid(uid)
     if (user) {
       const result = await deleteUser(uid)
       logger.info(result)
@@ -101,7 +120,7 @@ export async function DeleteUserByUidHandler(req: Request, res: Response) {
 }
 
 export async function GetUserByUidHandler(_: Request, res: Response) {
-  const user = await getUserByUID(res.locals.user.uid)
+  const user = await findUserByUid(res.locals.user.uid)
   if (user) {
     return res.status(200).json({ result: user })
   }

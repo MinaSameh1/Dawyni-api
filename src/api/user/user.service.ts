@@ -1,20 +1,32 @@
 import { UserRecord } from 'firebase-admin/lib/auth/user-record'
 import { omit, get } from 'lodash'
+import { FilterQuery, QueryOptions } from 'mongoose'
 import { auth } from '../../utils/firebase'
 import logger from '../../utils/logger'
-import UserModel, { UserInput } from './user.model'
+import UserModel, { User, UserInput } from './user.model'
 
-export function findUserByEmail(email: string) {
-  return UserModel.findOne({ email: email })
+export function findUser(
+  query: FilterQuery<User>,
+  options: QueryOptions = { lean: true }
+) {
+  return UserModel.find(query, {}, options)
+}
+
+export function findOneUser(
+  query: FilterQuery<User>,
+  options: QueryOptions = { lean: true }
+) {
+  return UserModel.findOne(query, {}, options)
 }
 
 /*
  * Checks if user exists or not
  */
-export function checkUser(
+export function checkIfUserExists(
   username: string,
   email: string,
-  phoneNumber: string
+  phoneNumber: string,
+  uid = ''
 ) {
   return UserModel.exists({
     $or: [
@@ -26,6 +38,9 @@ export function checkUser(
       },
       {
         phoneNumber: phoneNumber
+      },
+      {
+        uid: uid
       }
     ]
   })
@@ -41,7 +56,7 @@ export function checkUser(
 export async function createUser(input: UserInput) {
   logger.info(`Gonna Check for ${input.email}`)
 
-  const check = await checkUser(
+  const check = await checkIfUserExists(
     get(input, 'username', ''),
     get(input, 'email', ''),
     get(input, 'phoneNumber', '')
@@ -85,7 +100,7 @@ export async function createUser(input: UserInput) {
 }
 
 export async function createUserMongo(input: UserInput) {
-  const check = await checkUser(
+  const check = await checkIfUserExists(
     get(input, 'username', ''),
     get(input, 'email', ''),
     get(input, 'phoneNumber', '')
@@ -116,12 +131,38 @@ export async function createUserMongo(input: UserInput) {
   }
 }
 
-export function findUserByPhone(phone: string) {
-  return UserModel.findOne({ phoneNumber: phone })
+export async function getUserByPhoneNumber(phone: string) {
+  try {
+    return await auth().getUserByPhoneNumber(phone)
+  } catch (err: any) {
+    if (err.message == 'auth/user-not-found') return null
+    logger.error(err)
+    throw err
+  }
 }
 
-export function getUserByUID(uid: string) {
-  return UserModel.findOne({ uid: uid })
+export async function getUserByEmail(email: string) {
+  try {
+    return await auth().getUserByEmail(email)
+  } catch (err: any) {
+    if (err.message == 'auth/user-not-found') return null
+    logger.error(err)
+    throw err
+  }
+}
+
+export async function getUserByUid(uid: string) {
+  try {
+    return await auth().getUser(uid)
+  } catch (err: any) {
+    if (err.message == 'auth/user-not-found') return null
+    logger.error(err)
+    throw err
+  }
+}
+
+export function findUserByUid(uid: string) {
+  return findUser({ uid: uid })
 }
 
 export async function updateUser(uid: string, input: UserInput) {
