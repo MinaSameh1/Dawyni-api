@@ -33,7 +33,7 @@ _if intending to work on it run `npm run prepare`_
 
 | Status code | description                                       |
 | ----------- | ------------------------------------------------- |
-| 201         | Created                                           |
+| 200         | Created                                           |
 | 400         | Bad Request                                       |
 | 401         | Unauthorized Access                               |
 | 403         | Must Log in or refresh token expired! (Re login)  |
