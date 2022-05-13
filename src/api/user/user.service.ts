@@ -170,7 +170,11 @@ export async function getUserByUid(uid: string) {
   try {
     return await auth().getUser(uid)
   } catch (err: any) {
-    if (err.message == 'auth/user-not-found') return null
+    if (
+      err.message ===
+      'There is no user record corresponding to the provided identifier.'
+    )
+      return null
     logger.error(err)
     throw err
   }
