@@ -60,7 +60,7 @@ export class User extends TimeStamps implements UserDocument {
   @prop({ select: false, required: true, type: () => [String] })
   public password?: string
 
-  @prop({ required: true, type: () => Date })
+  @prop({ required: true, type: () => String })
   public dob?: string
 
   @prop({ required: true, type: () => Boolean })
