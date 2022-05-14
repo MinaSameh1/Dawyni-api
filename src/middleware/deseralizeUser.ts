@@ -1,6 +1,6 @@
 import { findUserByUid } from '../api/user/user.service'
 import { Request, Response, NextFunction } from 'express'
-import { logger } from '../utils/logger'
+import logger from '../utils/logger'
 import { get } from 'lodash'
 import { FBverifyIdToken } from '../utils/jwt.utils'
 
