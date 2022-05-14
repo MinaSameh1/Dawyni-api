@@ -1,3 +1,4 @@
+import logger from '../../utils/logger'
 import { Request, Response } from 'express'
 import { get, toNumber } from 'lodash'
 import { findDrug } from '../drug/drug.service'
@@ -81,12 +82,19 @@ export async function PurchaseCartHandler(_: Request, res: Response) {
 }
 
 export async function DeleteItemFromCartHandler(req: Request, res: Response) {
-  const result = await removeItemFromCart({
-    uid: res.locals.user.uid,
-    drugId: get(req.body, 'drugId')
-  })
-  if (result) {
-    return res.status(200).json({ message: 'Item deleted' })
+  try {
+    const result = await removeItemFromCart({
+      uid: res.locals.user.uid,
+      drugId: get(req.body, 'drugId')
+    })
+    if (result) {
+      return res.status(200).json({ message: 'Item deleted' })
+    }
+    return res.status(400).json({ message: "Item wasn't deleted, no cart?" })
+  } catch (err) {
+    logger.error(err)
+    return res
+      .status(500)
+      .json({ message: 'something went wrong server side ' })
   }
-  return res.status(400).json({ message: "Item wasn't deleted, no cart?" })
 }
