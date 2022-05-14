@@ -4,8 +4,7 @@ import logger from '../utils/logger'
 const requireUser = (_req: Request, res: Response, next: NextFunction) => {
   const user = res.locals.user
 
-  logger.debug(`requireUser recieved: ${user}`)
-
+  logger.debug(`requireUser recieved ${user?.username}`)
   if (user) {
     return next()
   }
