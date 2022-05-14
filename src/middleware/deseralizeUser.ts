@@ -1,4 +1,6 @@
+import { findUserByUid } from '../api/user/user.service'
 import { Request, Response, NextFunction } from 'express'
+import { logger } from '../utils/logger'
 import { get } from 'lodash'
 import { FBverifyIdToken } from '../utils/jwt.utils'
 
@@ -8,7 +10,7 @@ async function deseralizeUser(req: Request, res: Response, next: NextFunction) {
     ''
   )
 
-  // logger.debug(`Recieved This in auth headers: ${headerToken}`)
+  logger.info('Recieved token!')
 
   if (!headerToken) {
     return next()
@@ -18,7 +20,7 @@ async function deseralizeUser(req: Request, res: Response, next: NextFunction) {
     const { decoded } = await FBverifyIdToken(headerToken)
 
     if (decoded) {
-      res.locals.user = decoded
+      res.locals.user = await findUserByUid(decoded.uid)
       return next()
     }
     return next()

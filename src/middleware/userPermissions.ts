@@ -11,13 +11,14 @@ const userPermission =
     if (!res.locals.user) {
       return res.status(403).json([{ message: 'Please Log in' }])
     }
+    // Get the user role
     // User must be signed in to set res.locals.user,
     // as such if the logged in user is the same as the user
     // who uploaded the item/question let them do what they want with it.
     logger.debug(`userPerms Recieved Role:${res.locals.user.role}`)
     if (
-      req.body.user.role === 'user' &&
-      req.body.userID === res.locals.user._id
+      res.locals.user.role === 'user' &&
+      req.params.uid === res.locals.user.uid
     ) {
       return next()
     } else if (roles.includes(res.locals.user.role)) {

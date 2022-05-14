@@ -169,7 +169,7 @@ export async function getUserByUid(uid: string) {
 }
 
 export function findUserByUid(uid: string) {
-  return findUser({ uid: uid })
+  return findOneUser({ uid: uid })
 }
 
 export async function updateUser(uid: string, input: UserInput) {
