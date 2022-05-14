@@ -10,7 +10,10 @@ npm run build
 npm start
 ```
 
+Postman file is included under `test` directory containing endpoints and their body, a bearer token from firebase client side sign in is required for protected routes, you can put the token in the authroization tap under the folder in postman for easy usage.
+
 _if intending to work on it run `npm run prepare`_
+_Some routes are included as testing and easy access._
 
 ## API Endpoints
 
