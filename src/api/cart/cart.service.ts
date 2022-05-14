@@ -31,7 +31,7 @@ export function getOneCart(
   })
 }
 
-export async function AddItemToCart(cartId: string, item: ItemInput) {
+export async function AddItemToCart(cartId: string, addedItem: ItemInput) {
   // First get the cart
   const cart = await getOneCart({ _id: cartId }, { lean: false })
   if (cart) {
@@ -40,14 +40,16 @@ export async function AddItemToCart(cartId: string, item: ItemInput) {
       // Check that its not purchased
       if (cart.items) {
         // Check that the item doesn't already exist!
-        const index = cart.items.findIndex(item => item.drugId === item.drugId)
+        const index = cart.items.findIndex(
+          item => item.drugId === addedItem.drugId
+        )
         if (index > -1) {
           // if it exists then increase quantity
-          cart.items[index].quantity += item.quantity
+          cart.items[index].quantity += addedItem.quantity
           cart.items[index].total =
             cart.items[index].price * cart.items[index].quantity
         } else {
-          cart.items.push(item) // Add it
+          cart.items.push(addedItem) // Add it
         }
         return cart.save()
       }
