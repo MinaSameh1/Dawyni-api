@@ -49,9 +49,6 @@ export async function AddItemToCart(cartId: string, item: ItemInput) {
         } else {
           cart.items.push(item) // Add it
         }
-        cart.subTotal = cart.items
-          .map(item => (item.total ? item.total : 0))
-          .reduce((acc, next) => acc + next)
         return cart.save()
       }
     }

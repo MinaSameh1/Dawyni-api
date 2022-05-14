@@ -1,4 +1,4 @@
-import { getModelForClass, prop } from '@typegoose/typegoose'
+import { getModelForClass, pre, prop } from '@typegoose/typegoose'
 
 export interface ItemInput {
   drugId: string
@@ -12,7 +12,7 @@ export interface ItemInput {
 export interface CartInput {
   user_uid: string
   purchased: boolean
-  items: [ItemInput]
+  items: [ItemInput] | []
 }
 
 export class Item {
@@ -35,6 +35,17 @@ export class Item {
   total?: number
 }
 
+@pre<Cart>('save', function (next) {
+  if (!this.isModified('items')) return next()
+
+  if (this.items && this.items.length > 0) {
+    this.subTotal = this.items
+      .map(item => (item.total ? item.total : 0))
+      .reduce((acc, next) => acc + next)
+  }
+
+  return next()
+})
 export class Cart {
   @prop({ required: true, type: () => String })
   user_uid?: string

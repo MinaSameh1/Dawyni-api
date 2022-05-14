@@ -14,22 +14,40 @@ import {
 } from './cart.service'
 
 export async function GetUserHistoryHandler(_: Request, res: Response) {
-  const result = await getCartHistory(res.locals.user.uid)
-  if (result) {
-    return res.status(200).json(result)
+  try {
+    const result = await getCartHistory(res.locals.user.uid)
+    if (result) {
+      return res.status(200).json(result)
+    }
+    return res
+      .status(204)
+      .json({ message: "The user didn't make any purchase" })
+  } catch (err: unknown) {
+    logger.error(JSON.stringify(err, null, 2))
+    return res.status(500).json({ message: 'Server side error' })
   }
-  return res.status(400).json({ message: "The user didn't make any purchase" })
 }
 
 export async function GetUserCartHandler(_: Request, res: Response) {
-  const result = await getOneCart({
-    user_uid: res.locals.user.uid,
-    purchased: false
-  })
-  if (result) {
-    return res.status(200).json(result)
+  try {
+    const result = await getOneCart({
+      user_uid: res.locals.user.uid,
+      purchased: false
+    })
+    if (result) {
+      return res.status(200).json(result)
+    }
+
+    const created = await createPurchaseCart({
+      user_uid: res.locals.user.uid,
+      purchased: false,
+      items: []
+    })
+    return res.status(200).json(created)
+  } catch (err) {
+    logger.error(err)
+    return res.status(500).json({ message: 'Something went wrong server side' })
   }
-  return res.status(400).json({ message: "The user doesn't have any items" })
 }
 
 export async function GetAllCartsHandler(_: Request, res: Response) {
