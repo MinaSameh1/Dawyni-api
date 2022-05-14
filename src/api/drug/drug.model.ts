@@ -20,7 +20,7 @@ export class drug {
   @prop({ required: true, type: () => Array })
   public active_ingredients?: Array<string>
 
-  @prop({ required: true, type: () => String })
+  @prop({ required: false, default: 'Discontinued', type: () => String })
   public status?: string
 
   @prop({ required: true, type: () => String })

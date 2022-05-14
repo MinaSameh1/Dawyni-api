@@ -1,4 +1,4 @@
-import { object, number, string, TypeOf, any } from 'zod'
+import { object, number, string, TypeOf, any, optional } from 'zod'
 
 /**
  * @openapi
@@ -42,9 +42,11 @@ const payload = {
     })
       .min(10, 'must be atleast 10')
       .max(1000, 'price cannot be above 1000'),
-    status: string({
-      required_error: 'status is required'
-    }),
+    status: optional(
+      string({
+        required_error: 'status is required'
+      })
+    ),
     strength: string({
       required_error: 'strength is required'
     }),
