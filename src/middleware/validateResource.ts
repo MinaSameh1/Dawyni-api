@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 import { AnyZodObject } from 'zod'
+import logger from '../utils/logger'
 
 const validateResource =
   (schema: AnyZodObject) =>
   (req: Request, res: Response, next: NextFunction) => {
     try {
+      logger.info(`Currently in validate using ${schema}`)
       schema.parse({
         body: req.body,
         query: req.query,

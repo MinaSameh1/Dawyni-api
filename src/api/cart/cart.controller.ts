@@ -58,36 +58,45 @@ export async function AddItemToCartHandler(
   req: Request<unknown, unknown, ItemInput>,
   res: Response
 ) {
-  const cart = await getOneCart({
-    user_uid: res.locals.user.uid,
-    purchased: false
-  })
+  try {
+    const cart = await getOneCart({
+      user_uid: res.locals.user.uid,
+      purchased: false
+    })
 
-  const drug = await findDrug({ _id: req.body.drugId })
-  if (drug) {
-    const image = get(drug.forms?.at(0), 'image', '')
-    const item = {
-      drugId: drug._id,
-      quantity: get(req.body, 'quantity'),
-      drug_name: get(drug, 'drug_name', ''),
-      image: image,
-      price: drug.price,
-      total: drug.price * toNumber(get(req.body, 'quantity', 1))
+    logger.info('Currently in AddItemToCartHandler')
+    const drug = await findDrug({ _id: req.body.drugId })
+    if (drug) {
+      const image = get(drug.forms?.at(0), 'image', '')
+      const item = {
+        drugId: drug._id,
+        quantity: get(req.body, 'quantity'),
+        drug_name: get(drug, 'drug_name', ''),
+        image: image,
+        price: drug.price,
+        total: drug.price * toNumber(get(req.body, 'quantity', 1))
+      }
+      if (cart) {
+        const result = await AddItemToCart(cart._id, item)
+        if (result) return res.status(200).json(result)
+      } else {
+        // create it
+        const result = await createPurchaseCart({
+          user_uid: res.locals.user.uid,
+          purchased: false,
+          items: [item]
+        })
+        if (result) return res.status(200).json(result)
+        return res.status(500).json({ message: 'something went wrong' })
+      }
+      return res.status(400).json({ message: "Drug doesn't exist" })
     }
-    if (cart) {
-      const result = await AddItemToCart(cart._id, item)
-      if (result) return res.status(200).json(result)
-    } else {
-      // create it
-      const result = await createPurchaseCart({
-        user_uid: res.locals.user.uid,
-        purchased: false,
-        items: [item]
-      })
-      if (result) return res.status(200).json(result)
-      return res.status(500).json({ message: 'something went wrong' })
-    }
-    return res.status(400).json({ message: "Drug doesn't exist" })
+  } catch (err: any) {
+    logger.error({
+      message: err.message,
+      code: err.status,
+      stack: err.stack || 'No stack'
+    })
   }
 }
 
