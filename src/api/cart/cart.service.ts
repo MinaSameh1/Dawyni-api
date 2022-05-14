@@ -100,7 +100,7 @@ export async function removeItemFromCart({
   )
   if (cart) {
     if (cart.items) {
-      if (cart.items.findIndex(item => item.drugId === drugId)) {
+      if (cart.items.findIndex(item => item.drugId === drugId) > -1) {
         cart.items = cart.items.filter(item => item.drugId !== drugId)
         return cart.save()
       }

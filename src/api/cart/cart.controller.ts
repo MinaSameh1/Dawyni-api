@@ -108,7 +108,7 @@ export async function DeleteItemFromCartHandler(req: Request, res: Response) {
     if (result) {
       return res.status(200).json({ message: 'Item deleted' })
     }
-    return res.status(400).json({ message: "Item wasn't deleted, no cart?" })
+    return res.status(400).json({ message: "Item wasn't deleted" })
   } catch (err) {
     logger.error(err)
     return res
