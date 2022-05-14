@@ -25,10 +25,7 @@ export function getOneCart(
   Query: FilterQuery<Cart>,
   options: QueryOptions = { lean: true }
 ) {
-  return CartModel.findOne(Query, {}, options).populate({
-    path: 'items.drugId',
-    select: 'drugId drug_name quantity price total'
-  })
+  return CartModel.findOne(Query, {}, options)
 }
 
 export async function AddItemToCart(cartId: string, addedItem: ItemInput) {
