@@ -89,8 +89,8 @@ export async function AddItemToCartHandler(
         if (result) return res.status(200).json(result)
         return res.status(500).json({ message: 'something went wrong' })
       }
-      return res.status(400).json({ message: "Drug doesn't exist" })
     }
+    return res.status(400).json({ message: "Drug doesn't exist" })
   } catch (err: any) {
     logger.error({
       message: err.message,
