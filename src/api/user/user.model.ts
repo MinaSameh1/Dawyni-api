@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 
 interface roles {
-  role: 'user' | 'admin'
+  role: 'user' | 'admin' | 'cashier'
 }
 
 export interface UserInput {
@@ -67,7 +67,7 @@ export class User extends TimeStamps implements UserDocument {
   public isMale?: boolean
 
   @prop({
-    type: () => [String],
+    type: () => String,
     default: () => 'user'
   })
   public role?: roles

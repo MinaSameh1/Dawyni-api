@@ -94,6 +94,7 @@ export async function createUser(input: UserInput) {
     uid: userRecord.uid,
     isMale: get(input, 'isMale'),
     dob: get(input, 'dob'),
+    role: get(input, 'role', 'user'),
     deviceToken: get(input, 'deviceToken'),
     username: get(input, 'username'),
     phoneNumber: get(input, 'phoneNumber')
@@ -128,6 +129,7 @@ export async function createUserMongo(input: UserInput) {
     deviceToken: get(input, 'deviceToken'),
     isMale: get(input, 'isMale'),
     dob: get(input, 'dob'),
+    role: get(input, 'role', ''),
     username: get(input, 'username'),
     phoneNumber: get(input, 'phoneNumber')
   })
