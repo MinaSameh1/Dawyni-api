@@ -33,7 +33,7 @@ export function getOneCart(
 
 export async function AddItemToCart(cartId: string, item: ItemInput) {
   // First get the cart
-  const cart = await getOneCart({ _id: cartId }, {})
+  const cart = await getOneCart({ _id: cartId }, { lean: false })
   if (cart) {
     // Check that it exists
     if (!cart.purchased) {
@@ -95,7 +95,10 @@ export async function removeItemFromCart({
   drugId: string
 }) {
   // First get the cart
-  const cart = await getOneCart({ user_uid: uid, purchased: false })
+  const cart = await getOneCart(
+    { user_uid: uid, purchased: false },
+    { lean: false }
+  )
   if (cart) {
     if (cart.items) {
       cart.items = cart.items.filter(item => item.drugId !== drugId)
