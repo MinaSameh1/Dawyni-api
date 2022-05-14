@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import requireUser from '../../middleware/requireUser'
+import userPermissions from '../../middleware/userPermissions'
 import validateResource from '../../middleware/validateResource'
 import {
   TestTokenHandler,
@@ -9,7 +10,8 @@ import {
   GetAllUsersHandler,
   GetUserByUidHandler,
   UpdateUserByUidHandler,
-  DeleteUserByUidHandler
+  DeleteUserByUidHandler,
+  GetUserByUidForAdminHandler
 } from './user.controller'
 import {
   createUserEmailSchema,
@@ -76,6 +78,14 @@ router.put(
   validateResource(UserParams),
   requireUser,
   UpdateUserByUidHandler
+)
+
+router.get(
+  USER_ENDPOINT + '/:uid',
+  requireUser,
+  userPermissions(['admin']),
+  validateResource(UserParams),
+  GetUserByUidForAdminHandler
 )
 
 router.get(USER_ENDPOINT, requireUser, GetUserByUidHandler)

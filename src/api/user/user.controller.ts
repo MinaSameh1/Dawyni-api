@@ -122,6 +122,14 @@ export async function DeleteUserByUidHandler(req: Request, res: Response) {
     .json({ message: "missing uid of user or user doesn't exist!" })
 }
 
+export async function GetUserByUidForAdminHandler(req: Request, res: Response) {
+  const user = await findUserByUid(get(req.params, 'uid', ''))
+  if (user) {
+    return res.status(200).json(user)
+  }
+  return res.status(400).json({ message: "user doesn't exist!" })
+}
+
 export async function GetUserByUidHandler(_: Request, res: Response) {
   const user = await findUserByUid(res.locals.user.uid)
   if (user) {

@@ -142,11 +142,7 @@ export async function getUserByPhoneNumber(phone: string) {
   try {
     return await auth().getUserByPhoneNumber(phone)
   } catch (err: any) {
-    if (
-      err.message ===
-      'There is no user record corresponding to the provided identifier.'
-    )
-      return null
+    if (err.code === 'auth/user-not-found') return null
     logger.error(err)
     throw err
   }
@@ -156,11 +152,7 @@ export async function getUserByEmail(email: string) {
   try {
     return await auth().getUserByEmail(email)
   } catch (err: any) {
-    if (
-      err.message ===
-      'There is no user record corresponding to the provided identifier.'
-    )
-      return null
+    if (err.code === 'auth/user-not-found') return null
     logger.error(err)
     throw err
   }
@@ -170,11 +162,7 @@ export async function getUserByUid(uid: string) {
   try {
     return await auth().getUser(uid)
   } catch (err: any) {
-    if (
-      err.message ===
-      'There is no user record corresponding to the provided identifier.'
-    )
-      return null
+    if (err.code === 'auth/user-not-found') return null
     logger.error(err)
     throw err
   }
@@ -228,9 +216,7 @@ export async function getAllUsersFB(
   return auth()
     .listUsers(maxResults)
     .then(listUsersResult => listUsersResult.users)
-    .catch(err => {
-      logger.error('Error getting users:' + err)
-    })
+    .catch(err => logger.error('Error getting users:' + err))
 }
 
 export async function verifyEmailAndPass(email: string, pass: string) {

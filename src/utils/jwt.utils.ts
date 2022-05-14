@@ -13,7 +13,9 @@ export async function FBverifyIdToken(idToken: string) {
     logger.error('FB verifyToken error:' + err.message)
     return {
       valid: false,
-      expired: err.message === 'jwt expired',
+      expired:
+        err.code === 'auth/id-token-expired' ||
+        err.code === 'auth/argument-error',
       decoded: null
     }
   }
