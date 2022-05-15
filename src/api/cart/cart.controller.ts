@@ -73,7 +73,7 @@ export async function AddItemToCartHandler(
         quantity: get(req.body, 'quantity'),
         drug_name: get(drug, 'drug_name', ''),
         image: image,
-        price: drug.price,
+        price: toNumber(drug.price),
         total: drug.price * toNumber(get(req.body, 'quantity', 1))
       }
       if (cart) {
