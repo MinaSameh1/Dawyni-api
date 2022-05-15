@@ -3,7 +3,7 @@ import logger from '../../utils/logger'
 import { get } from 'lodash'
 import {
   createUser,
-  createUserMongo,
+  createUserForAndroid,
   deleteUser,
   verifyEmailAndPass,
   getToken,
@@ -45,7 +45,7 @@ export async function CreateUserByEmailHandler(req: Request, res: Response) {
   }
 }
 
-export async function CreateUserByPhone(req: Request, res: Response) {
+export async function CreateUserAndroid(req: Request, res: Response) {
   try {
     const findUser = await checkIfUserExists({
       username: req.body.username,
@@ -59,7 +59,7 @@ export async function CreateUserByPhone(req: Request, res: Response) {
           'user already exists or some information like phone/email/usernmae already in use!'
       })
     // get the user
-    const { user, err } = await createUserMongo(req.body)
+    const { user, err } = await createUserForAndroid(req.body)
     if (err) {
       return res.status(err.status).json({ message: err.message })
     }

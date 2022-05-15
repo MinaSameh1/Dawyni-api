@@ -106,7 +106,7 @@ export async function createUser(input: UserInput) {
   }
 }
 
-export async function createUserMongo(input: UserInput) {
+export async function createUserForAndroid(input: UserInput) {
   const check = await checkIfUserExists({
     username: get(input, 'username', ''),
     email: get(input, 'email', ''),
@@ -122,6 +122,15 @@ export async function createUserMongo(input: UserInput) {
       user: null
     }
   }
+
+  const fb_update = {
+    email: get(input, 'email'),
+    password: get(input, 'password'),
+    displayName: get(input, 'username')
+  }
+
+  const userRecord = auth().updateUser(get(input, 'uid'), fb_update)
+
   const newUser = await UserModel.create({
     email: get(input, 'email'),
     password: get(input, 'password'),
@@ -136,7 +145,8 @@ export async function createUserMongo(input: UserInput) {
 
   return {
     err: null,
-    user: omit(newUser.toJSON(), 'password')
+    user: omit(newUser.toJSON(), 'password'),
+    userRecord: userRecord
   }
 }
 
