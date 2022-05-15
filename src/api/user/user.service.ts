@@ -107,47 +107,56 @@ export async function createUser(input: UserInput) {
 }
 
 export async function createUserForAndroid(input: UserInput) {
-  const check = await checkIfUserExists({
-    username: get(input, 'username', ''),
-    email: get(input, 'email', ''),
-    phoneNumber: get(input, 'phoneNumber', ''),
-    uid: ''
-  })
-  if (check) {
-    return {
-      err: {
-        status: 400,
-        message: 'Email or Username Already Exists!'
-      },
-      user: null
+  try {
+    const check = await checkIfUserExists({
+      username: get(input, 'username', ''),
+      email: get(input, 'email', ''),
+      phoneNumber: get(input, 'phoneNumber', ''),
+      uid: ''
+    })
+    if (check) {
+      return {
+        err: {
+          status: 400,
+          message: 'Email or Username Already Exists!'
+        },
+        user: null
+      }
     }
-  }
 
-  const fb_update = {
-    email: get(input, 'email'),
-    emailVerified: true,
-    password: get(input, 'password'),
-    displayName: get(input, 'username')
-  }
+    const fb_update = {
+      email: get(input, 'email'),
+      emailVerified: true,
+      password: get(input, 'password'),
+      displayName: get(input, 'username')
+    }
 
-  const userRecord = auth().updateUser(get(input, 'uid'), fb_update)
+    const userRecord = await auth().updateUser(get(input, 'uid'), fb_update)
 
-  const newUser = await UserModel.create({
-    email: get(input, 'email'),
-    password: get(input, 'password'),
-    uid: get(input, 'uid'),
-    deviceToken: get(input, 'deviceToken'),
-    isMale: get(input, 'isMale'),
-    dob: get(input, 'dob'),
-    role: get(input, 'role', ''),
-    username: get(input, 'username'),
-    phoneNumber: get(input, 'phoneNumber')
-  })
+    const newUser = await UserModel.create({
+      email: get(input, 'email'),
+      password: get(input, 'password'),
+      uid: get(input, 'uid'),
+      deviceToken: get(input, 'deviceToken'),
+      isMale: get(input, 'isMale'),
+      dob: get(input, 'dob'),
+      role: get(input, 'role', ''),
+      username: get(input, 'username'),
+      phoneNumber: get(input, 'phoneNumber')
+    })
 
-  return {
-    err: null,
-    user: omit(newUser.toJSON(), 'password'),
-    userRecord: userRecord
+    return {
+      err: userRecord ? null : true,
+      user: omit(newUser.toJSON(), 'password'),
+      userRecord: userRecord
+    }
+  } catch (err) {
+    logger.error(err)
+    return {
+      err: true,
+      user: null,
+      userRecord: null
+    }
   }
 }
 
