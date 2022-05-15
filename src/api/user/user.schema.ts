@@ -86,6 +86,39 @@ export const createUserEmailSchema = object({
   })
 })
 
+export const updateUserPhoneSchema = object({
+  body: object({
+    username: string({
+      required_error: 'username is required!',
+      invalid_type_error: 'username must be string'
+    }),
+    password: string({
+      required_error: 'Password is required',
+      invalid_type_error: 'Password should be a string'
+    })
+      .min(6, 'Password too short!')
+      .max(16, 'Password is too long'),
+    confirmPassword: string({
+      required_error: 'confirmPassword is required!',
+      invalid_type_error: 'confirmPassword must be string'
+    }),
+    dob: string({
+      required_error: 'Required dob(Date of birth) as string'
+    }),
+    deviceToken: optional(
+      string({
+        invalid_type_error: 'deviceToken must be string'
+      })
+    ),
+    email: string({
+      required_error: 'Email is required'
+    })
+  }).refine(data => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match!'
+  })
+})
+
 export const createUserPhoneSchema = object({
   body: object({
     username: string({

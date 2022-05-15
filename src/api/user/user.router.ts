@@ -17,7 +17,8 @@ import {
   createUserEmailSchema,
   createUserPhoneSchema,
   createTokenSchema,
-  UserParams
+  UserParams,
+  updateUserPhoneSchema
 } from './user.schema'
 
 const router = Router()
@@ -75,8 +76,9 @@ router.get(USER_ENDPOINT + '/token', requireUser, TestTokenHandler)
 
 router.put(
   USER_ENDPOINT + '/:uid',
-  validateResource(UserParams),
   requireUser,
+  validateResource(UserParams),
+  validateResource(updateUserPhoneSchema),
   UpdateUserByUidHandler
 )
 

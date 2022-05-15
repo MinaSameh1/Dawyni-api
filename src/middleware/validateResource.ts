@@ -6,7 +6,7 @@ const validateResource =
   (schema: AnyZodObject) =>
   (req: Request, res: Response, next: NextFunction) => {
     try {
-      logger.debug(`Currently in validate using ${schema.shape}`)
+      logger.debug('Currently in validateResource')
       schema.parse({
         body: req.body,
         query: req.query,

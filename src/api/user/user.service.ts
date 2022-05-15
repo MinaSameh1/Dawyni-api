@@ -177,7 +177,6 @@ export function findUserByUid(uid: string) {
 export async function updateUser(uid: string, input: UserInput) {
   const fb_update = {
     email: get(input, 'email'),
-    phoneNumber: get(input, 'phoneNumber'),
     password: get(input, 'password'),
     displayName: get(input, 'username')
   }
