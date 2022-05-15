@@ -124,15 +124,6 @@ export async function createUserForAndroid(input: UserInput) {
       }
     }
 
-    const fb_update = {
-      email: get(input, 'email'),
-      emailVerified: true,
-      password: get(input, 'password'),
-      displayName: get(input, 'username')
-    }
-
-    const userRecord = await auth().updateUser(get(input, 'uid'), fb_update)
-
     const newUser = await UserModel.create({
       email: get(input, 'email'),
       password: get(input, 'password'),
@@ -146,14 +137,13 @@ export async function createUserForAndroid(input: UserInput) {
     })
 
     return {
-      err: userRecord
+      err: newUser
         ? null
         : {
             status: 500,
-            message: 'Something wrong occured with firebase ~mina'
+            message: 'Something wrong serverSide'
           },
-      user: omit(newUser.toJSON(), 'password'),
-      userRecord: userRecord
+      user: omit(newUser.toJSON(), 'password')
     }
   } catch (err) {
     logger.error(err)
