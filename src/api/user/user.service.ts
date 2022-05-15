@@ -146,7 +146,12 @@ export async function createUserForAndroid(input: UserInput) {
     })
 
     return {
-      err: userRecord ? null : true,
+      err: userRecord
+        ? null
+        : {
+            status: 500,
+            message: 'Something wrong occured with firebase ~mina'
+          },
       user: omit(newUser.toJSON(), 'password'),
       userRecord: userRecord
     }
