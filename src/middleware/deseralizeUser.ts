@@ -10,14 +10,19 @@ async function deseralizeUser(req: Request, res: Response, next: NextFunction) {
     ''
   )
 
+  const accessToken: string = get(req, 'headers.access_token', '').replace(
+    /^Bearer\s/, // Removes Bearer from token
+    ''
+  )
+
   logger.info('Recieved token!')
 
-  if (!headerToken) {
+  if (!headerToken && !accessToken) {
     return next()
   }
 
   try {
-    const { decoded } = await FBverifyIdToken(headerToken)
+    const { decoded } = await FBverifyIdToken(headerToken || accessToken)
 
     if (decoded) {
       res.locals.user = decoded
