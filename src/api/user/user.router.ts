@@ -5,7 +5,7 @@ import validateResource from '../../middleware/validateResource'
 import {
   TestTokenHandler,
   CreateUserByEmailHandler,
-  CreateUserByPhone,
+  CreateUserAndroid,
   CreateTokenHandler,
   GetAllUsersHandler,
   GetUserByUidHandler,
@@ -61,7 +61,7 @@ router.post(
 router.post(
   USER_ENDPOINT + '/phone',
   validateResource(createUserPhoneSchema),
-  CreateUserByPhone
+  CreateUserAndroid
 )
 
 // Get a custom token

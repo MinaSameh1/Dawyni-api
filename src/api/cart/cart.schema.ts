@@ -18,12 +18,13 @@ export const cartItemSchema = object({
 })
 
 export const deleteItemSchema = object({
-  param: object({
+  params: object({
     drugId: string({
-      required_error: 'Requires drugId'
+      required_error: 'DrugID is required'
     })
   })
 })
+
 export const cartItemsSchema = object({
   body: array(itemSchema)
 })
