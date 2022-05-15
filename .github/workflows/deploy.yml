@@ -49,10 +49,10 @@ jobs:
 
       - name: build the app
         run: pnpm run build
-      
+
       #- name: run test
       #  run: pnpm run test
-        
+
       - name: Login heroku
         run: |
           cat > ~/.netrc <<EOF
