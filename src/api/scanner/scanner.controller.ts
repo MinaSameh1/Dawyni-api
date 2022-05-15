@@ -26,7 +26,7 @@ export async function scannerPostHandler(req: Request, res: Response) {
           await findDrug({ drug_name: { $regex: item, $options: 'i' } })
         )
       }
-      return res.status(200).json({ result: drugs })
+      return res.status(200).json(drugs)
     } catch (err: unknown) {
       logger.error(err)
     }

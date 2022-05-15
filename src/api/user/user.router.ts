@@ -11,7 +11,8 @@ import {
   GetUserByUidHandler,
   UpdateUserByUidHandler,
   DeleteUserByUidHandler,
-  GetUserByUidForAdminHandler
+  GetUserByUidForAdminHandler,
+  GetAllAdmins
 } from './user.controller'
 import {
   createUserEmailSchema,
@@ -79,7 +80,7 @@ router.get(
   USER_ENDPOINT + '/admin',
   requireUser,
   userPermissions(['admin']),
-  TestTokenHandler
+  GetAllAdmins
 )
 
 router.put(
