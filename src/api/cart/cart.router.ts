@@ -31,7 +31,7 @@ router.patch(
 router.post(CART_ENDPOINT, requireUser, PurchaseCartHandler)
 
 router.delete(
-  CART_ENDPOINT,
+  CART_ENDPOINT + '/:drugId',
   requireUser,
   validateResource(deleteItemSchema),
   DeleteItemFromCartHandler

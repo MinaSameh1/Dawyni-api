@@ -20,7 +20,8 @@ async function deseralizeUser(req: Request, res: Response, next: NextFunction) {
     const { decoded } = await FBverifyIdToken(headerToken)
 
     if (decoded) {
-      res.locals.user = await findUserByUid(decoded.uid)
+      res.locals.user = decoded
+      res.locals.userData = await findUserByUid(decoded.uid)
       return next()
     }
     return next()

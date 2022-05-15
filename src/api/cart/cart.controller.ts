@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { get, toNumber } from 'lodash'
 import { findDrug } from '../drug/drug.service'
 import { ItemInput } from './cart.model'
+import mongoose from 'mongoose'
 import {
   getCartHistory,
   getCarts,
@@ -109,9 +110,13 @@ export async function PurchaseCartHandler(_: Request, res: Response) {
 
 export async function DeleteItemFromCartHandler(req: Request, res: Response) {
   try {
+    const drugId = get(req.params, 'drugId')
+    if (!mongoose.Types.ObjectId.isValid(drugId)) {
+      return res.status(400).json({ message: 'Bad ObjectID' })
+    }
     const result = await removeItemFromCart({
       uid: res.locals.user.uid,
-      drugId: get(req.body, 'drugId')
+      drugId: drugId
     })
     if (result) {
       return res.status(200).json({ message: 'Item deleted' })

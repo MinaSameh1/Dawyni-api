@@ -18,7 +18,7 @@ export const cartItemSchema = object({
 })
 
 export const deleteItemSchema = object({
-  body: object({
+  param: object({
     drugId: string({
       required_error: 'Requires drugId'
     })
