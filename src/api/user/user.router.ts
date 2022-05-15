@@ -52,13 +52,13 @@ const USER_ENDPOINT = '/api/user'
  */
 router.post(
   USER_ENDPOINT,
+  requireUser,
   validateResource(createUserEmailSchema),
   CreateUserByEmailHandler
 )
 
 router.post(
   USER_ENDPOINT + '/phone',
-  requireUser,
   validateResource(createUserPhoneSchema),
   CreateUserByPhone
 )
