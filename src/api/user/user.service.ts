@@ -153,7 +153,10 @@ export async function createUserForAndroid(input: UserInput) {
   } catch (err) {
     logger.error(err)
     return {
-      err: true,
+      err: {
+        status: 500,
+        message: 'Something went wrong server side'
+      },
       user: null,
       userRecord: null
     }
