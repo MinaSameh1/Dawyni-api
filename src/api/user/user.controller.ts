@@ -7,6 +7,7 @@ import {
   deleteUser,
   verifyEmailAndPass,
   getToken,
+  getAdmins,
   getAllUsersFB,
   findUserByUid,
   updateUser,
@@ -148,4 +149,10 @@ export async function GetAllUsersHandler(_: Request, res: Response) {
 export async function TestTokenHandler(_: Request, res: Response) {
   if (res.locals.user) return res.status(200).json(res.locals.user)
   return res.status(400).json({ message: 'Failed!' })
+}
+
+export async function GetAllAdmins(req: Request, res: Response) {
+  const result = await getAdmins()
+  if (result) return res.status(200).json(result)
+  return res.status(400).json({ message: 'nousers found!' })
 }

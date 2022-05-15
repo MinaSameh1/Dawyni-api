@@ -51,6 +51,10 @@ export function checkIfUserExists({
   })
 }
 
+export function getAdmins() {
+  return findUser({ role: 'admin' })
+}
+
 /**
  * Create a user
  *

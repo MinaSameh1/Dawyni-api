@@ -74,6 +74,14 @@ router.post(
 // Testing route for token
 router.get(USER_ENDPOINT + '/token', requireUser, TestTokenHandler)
 
+// Testing route for token
+router.get(
+  USER_ENDPOINT + '/admin',
+  requireUser,
+  userPermissions(['admin']),
+  TestTokenHandler
+)
+
 router.put(
   USER_ENDPOINT + '/:uid',
   requireUser,
