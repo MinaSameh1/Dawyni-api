@@ -125,6 +125,7 @@ export async function createUserForAndroid(input: UserInput) {
 
   const fb_update = {
     email: get(input, 'email'),
+    emailVerified: true,
     password: get(input, 'password'),
     displayName: get(input, 'username')
   }
