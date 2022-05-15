@@ -35,21 +35,19 @@ export async function AddItemToCart(cartId: string, addedItem: ItemInput) {
     // Check that it exists
     if (!cart.purchased) {
       // Check that its not purchased
-      if (cart.items) {
-        // Check that the item doesn't already exist!
-        const index = cart.items.findIndex(
-          item => item.drugId === addedItem.drugId
-        )
-        if (index > -1) {
-          // if it exists then increase quantity
-          cart.items[index].quantity += addedItem.quantity
-          cart.items[index].total =
-            cart.items[index].price * cart.items[index].quantity
-        } else {
-          cart.items.push(addedItem) // Add it
-        }
-        return cart.save()
+      // Check that the item doesn't already exist!
+      const index = cart.items.findIndex(
+        item => item.drugId === addedItem.drugId
+      )
+      if (index > -1) {
+        // if it exists then increase quantity
+        cart.items[index].quantity += addedItem.quantity
+        cart.items[index].total =
+          cart.items[index].price * cart.items[index].quantity
+      } else {
+        cart.items.push(addedItem) // Add it
       }
+      return cart.save()
     }
   }
 }

@@ -64,7 +64,6 @@ export async function AddItemToCartHandler(
       purchased: false
     })
 
-    logger.info('Currently in AddItemToCartHandler')
     const drug = await findDrug({ _id: req.body.drugId })
     if (drug) {
       const image = get(drug.forms?.at(0), 'image', '')
@@ -87,8 +86,8 @@ export async function AddItemToCartHandler(
           items: [item]
         })
         if (result) return res.status(200).json(result)
-        return res.status(500).json({ message: 'something went wrong' })
       }
+      return res.status(500).json({ message: 'something went wrong' })
     }
     return res.status(400).json({ message: "Drug doesn't exist" })
   } catch (err: any) {

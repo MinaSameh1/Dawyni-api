@@ -51,7 +51,7 @@ export class Cart {
   user_uid?: string
 
   @prop({ required: true, type: () => Array })
-  items?: Array<Item>
+  items: Array<Item> = []
 
   @prop({ required: true, default: false, type: () => Boolean })
   purchased?: boolean
