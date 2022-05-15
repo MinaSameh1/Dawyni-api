@@ -3,22 +3,14 @@ import { get } from 'lodash'
 import CartModel, { Cart, ItemInput, CartInput } from './cart.model'
 
 export function getCartHistory(uid: string) {
-  return CartModel.find({ user_uid: uid, purchased: true })
-    .populate({
-      path: 'items.drugId',
-      select: 'drugId drug_name price total'
-    })
-    .lean()
+  return CartModel.find({ user_uid: uid, purchased: true }).lean()
 }
 
 export function getCart(
   Query: FilterQuery<Cart>,
   options: QueryOptions = { lean: true }
 ) {
-  return CartModel.find(Query, {}, options).populate({
-    path: 'items.drugId',
-    select: 'drugId drug_name price total'
-  })
+  return CartModel.find(Query, {}, options)
 }
 
 export function getOneCart(
