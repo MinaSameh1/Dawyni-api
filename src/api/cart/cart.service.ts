@@ -62,10 +62,12 @@ export async function createPurchaseCart(input: CartInput) {
 }
 
 export async function purchaseCart(uid: string) {
-  return CartModel.findOneAndUpdate(
-    { user_uid: uid, purchased: false },
-    { purchased: true }
-  )
+  const cart = await getOneCart({ user_uid: uid, purchased: false })
+  if (cart && cart?.items.length > 0) {
+    cart.purchased = false
+    return cart.save()
+  }
+  return null
 }
 
 // For testing purposes only
