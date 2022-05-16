@@ -20,6 +20,7 @@ export function getOneCart(
   return CartModel.findOne(Query, {}, options)
 }
 
+// TODO: Pass the cart from the handler or move all logic here, to save a request to db!
 export async function AddItemToCart(cartId: string, addedItem: ItemInput) {
   // First get the cart
   const cart = await getOneCart({ _id: cartId }, { lean: false })
@@ -39,6 +40,7 @@ export async function AddItemToCart(cartId: string, addedItem: ItemInput) {
       } else {
         cart.items.push(addedItem) // Add it
       }
+      cart.markModified('items')
       return cart.save()
     }
   }
