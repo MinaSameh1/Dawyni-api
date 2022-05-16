@@ -22,9 +22,11 @@ export async function scannerPostHandler(req: Request, res: Response) {
       const drugs = []
       logger.info(text.split('\n'))
       for (const item of text.split('\n')) {
-        drugs.push(
-          await findDrug({ drug_name: { $regex: item, $options: 'i' } })
-        )
+        if (item) {
+          drugs.push(
+            await findDrug({ drug_name: { $regex: item, $options: 'i' } })
+          )
+        }
       }
       return res.status(200).json(drugs)
     } catch (err: unknown) {
