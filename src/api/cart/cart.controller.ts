@@ -13,6 +13,7 @@ import {
   removeItemFromCart,
   createPurchaseCart
 } from './cart.service'
+import { sendMsg } from '../../utils/fbMsg'
 
 export async function GetUserHistoryHandler(_: Request, res: Response) {
   try {
@@ -102,7 +103,20 @@ export async function AddItemToCartHandler(
 
 export async function PurchaseCartHandler(_: Request, res: Response) {
   const result = await purchaseCart(res.locals.user.uid)
-  if (result) return res.status(200).json(result)
+  if (result) {
+    try {
+      const msg = `${res.locals.userData.username} Bought`
+      sendMsg({
+        title: 'Order Purchased',
+        body: msg
+      })
+    } catch (err) {
+      logger.info('Firebase Messaging failed, but will continue')
+      logger.error(err)
+      logger.info('Continuning!')
+    }
+    return res.status(200).json(result)
+  }
   return res
     .status(400)
     .json({ message: "User doesn't have cart to purchase!" })
