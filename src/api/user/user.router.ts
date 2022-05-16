@@ -12,7 +12,8 @@ import {
   UpdateUserByUidHandler,
   DeleteUserByUidHandler,
   GetUserByUidForAdminHandler,
-  GetAllAdmins
+  GetAllAdmins,
+  UpdateCurrentUserByUidHandler
 } from './user.controller'
 import {
   createUserEmailSchema,
@@ -89,6 +90,13 @@ router.put(
   validateResource(UserParams),
   validateResource(updateUserPhoneSchema),
   UpdateUserByUidHandler
+)
+
+router.put(
+  USER_ENDPOINT,
+  requireUser,
+  validateResource(updateUserPhoneSchema),
+  UpdateCurrentUserByUidHandler
 )
 
 router.get(

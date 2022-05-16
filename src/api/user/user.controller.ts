@@ -85,6 +85,25 @@ export async function CreateTokenHandler(req: Request, res: Response) {
   return res.status(401).json({ message: 'Wrong email or pass' })
 }
 
+export async function UpdateCurrentUserByUidHandler(
+  req: Request,
+  res: Response
+) {
+  const uid = res.locals.user.uid
+  const user = await findUserByUid(uid)
+  if (user) {
+    const result = await updateUser(uid, req.body)
+    logger.info(result)
+    if (result) {
+      return res.status(200).json({ message: 'User updated' })
+    }
+    return res.status(400).json({ message: "user doesn't exist!" })
+  }
+  return res
+    .status(400)
+    .json({ message: "missing uid of user or user doesn't exist!" })
+}
+
 export async function UpdateUserByUidHandler(req: Request, res: Response) {
   if (req.params.uid) {
     const uid = get(req.params, 'uid')
