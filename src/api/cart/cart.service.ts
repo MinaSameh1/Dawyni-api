@@ -67,7 +67,7 @@ export async function purchaseCart(uid: string) {
     { lean: false }
   )
   if (cart && cart?.items.length > 0) {
-    cart.purchased = false
+    cart.purchased = true
     return cart.save()
   }
   return null
