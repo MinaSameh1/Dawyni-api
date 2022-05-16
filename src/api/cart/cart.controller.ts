@@ -106,7 +106,7 @@ export async function PurchaseCartHandler(_: Request, res: Response) {
   const result = await purchaseCart(res.locals.user.uid)
   if (result) {
     try {
-      const msg = `${res.locals.userData.username} Purchased ${result.subTotal} worth of items`
+      const msg = `${res.locals.userData.username} Purchased ${result.subTotal} L.E. worth of items`
       const admin = await findOneUser({ role: 'admin' })
       if (admin?.deviceToken)
         sendMsg(admin.deviceToken, {
