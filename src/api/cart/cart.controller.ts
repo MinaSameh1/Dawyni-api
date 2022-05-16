@@ -69,12 +69,11 @@ export async function AddItemToCartHandler(
 
     const drug = await findDrug({ _id: req.body.drugId })
     if (drug) {
-      const image = get(drug.forms?.at(0), 'image', '')
       const item = {
-        drugId: drug._id,
+        drugId: req.body.drugId,
         quantity: get(req.body, 'quantity'),
         drug_name: get(drug, 'drug_name', ''),
-        image: image,
+        image: get(drug.forms?.at(0), 'image', ''),
         price: toNumber(drug.price),
         total: drug.price * toNumber(get(req.body, 'quantity', 1))
       }

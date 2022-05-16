@@ -62,7 +62,10 @@ export async function createPurchaseCart(input: CartInput) {
 }
 
 export async function purchaseCart(uid: string) {
-  const cart = await getOneCart({ user_uid: uid, purchased: false })
+  const cart = await getOneCart(
+    { user_uid: uid, purchased: false },
+    { lean: false }
+  )
   if (cart && cart?.items.length > 0) {
     cart.purchased = false
     return cart.save()
