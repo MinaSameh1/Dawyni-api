@@ -1,9 +1,9 @@
 import { getMessaging } from 'firebase-admin/messaging'
 
-export function sendMsg(regToken: string, msg: { [key: string]: string }) {
+export function sendMsg(msg: { [key: string]: string }) {
   const message = {
     data: msg,
-    token: regToken
+    topic: 'Cart'
   }
   return getMessaging().send(message)
 }
