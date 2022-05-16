@@ -14,6 +14,7 @@ import {
   createPurchaseCart
 } from './cart.service'
 import { sendMsg } from '../../utils/fbMsg'
+import { findOneUser } from '../user/user.service'
 
 export async function GetUserHistoryHandler(_: Request, res: Response) {
   try {
@@ -105,11 +106,13 @@ export async function PurchaseCartHandler(_: Request, res: Response) {
   const result = await purchaseCart(res.locals.user.uid)
   if (result) {
     try {
-      const msg = `${res.locals.userData.username} Bought`
-      sendMsg({
-        title: 'Order Purchased',
-        body: msg
-      })
+      const msg = `${res.locals.userData.username} Purchased ${result.subTotal} worth of items`
+      const admin = await findOneUser({ role: 'admin' })
+      if (admin?.deviceToken)
+        sendMsg(admin.deviceToken, {
+          title: 'Order Purchased',
+          body: msg
+        })
     } catch (err) {
       logger.info('Firebase Messaging failed, but will continue')
       logger.error(err)
