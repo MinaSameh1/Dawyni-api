@@ -78,7 +78,7 @@ export const createUserEmailSchema = object({
         invalid_type_error: 'Needs to be string and only one word.'
       })
         .min(4, 'Too short')
-        .max(6, 'Too Long')
+        .max(8, 'Too Long')
     )
   }).refine(data => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
@@ -160,7 +160,7 @@ export const createUserPhoneSchema = object({
         invalid_type_error: 'Needs to be string and only one word.'
       })
         .min(4, 'Too short')
-        .max(6, 'Too Long')
+        .max(8, 'Too Long')
     )
   })
 })
