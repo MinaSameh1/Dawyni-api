@@ -16,6 +16,9 @@ _if intending to work on it run `npm run prepare`_
 
 _Some routes are included as testing and easy access._
 
+The database used is from https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files 
+Download it and put it in db_backup and run the script 
+
 ## API Endpoints
 
 | Endpoint     | method | brief description                    |
