@@ -22,8 +22,9 @@ export async function scannerPostHandler(req: Request, res: Response) {
       const drugs = []
       logger.info(text.split('\n'))
       for (const item of text.split('\n')) {
+        const srch: string = sanitizeString(item)
         const drug = await findDrug({
-          drug_name: { $regex: item, $options: 'i' }
+          drug_name: { $regex: srch, $options: 'i' }
         })
         if (drug) drugs.push(drug)
       }
@@ -33,4 +34,9 @@ export async function scannerPostHandler(req: Request, res: Response) {
     }
   }
   return res.status(400).json({ message: 'No image found' })
+}
+
+function sanitizeString(str: string) {
+  str = str.replace(/[^a-z0-9áéíóúñü .,_-]/gim, ' ')
+  return str.trim()
 }
