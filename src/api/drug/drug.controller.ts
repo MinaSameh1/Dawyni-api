@@ -60,7 +60,7 @@ export async function getDrugsHandler(req: Request, res: Response) {
 
     logger.error('Error in getDrugs' + e)
     return res.status(500).json({
-      message: 'something went wrong'
+      message: 'something went wrong server side'
     })
   }
 }

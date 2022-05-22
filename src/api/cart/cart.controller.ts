@@ -23,7 +23,7 @@ export async function GetUserHistoryHandler(_: Request, res: Response) {
       return res.status(200).json(result)
     }
     return res
-      .status(204)
+      .status(200)
       .json({ message: "The user didn't make any purchase" })
   } catch (err: unknown) {
     logger.error(JSON.stringify(err, null, 2))
@@ -46,13 +46,19 @@ export async function GetUserCartHandler(_: Request, res: Response) {
       purchased: false,
       items: []
     })
-    return res.status(200).json(created)
+    if (created) {
+      return res.status(200).json(created)
+    }
+    return res
+      .status(500)
+      .json({ message: 'Something went wrong server side ' })
   } catch (err) {
     logger.error(err)
     return res.status(500).json({ message: 'Something went wrong server side' })
   }
 }
 
+// Just for testing
 export async function GetAllCartsHandler(_: Request, res: Response) {
   return res.status(200).json(getCarts())
 }
@@ -89,15 +95,18 @@ export async function AddItemToCartHandler(
         })
         if (result) return res.status(200).json(result)
       }
-      return res.status(500).json({ message: 'something went wrong' })
+      return res
+        .status(500)
+        .json({ message: 'something went wrong server side' })
     }
-    return res.status(400).json({ message: "Drug doesn't exist" })
+    return res.status(404).json({ message: "Drug doesn't exist" })
   } catch (err: any) {
     logger.error({
       message: err.message,
       code: err.status,
       stack: err.stack || 'No stack'
     })
+    return res.status(500).json({ message: 'something went wrong server side' })
   }
 }
 
@@ -137,7 +146,7 @@ export async function DeleteItemFromCartHandler(req: Request, res: Response) {
     if (result) {
       return res.status(200).json({ message: 'Item deleted' })
     }
-    return res.status(400).json({ message: "Item wasn't deleted" })
+    return res.status(404).json({ message: 'Item not in cart!' })
   } catch (err) {
     logger.error(err)
     return res
