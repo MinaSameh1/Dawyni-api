@@ -16,7 +16,7 @@ _if intending to work on it run `npm run prepare`_
 
 _Some routes are included as testing and easy access._
 
-The database used is from https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files 
+The database used is from https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files      
 Download it and put it in db_backup and run the script 
 
 ## API Endpoints
@@ -42,14 +42,15 @@ Download it and put it in db_backup and run the script
 | ----------- | ------------------------------------------------- |
 | 200         | Created                                           |
 | 400         | Bad Request                                       |
-| 401         | Unauthorized Access                               |
-| 403         | Must Log in or refresh token expired! (Re login)  |
+| 401         | Unauthorized Access or bad token                  |
+| 404         | Not found                                         |
 | 500         | Something went wrong server side (Rarely Happens) |
 
 #### Method Put
 
 | Status code | description |
 | ----------- | ----------- |
+| 200         | Finished    |
 | 405         | Not allowed |
 
 #### Method Delete
