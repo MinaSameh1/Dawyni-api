@@ -1,3 +1,4 @@
+import { sanitizeString } from '@App/utils/utils'
 import { FilterQuery, UpdateQuery, QueryOptions } from 'mongoose'
 import DrugModel, { drug } from './drug.model'
 
@@ -52,4 +53,15 @@ export async function getUniqueForms() {
 
 export async function findAndDeleteDrug(query: FilterQuery<drug>) {
   return DrugModel.deleteOne(query)
+}
+
+export async function searchDrugsLikeName(strs: Array<string>) {
+  const drugs: Array<drug> = []
+  strs.map(async item => {
+    const drug = await findDrug({
+      drug_name: { $regex: sanitizeString(item), $options: 'i' }
+    })
+    if (drug) drugs.push(drug)
+  })
+  return drugs
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import logger from '../../utils/logger'
 import Tesseract from 'tesseract.js'
-import { findDrug } from '../drug/drug.service'
+import { searchDrugsLikeName } from '../drug/drug.service'
 
 /**
  * scannerPostHandler
@@ -19,24 +19,15 @@ export async function scannerPostHandler(req: Request, res: Response) {
         logger: m => logger.info(m)
       })
       // split the text and search for drugs
-      const drugs = []
-      logger.info(text.split('\n'))
-      for (const item of text.split('\n')) {
-        const srch: string = sanitizeString(item)
-        const drug = await findDrug({
-          drug_name: { $regex: srch, $options: 'i' }
-        })
-        if (drug) drugs.push(drug)
+      logger.debug(text.split('\n'))
+      const drugs = searchDrugsLikeName(text.split('\n'))
+      if (drugs) {
+        return res.status(200).json(drugs)
       }
-      return res.status(200).json(drugs)
+      return res.status(404).json({ message: 'No drugs with the text found' })
     } catch (err: unknown) {
       logger.error(err)
     }
   }
   return res.status(400).json({ message: 'No image found' })
-}
-
-function sanitizeString(str: string) {
-  str = str.replace(/[^a-z0-9áéíóúñü .,_-]/gim, ' ')
-  return str.trim()
 }
