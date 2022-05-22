@@ -42,14 +42,15 @@ Download it and put it in db_backup and run the script
 | ----------- | ------------------------------------------------- |
 | 200         | Created                                           |
 | 400         | Bad Request                                       |
-| 401         | Unauthorized Access                               |
-| 403         | Must Log in or refresh token expired! (Re login)  |
+| 401         | Unauthorized Access or bad token                  |
+| 404         | Not found                                         |
 | 500         | Something went wrong server side (Rarely Happens) |
 
 #### Method Put
 
 | Status code | description |
 | ----------- | ----------- |
+| 200         | Finished    |
 | 405         | Not allowed |
 
 #### Method Delete
