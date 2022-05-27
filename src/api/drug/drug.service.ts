@@ -1,4 +1,4 @@
-import { sanitizeString } from '@App/utils/utils'
+import { sanitizeString } from '../../utils/utils'
 import { FilterQuery, UpdateQuery, QueryOptions } from 'mongoose'
 import DrugModel, { drug } from './drug.model'
 
