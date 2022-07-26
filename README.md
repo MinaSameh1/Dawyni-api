@@ -1,6 +1,6 @@
-# finalproject-api
+# Dawyni-api
 
-This api is hosted on `https://finalproject-pis.herokuapp.com`
+This api *was* hosted on `https://finalproject-pis.herokuapp.com`
 
 ## First steps
 
