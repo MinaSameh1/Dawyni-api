@@ -1,6 +1,6 @@
 # Dawyni-api
 
-This api *was* hosted on `https://finalproject-pis.herokuapp.com`
+This api _was_ hosted on `https://finalproject-pis.herokuapp.com`
 
 The Client: `https://github.com/mahmoud947/smart_pharmacy`
 
@@ -20,10 +20,11 @@ _if intending to work on it run `npm run prepare`_
 
 _Some routes are included as testing and easy access._
 
-The database used is from https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files      
-Download it and put it in db_backup and run the python script 
+The database used is from https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files  
+Download it and put it in db_backup and run the python script
 
 I used python to model and add data.
+
 ## API Endpoints
 
 | Endpoint     | method | brief description                    |
